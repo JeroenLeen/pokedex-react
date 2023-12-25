@@ -54,7 +54,6 @@ export default function App() {
       <form>
         <div >
           <Select options={users} onChange={onChangeHandler} ></Select>
-          <input type="text"  className="form-control" placeholder="Enter your name" id="exampleInputEmail1" aria-describedby="emailHelp"/>
         </div>
       </form>
       <button onClick={() =>refreshData()}>"show my pokemon"</button>
