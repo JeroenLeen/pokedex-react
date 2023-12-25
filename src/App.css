@@ -1,8 +1,37 @@
 #root {
-  max-width: 1280px;
+  max-width: 70%;
+  width:100%;
+  background-color: azure;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content:center;
+}
+
+.selector{
+  display: flex;
+  justify-content:center;
+}
+
+.selectorSelect{
+  width:30%;
+  margin-right: 10px;
+}
+
+.entries{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.entry{
+  background-color: white;
+  border: 3px black;
+  width: 15%;
 }
 
 .logo {

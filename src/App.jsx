@@ -47,31 +47,25 @@ export default function App() {
     <>
 <div className="wholeSite">
     <div className="content">
-      <div >
-      <h1>Hatch & Catch Pokedex</h1>
+      <div className="header">
+        <img src='/falcon_logo.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogitap.gif" alt="Image" className="logo" />
       </div>
-      <div >
-      <form>
-        <div >
-          <Select options={users} onChange={onChangeHandler} ></Select>
-        </div>
-      </form>
-      <button onClick={() =>refreshData()}>"show my pokemon"</button>
+     
+      <div className='selector'>
+          <Select className='selectorSelect'  options={users} onChange={onChangeHandler} ></Select>
+         <button onClick={() =>refreshData()}>"Show pokedex"</button>
     </div>
 
-      <div >
-        <div>
-
+   
+     <div className='entries'> 
           {
-         items2.map(el =>  <div key={el.key}>
-          <PokedexEntry  key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
+         items2.map(el =>  <div key={el.key} className="entry">
+          <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
           normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName}></PokedexEntry>
            </div>)
           }
-          yea yea
-         
-        </div>s
       </div>
+     
 
 
 </div>
