@@ -10,16 +10,18 @@ export default function PokedexEntry(  props) {
       
     return (
       <>
+      <div className='entry-container'>
       <div className="image-container">
       <img src={imageUrl2} alt="Image" className="image" />
       </div>
+
       <div className="numbers">
        <div> <b>{ props.name }</b></div>
-       <div className='number-container'><div> Normal: { props.normalNumber }</div>
-        <div>Shiny: {props.shinyNumber }</div></div>
+       <div className='number-container'><div className={props.normalNumber>0?'green':'red'}> Normal: { props.normalNumber }</div>
+        <div className={props.shinyNumber>0?'green':'red'}>Shiny: {props.shinyNumber }</div></div>
        
       </div>
-    
+      </div>
     </>
     )
   }
