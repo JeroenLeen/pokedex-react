@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css'
 import DBResource from './DBResource'
-import PokedexEntry from './pokedexEntry'
+import PokedexEntry from './PokedexEntry'
 import Select from 'react-select'
 
 export default function App() {
