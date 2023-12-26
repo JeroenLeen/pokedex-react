@@ -55,14 +55,17 @@ export default function App() {
     (async () => {
       console.log("finding pokemon for:" + change.value);
       const data  = await resource.getUniquePokedexEntries(change.value)
-      setPokemonCaugth(data.length);
-      let sum = 0;
 
+      let shinySum = 0;
+      let totalSum=0;
       // calculate sum using forEach() method
       data.forEach( entry => {
-        sum += entry.shinyNumber;
+        shinySum += entry.shinyNumber;
+        totalSum+= entry.normalNumber + entry.shinyNumber;
       })
-      setTotalShinyCaugth(sum);
+     
+      setPokemonCaugth(totalSum);
+      setTotalShinyCaugth(shinySum);
       setUniquePokemonCaugth( data.filter((entry) => entry.normalNumber > 0 | entry.shinyNumber > 0 ).length);
       console.log("response:");
       console.log(data);
