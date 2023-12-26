@@ -30,8 +30,11 @@
 
 .entry{
   background-color: white;
-  border: 3px black;
+  border: 1px solid grey;
   width: 15%;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow:  2px 2px grey;
 }
 
 .logo {
