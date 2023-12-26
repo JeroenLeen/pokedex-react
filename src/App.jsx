@@ -19,6 +19,9 @@ export default function App() {
   const [users, setUsers] = useState([]);
   const [usersCalled, setUsersCalled] = useState(false);
   const [usersName, setUserName] = useState(false);
+  const [pokemonCaugth, setPokemonCaugth] = useState(0);
+  const [uniquePokemonCaugth, setUniquePokemonCaugth] = useState(0);
+  const [totalShinyCaugth, setTotalShinyCaugth] = useState(0);
 
   function refreshData() {
     (async () => {
@@ -42,12 +45,25 @@ export default function App() {
     }
   })();},[]);
 
+  function countUnique(iterable) {
+    return new Set(iterable).size;
+  }
+
   const onChangeHandler = (change) => {
   
     setUserName(change.value);
     (async () => {
       console.log("finding pokemon for:" + change.value);
       const data  = await resource.getUniquePokedexEntries(change.value)
+      setPokemonCaugth(data.length);
+      let sum = 0;
+
+      // calculate sum using forEach() method
+      data.forEach( entry => {
+        sum += entry.shinyNumber;
+      })
+      setTotalShinyCaugth(sum);
+      setUniquePokemonCaugth( data.filter((entry) => entry.normalNumber > 0 | entry.shinyNumber > 0 ).length);
       console.log("response:");
       console.log(data);
       setItems2(data) ;
@@ -65,10 +81,11 @@ export default function App() {
            <h4 className='selectTitle'>
             User:
             </h4><div className='selectAndTooltip' >
-              <Select className='selectorSelect'  options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select><div className="selectIcon">
+              <Select className='selectorSelect'  options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select>
+              <div className="selectIcon">
               <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
               <Tooltip id="my-tooltip" 
-                place="bottom"
+                place="top"
                 effect='solid'
                 content="The user whose pokedex you want to see. You can search in this field"/>
             </div>
@@ -76,7 +93,14 @@ export default function App() {
       </div>
       </div>
 
-   
+    <div>
+      <div className='generalData'>  
+        <div><h4>Total Catches: {pokemonCaugth}</h4> </div>
+       <div><h4> Unique Catches: {uniquePokemonCaugth}</h4></div>
+       <div><h4> Total Shiny's Caugth: {totalShinyCaugth}</h4></div>
+    </div>
+
+    </div>
      <div className='entries'> 
           {
          items2.map(el =>  <div key={el.key} className="entry">

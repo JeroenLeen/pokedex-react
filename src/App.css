@@ -59,6 +59,11 @@
   justify-content: center;
 }
 
+.generalData{
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .entries{
   display: flex;
   flex-wrap:wrap;
