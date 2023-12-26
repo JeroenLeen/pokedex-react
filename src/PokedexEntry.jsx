@@ -10,7 +10,7 @@ export default function PokedexEntry(  props) {
       
     return (
       <>
-      <div className='entry-container'>
+      <div className={props.shinyNumber>0?'entry-container-shiny':'entry-container'}>
       <div className="image-container">
       <img src={imageUrl2} alt="Image" className="image" />
       </div>

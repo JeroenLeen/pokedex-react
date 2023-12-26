@@ -37,6 +37,7 @@
   display: flex;
 }
 
+
 .selectIcon{
   display: flex;
   align-items: center;
@@ -71,6 +72,8 @@
   margin: 5px;
   border-radius: 5px;
   box-shadow:  2px 2px grey;
+  position: relative;
+  overflow: hidden;
 }
 
 .logo {

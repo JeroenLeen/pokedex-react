@@ -2,17 +2,22 @@
     width: 60%;
 }
 
-.entry-container::before {
+.entry-container-shiny::before {
     content: '';
-    position: relative;
+    position: absolute;
     top: 0;
-    left: -300px;
+    left: -120%;
     width: 100%;
     height: 100%;
-    background: rgba(14, 9, 9, 0.3);
+    background: rgb(255 215 0 / 30%);
     transform: skewX(-30deg);
     transition: 0.3s;
-  } 
+} 
+
+.entry-container-shiny:hover:before {
+    left: 75%;
+    background: rgb(255 215 0 / 30%);
+  }
 
 .number-container{
     display: flex;
