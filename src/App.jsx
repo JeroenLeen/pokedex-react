@@ -41,6 +41,7 @@ export default function App() {
   })();},[]);
 
   const onChangeHandler = (change) => {
+    console.log("change: " + change)
     setUserName(change.value);
   };
   return (
