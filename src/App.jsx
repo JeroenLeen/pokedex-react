@@ -3,6 +3,8 @@ import './App.css'
 import DBResource from './DBResource'
 import PokedexEntry from './PokedexEntry'
 import Select from 'react-select'
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 export default function App() {
   //static contextType = ThemeContext;
@@ -41,8 +43,15 @@ export default function App() {
   })();},[]);
 
   const onChangeHandler = (change) => {
-    console.log("change: " + change)
+  
     setUserName(change.value);
+    (async () => {
+      console.log("finding pokemon for:" + change.value);
+      const data  = await resource.getUniquePokedexEntries(change.value)
+      console.log("response:");
+      console.log(data);
+      setItems2(data) ;
+      })()
   };
   return (
     <>
@@ -51,11 +60,21 @@ export default function App() {
       <div className="header">
         <img src='/falcon_logo.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogitap.gif" alt="Image" className="logo" />
       </div>
-     
+      <div className='selectorWrapper'>
       <div className='selector'>
-          <Select className='selectorSelect'  options={users} onChange={onChangeHandler} ></Select>
-         <button onClick={() =>refreshData()}>"Show pokedex"</button>
-    </div>
+           <h4 className='selectTitle'>
+            User:
+            </h4><div className='selectAndTooltip' >
+              <Select className='selectorSelect'  options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select><div className="selectIcon">
+              <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
+              <Tooltip id="my-tooltip" 
+                place="bottom"
+                effect='solid'
+                content="The user whose pokedex you want to see. You can search in this field"/>
+            </div>
+            </div>
+      </div>
+      </div>
 
    
      <div className='entries'> 

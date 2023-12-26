@@ -14,12 +14,48 @@
 
 .selector{
   display: flex;
-  justify-content:center;
+  justify-content: center;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: flex-start;
+  width:30%;
 }
 
 .selectorSelect{
-  width:30%;
+  width:100%;
+
+}
+
+.selectAndTooltip{
+  width:100%;
   margin-right: 10px;
+  display: flex;
+}
+
+.selectTitle{
+  margin-bottom: 0;
+  display: flex;
+}
+
+.selectIcon{
+  display: flex;
+  align-items: center;
+}
+
+.selectIconImg{
+  width: 25px;
+    height: 25px;
+    background: white;
+    border: solid 1px;
+    border-radius: 100%;
+    padding: 3px;
+    margin-left: 5px;
+}
+
+.selectorWrapper{
+  width:100%;
+  display: flex;
+  justify-content: center;
 }
 
 .entries{
