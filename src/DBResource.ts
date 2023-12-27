@@ -56,10 +56,6 @@ export default class DBResource{
             entry.pokedex=parts[0] + (parts[1]==undefined?"":parts[1]);
         });
 
-        //allData.sort((a, b) => (a.pokedex < b.pokedex ? -1 : 1));
-        console.log("added zero's ?");
-        console.log(allData);
-
 
         allData.sort(function (a, b) {
             if (a.pokedex < b.pokedex) {
@@ -72,7 +68,6 @@ export default class DBResource{
           });
 
 
-          console.log(allData);
 
         allData.forEach(entry => {
             entry.pokedex =   entry.pokedex.replace(/^0+/, '');

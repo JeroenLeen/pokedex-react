@@ -27,8 +27,6 @@ export default function App() {
     (async () => {
         console.log("finding pokemon for:" + usersName);
         const data  = await resource.getUniquePokedexEntries(usersName)
-        console.log("response:");
-        console.log(data);
         setItems2(data) ;
   })()
   }
@@ -39,15 +37,10 @@ export default function App() {
       setUsersCalled(true);
       console.log("calling unique users:");
       const foundUsers  = await resource.getUniqueUsers()
-      console.log("response users:");
-      console.log(foundUsers);
       setUsers(foundUsers) ;
     }
   })();},[]);
 
-  function countUnique(iterable) {
-    return new Set(iterable).size;
-  }
 
   const onChangeHandler = (change) => {
   
@@ -67,8 +60,6 @@ export default function App() {
       setPokemonCaugth(totalSum);
       setTotalShinyCaugth(shinySum);
       setUniquePokemonCaugth( data.filter((entry) => entry.normalNumber > 0 | entry.shinyNumber > 0 ).length);
-      console.log("response:");
-      console.log(data);
       setItems2(data) ;
       })()
   };
@@ -76,6 +67,7 @@ export default function App() {
     <>
 <div className="wholeSite">
     <div className="content">
+
       <div className="header">
         <img src='/falcon_logo.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogitap.gif" alt="Image" className="logo" />
       </div>
@@ -111,6 +103,17 @@ export default function App() {
           normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName}></PokedexEntry>
            </div>)
           }
+      </div>
+      <div className="footer">
+
+              <div className="selectIcon">
+              <img data-tooltip-id="info-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
+              <Tooltip id="info-tooltip" 
+                place="left"
+                effect='solid'
+                content="For bugs, please contact Forodor on discord"/>
+            </div>
+ 
       </div>
      
 
