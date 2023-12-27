@@ -69,7 +69,7 @@ export default function App() {
     <div className="content">
 
       <div className="header">
-        <img src='/falcon_logo.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogitap.gif" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
       <div className='selectorWrapper'>
       <div className='selector'>
@@ -92,7 +92,7 @@ export default function App() {
       <div className='generalData'>  
         <div><h4>Total Catches: {pokemonCaugth}</h4> </div>
        <div><h4> Unique Catches: {uniquePokemonCaugth}</h4></div>
-       <div><h4> Total Shiny's Caugth: {totalShinyCaugth}</h4></div>
+       <div><h4> Total Shiny's Caught: {totalShinyCaugth}</h4></div>
     </div>
 
     </div>
@@ -100,7 +100,7 @@ export default function App() {
           {
          items2.map(el =>  <div key={el.key} className="entry">
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName}></PokedexEntry>
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}></PokedexEntry>
            </div>)
           }
       </div>
