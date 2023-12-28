@@ -70,10 +70,58 @@
   justify-content:center;
 }
 
+
 .footer{
   display: flex;
   justify-content: end;
 }
+
+.menu{
+  display: flex;
+  justify-content: center;
+  background-color: rgb(137, 198, 131);
+  border: solid 5px rgb(83, 160, 90);
+  border-radius: 15px;
+}
+
+.menuItemContainer {
+  width: 20%; 
+  height: 150px;
+  background: url('/upscaled menu.png');
+  background-size:  100% 100%;
+  margin: 10px;
+}
+
+.menuItemContainer:hover {
+  width: 20%; 
+  height: 150px;
+  background: url('/upscaled menu_selected.png');
+  background-size: 100% 100% ;
+}
+
+.pokedexMenuItemContainer{
+  background: url('/pokedex_menu.png')  !important ;
+  background-size: 100% 100%  !important; ;
+}
+.pokedexMenuItemContainer:hover {
+  background: url('/pokedex_menu_selected.png')  !important;
+  background-size: 100% 100%  !important; ;
+}
+
+.doubleFinderMenuItemContainer{
+  background: url('/doublefinder_menu.png')  !important ;
+  background-size: 100% 100%  !important;;
+}
+.doubleFinderMenuItemContainer:hover {
+  background: url('/doublefinder_menu_selected.png')  !important;
+  background-size: 100% 100%   !important;; 
+}
+
+
+
+.menuItemImage{
+  width: 100%; 
+ }
 
 .entry{
   background-color: white;
