@@ -61,18 +61,21 @@ export default function App() {
       setTotalShinyCaugth(shinySum);
       setUniquePokemonCaugth( data.filter((entry) => entry.normalNumber > 0 | entry.shinyNumber > 0 ).length);
       setItems2(data) ;
+      let menu =       "<div className='menu'>"+
+      "<div className='pokedexMenuItemContainer menuItemContainer'></div>"+
+      "<div className='doubleFinderMenuItemContainer menuItemContainer'></div>"+
+      "<div className='ExplenationMenuItemContainer menuItemContainer'></div>"+
+      "<div className='aboutSiteMenuItemContainer menuItemContainer'></div>"+
+      "</div>"
+
+
       })()
   };
   return (
     <>
 <div className="wholeSite">
     <div className="content">
-      <div className='menu'>
-        <div className='pokedexMenuItemContainer menuItemContainer'></div>
-        <div className='doubleFinderMenuItemContainer menuItemContainer'></div>
-        <div className='ExplenationMenuItemContainer menuItemContainer'></div>
-        <div className='aboutSiteMenuItemContainer menuItemContainer'></div>
-      </div>
+
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
