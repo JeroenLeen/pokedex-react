@@ -6,14 +6,14 @@ export default function PokedexEntry(  props) {
         "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
         import.meta.url
       ).href;
-
+          debugger;
       
     return (
       <>
-      <div className='exclusiveLogoContainer'><img className='exclusiveLogoImg' src={props.exclusiveTo + ".png"}></img></div>
+      <div className='exclusiveLogoContainer'><img className='exclusiveLogoImg ' src={props.exclusiveTo + ".png"}></img></div>
       <div className={props.shinyNumber>0?'entry-container-shiny':'entry-container'}>
       <div className="image-container">
-      <img src={imageUrl2} alt="Image" className="image" />
+      <img src={imageUrl2} alt="Image" className={"image "+ props.rarity} />
       </div>
 
       <div className="numbers">

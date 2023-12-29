@@ -108,7 +108,8 @@ export default function App() {
           {
          items2.map(el =>  <div key={el.key} className="entry">
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}></PokedexEntry>
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
+          rarity={el.rarity}></PokedexEntry>
            </div>)
           }
       </div>
