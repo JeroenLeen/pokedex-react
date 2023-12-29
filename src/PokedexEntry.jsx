@@ -6,7 +6,7 @@ export default function PokedexEntry(  props) {
         "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
         import.meta.url
       ).href;
-          debugger;
+
       
     return (
       <>
