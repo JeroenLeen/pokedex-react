@@ -24,19 +24,25 @@
     height: 25px;
   }
 
+  .rarityLogoImg{
+    width: 25px;
+    height: 25px;
+  }
+
+
   .Common{
   
   }
 
-  .Uncommon{
+  .DUncommon{
     filter: drop-shadow(0 0 2em blue);
   }
 
-  .Rare{
+  .DRare{
     filter: drop-shadow(0 0 2em yellow);
   }
 
-  .Legendary{
+  .DLegendary{
     filter: drop-shadow(0 0 2em #FF6C33);
   }
 

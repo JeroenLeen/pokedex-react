@@ -101,7 +101,16 @@ export default function App() {
         <div><h4>Total Catches: {pokemonCaugth}</h4> </div>
        <div><h4> Unique Catches: {uniquePokemonCaugth}</h4></div>
        <div><h4> Total Shiny's Caught: {totalShinyCaugth}</h4></div>
-    </div>
+      </div>
+      <div className='generalData'>  
+        <div><img className='legendLogo' src="/Common.png"></img> = Common </div>
+        <div><img className='legendLogo' src="/Uncommon.png"></img> = Uncommon </div>
+        <div><img className='legendLogo' src="/Rare.png"></img> = Rare </div>
+        <div><img className='legendLogo' src="/Legendary.png"></img> = Legendary </div>
+        <div><img className='legendLogo' src="/yogieisbar.png"></img> = Yogieisbar exclusive </div>
+        <div><img className='legendLogo' src="/streamingfalcon.png"></img> = Streamingfalcon exclusive </div>
+      </div>
+
 
     </div>
      <div className='entries'> 
