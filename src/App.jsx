@@ -53,13 +53,14 @@ export default function App() {
       let totalSum=0;
       // calculate sum using forEach() method
       data.forEach( entry => {
+        debugger;
         shinySum += entry.shinyNumber;
         totalSum+= entry.normalNumber + entry.shinyNumber;
       })
      
       setPokemonCaugth(totalSum);
       setTotalShinyCaugth(shinySum);
-      setUniquePokemonCaugth( data.filter((entry) => entry.normalNumber > 0 | entry.shinyNumber > 0 ).length);
+      setUniquePokemonCaugth( data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal  ).length);
       setItems2(data) ;
       let menu =       "<div className='menu'>"+
       "<div className='pokedexMenuItemContainer menuItemContainer'></div>"+
