@@ -37,6 +37,37 @@ export default class DBResource{
     }
 
     
+    async getPokedex() {
+        let { data, error } = await this.supabase
+        .from('PokemonData')
+        .select("*");
+
+        let options = data.map(pokemon=> {return {value:pokemon.gamePokedex, label:pokemon.monName}}) ; 
+        return  options;
+    }
+
+    async getUsersWhoOwnPokemon(pokedex) {
+        let { data: AllUserData, error:error2} = await this.supabase
+        .from('pokemonCaugthCounter')
+        .select("*")
+        // Filters
+        .eq('pokedex', pokedex);
+
+
+
+        AllUserData.sort(function (a, b) {
+            if (a.count > b.count) {
+              return -1;
+            }
+            if (a.count < b.count) {
+              return 1;
+            }
+            return 0;
+          });
+          return AllUserData;
+
+
+    }
 
     async getUniquePokedexEntries(username) {
         console.log('calling pokedex');
