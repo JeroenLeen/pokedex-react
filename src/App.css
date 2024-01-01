@@ -85,7 +85,7 @@
 .menuItemContainer {
   width: 20%; 
   height: 150px;
-  background: url('/upscaled menu.png');
+  background: url('/to_be_announced.png');
   background-size:  100% 100%;
   margin: 5px;
 }
@@ -93,7 +93,7 @@
 .menuItemContainer:hover {
   width: 20%; 
   height: 150px;
-  background: url('/upscaled menu_selected.png');
+  background: url('/to_be_announced_selected.png');
   background-size: 100% 100% ;
   border: 0px !important;
 }
