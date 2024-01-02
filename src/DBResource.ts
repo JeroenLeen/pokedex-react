@@ -69,6 +69,29 @@ export default class DBResource{
 
     }
 
+    async getUsersWhoOwnShinyPokemon(pokedex) {
+        let { data: AllUserData, error:error2} = await this.supabase
+        .from('shinyPokemonCaugthCounter')
+        .select("*")
+        // Filters
+        .eq('pokedex', pokedex);
+
+
+
+        AllUserData.sort(function (a, b) {
+            if (a.count > b.count) {
+              return -1;
+            }
+            if (a.count < b.count) {
+              return 1;
+            }
+            return 0;
+          });
+          return AllUserData;
+
+
+    }
+
     async getUniquePokedexEntries(username) {
         console.log('calling pokedex');
 

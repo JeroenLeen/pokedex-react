@@ -139,6 +139,15 @@
     font-size: 20px;
   }
 
+  .shiny{
+    margin-left: 10px;
+  }
+
+  .shinyCheckbox{
+    width: 30px;
+    height: 30px;
+  }
+
   @media (max-width: 1000px) {
     .userText{
       width: 100%;

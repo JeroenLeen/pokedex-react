@@ -12,6 +12,8 @@ export default function DoubleFinder() {
     const [usersFound, setUsersFound] = useState([]);
     const [imgUrl, setImgUrl] = useState([]);
     const [testArray, setTestArray] = useState([1,2,3,4,5,6,7,8,9,10]);
+    const [isShiny, setIsShiny] = useState(false);
+
     useEffect(() => {
         (async () => {
           if(!pokedexCalled){
@@ -42,18 +44,64 @@ export default function DoubleFinder() {
         setPokedex(change.value);
         (async () => {
           console.log("finding users for pokedex:" + change.value);
-          const data  = await resource.getUsersWhoOwnPokemon(change.value);
+          let data;
+            if(isShiny){
+              data = await resource.getUsersWhoOwnShinyPokemon(change.value);
+            }else {
+              data  = await resource.getUsersWhoOwnPokemon(change.value);
+            }
           console.log( data);
           setUsersFound(data);
 
-          const imageUrl2 = new URL(
-            "/pokemon/Normal/" + change.value + ".png",
+          let imageUrl2 ;
+          if(isShiny){
+            imageUrl2 = new URL(
+            "/pokemon/Shiny/" + change.value + ".png",
             import.meta.url
           ).href;
+          }else{
+            imageUrl2 = new URL(
+              "/pokemon/Normal/" + change.value + ".png",
+              import.meta.url
+            ).href;
+          }
           setImgUrl(imageUrl2);
           })()
       
       };
+
+      const onShinyChange = (change) => {
+        setIsShiny(change.target.checked);
+        if(pokedex!=""){
+          (async () => {
+            console.log("finding users for pokedex:" + change.value);
+            let data;
+            if(change.target.checked){
+              data = await resource.getUsersWhoOwnShinyPokemon(pokedex);
+            }else {
+              data  = await resource.getUsersWhoOwnPokemon(pokedex);
+            }
+            
+            console.log( data);
+            setUsersFound(data);
+
+            let imageUrl2 ;
+            if(change.target.checked){
+              imageUrl2 = new URL(
+              "/pokemon/Shiny/" + pokedex + ".png",
+              import.meta.url
+            ).href;
+            }else{
+              imageUrl2 = new URL(
+                "/pokemon/Normal/" + pokedex + ".png",
+                import.meta.url
+              ).href;
+            }
+            setImgUrl(imageUrl2);
+            })()
+        }
+      };
+
 
 
     return (
@@ -74,16 +122,22 @@ export default function DoubleFinder() {
       <div className='selector'>
            <h4 className='selectTitle'>
             Pokemon:
-            </h4><div className='selectAndTooltip' >
+            </h4><div className='selectAndTooltip'>
+             
               <Select className='selectorSelect'  options={pokemon} onChange={onChangeHandler}  defaultValue={"pokemon"}></Select>
               <div className="selectIcon">
               <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
+              
               <Tooltip id="my-tooltip" 
                 place="top"
                 effect='solid'
                 content="The pokemon that you wanna search for"/>
             </div>
             </div>
+      </div>
+      <div className='shiny'>
+      <h4 className='selectTitle'>Shiny:</h4>
+        <input className='shinyCheckbox' onChange={onShinyChange}  type='checkbox'></input>
       </div>
       </div>
       <div className='dataContainer'>
@@ -99,6 +153,9 @@ export default function DoubleFinder() {
           }
         </div>
         </div> )
+          }
+          {
+              pokedex == "" || usersFound.length>0?'':'No Users found who own this pokemon'
           }
     
       </div>
