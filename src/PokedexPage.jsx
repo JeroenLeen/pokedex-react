@@ -24,7 +24,9 @@ export default function PokedexPage() {
   const [pokemonCaugth, setPokemonCaugth] = useState(0);
   const [uniquePokemonCaugth, setUniquePokemonCaugth] = useState(0);
   const [totalShinyCaugth, setTotalShinyCaugth] = useState(0);
-  const sortOptions = [{value:"Pokedex", label:"Pokedex"},{value:"Name", label:"Name"},{value:"Number caught", label:"Number caught"},{value:"Shiny's caught", label:"Shiny's caught"}]
+  const sortOptions = [{value:"Pokedex", label:"Pokedex"},
+  {value:"Name", label:"Name"},{value:"Number caught ↑", label:"Number caught ↑"},{value:"Number caught ↓", label:"Number caught ↓"}
+  ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
 
   const routeChange = () =>{ 
@@ -84,7 +86,19 @@ export default function PokedexPage() {
         return 0;
       });
     }
-    if(change.value == "Number caught"){
+    if(change.value == "Number caught ↑"){
+      tempData.sort(function (a, b) {
+        if (a.normalNumber < b.normalNumber) {
+          return -1;
+        }
+        if (a.normalNumber > b.normalNumber) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+
+    if(change.value == "Number caught ↓"){
       tempData.sort(function (a, b) {
         if (a.normalNumber > b.normalNumber) {
           return -1;
@@ -96,7 +110,19 @@ export default function PokedexPage() {
       });
     }
 
-    if(change.value == "Shiny's caught"){
+    if(change.value == "Shiny's caught ↑"){
+      tempData.sort(function (a, b) {
+        if (a.shinyNumber < b.shinyNumber) {
+          return -1;
+        }
+        if (a.shinyNumber > b.shinyNumber) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+
+    if(change.value == "Shiny's caught ↓"){
       tempData.sort(function (a, b) {
         if (a.shinyNumber > b.shinyNumber) {
           return -1;
