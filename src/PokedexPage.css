@@ -1,0 +1,12 @@
+.sortContainer{
+    display: flex;
+    justify-content: flex-end
+}
+
+.sortSelectContainer{
+    width:20%
+}
+
+.sortSelect{
+    width:80%
+}
