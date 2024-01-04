@@ -11,7 +11,8 @@ export default function PokedexPage() {
 
   let navigate = useNavigate(); 
   const resource = new DBResource();
-
+  const queryParameters = new URLSearchParams(window.location.search)
+  const userParam = queryParameters.get("user");
 
   //const items2 = useRef([]);
 
@@ -19,14 +20,15 @@ export default function PokedexPage() {
   const [pokemonsOriginalSort, setPokemonsOriginalSort] = useState([]);
   const [users, setUsers] = useState([]);
   const [usersCalled, setUsersCalled] = useState(false);
-  const [usersName, setUserName] = useState(false);
+  const [userValue, setUserValue] = useState();
   const [hasData, setHasData] = useState(true);
   const [pokemonCaugth, setPokemonCaugth] = useState(0);
   const [uniquePokemonCaugth, setUniquePokemonCaugth] = useState(0);
   const [totalShinyCaugth, setTotalShinyCaugth] = useState(0);
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},
   {value:"Name", label:"Name"},{value:"Number caught ↑", label:"Number caught ↑"},{value:"Number caught ↓", label:"Number caught ↓"}
-  ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}]
+  ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}
+  ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
 
   const routeChange = () =>{ 
@@ -41,33 +43,45 @@ export default function PokedexPage() {
       console.log("calling unique users:");
       const foundUsers  = await resource.getUniqueUsers()
       setUsers(foundUsers) ;
+      if(userParam){
+        console.log("found value")
+        setUserValue({label:userParam, value:userParam});
+        await fetchAndDisplayPokemonData(userParam);
+      }
+   
     }
   })();},[]);
 
 
   const onChangeHandler = (change) => {
+    setUserValue(change);
     setSelectValue({value:"Pokedex", label:"Pokedex"});
-    setUserName(change.value);
     (async () => {
-      setHasData(false);
-      console.log("finding pokemon for:" + change.value);
-      const data  = await resource.getUniquePokedexEntries(change.value)
-
-      let shinySum = 0;
-      let totalSum=0;
-      // calculate sum using forEach() method
-      data.forEach( entry => {
-        shinySum += entry.shinyNumber;
-        totalSum+= entry.normalNumber + entry.shinyNumber;
-      })
      
-      setPokemonCaugth(totalSum);
-      setTotalShinyCaugth(shinySum);
-      setUniquePokemonCaugth( data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal  ).length);
-      setItems2(data) ;
-      setPokemonsOriginalSort(data);
+      console.log("finding pokemon for:" + change.value);
+      await fetchAndDisplayPokemonData(change.value);
       })()
   };
+
+  async function fetchAndDisplayPokemonData(value) {
+    window.history.pushState({path:'?user=' + value },'','?user=' + value );
+    setHasData(false);
+    const data = await resource.getUniquePokedexEntries(value);
+
+    let shinySum = 0;
+    let totalSum = 0;
+    // calculate sum using forEach() method
+    data.forEach(entry => {
+      shinySum += entry.shinyNumber;
+      totalSum += entry.normalNumber + entry.shinyNumber;
+    });
+
+    setPokemonCaugth(totalSum);
+    setTotalShinyCaugth(shinySum);
+    setUniquePokemonCaugth(data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal).length);
+    setItems2(data);
+    setPokemonsOriginalSort(data);
+  }
 
 
   const onSortChangeHandler = (change) => {
@@ -133,7 +147,31 @@ export default function PokedexPage() {
         return 0;
       });
     }
-   
+
+    if(change.value == "Rarity ↑"){
+      tempData.sort(function (a, b) {
+        if (a.rarityNumber < b.rarityNumber) {
+          return -1;
+        }
+        if (a.rarityNumber > b.rarityNumber) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  
+      if(change.value == "Rarity ↓"){
+        tempData.sort(function (a, b) {
+          if (a.rarityNumber > b.rarityNumber) {
+            return -1;
+          }
+          if (a.rarityNumber < b.rarityNumber) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+    
 
     setItems2(tempData) ;
   };
@@ -159,7 +197,7 @@ export default function PokedexPage() {
            <h4 className='selectTitle'>
             User:
             </h4><div className='selectAndTooltip' >
-              <Select className='selectorSelect'  options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select>
+              <Select className='selectorSelect' value={userValue} options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select>
               <div className="selectIcon">
               <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
               <Tooltip id="my-tooltip" 
@@ -210,6 +248,8 @@ export default function PokedexPage() {
 
 </div>
   )
+
+ 
 }
 
 

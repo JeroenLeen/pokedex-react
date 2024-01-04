@@ -104,6 +104,17 @@ export default class DBResource{
         allData.forEach(entry => {
             entry.normalNumber =0;
             entry.shinyNumber =0;
+            if(entry.rarity == 'Common'){
+                entry.rarityNumber= 1;
+            } else  if(entry.rarity == 'Uncommon'){
+                entry.rarityNumber= 2;
+            } else  if(entry.rarity == 'Rare'){
+                entry.rarityNumber= 3;
+            } else  if(entry.rarity == 'Legendary'){
+                entry.rarityNumber= 4;
+            }
+       
+            debugger;
             entry.key = entry.pokedex;
             let parts = entry.pokedex.match(/[a-zA-Z]+|[0-9]+/g)
             while (parts[0].length < 6) parts[0] = "0" + parts[0];
