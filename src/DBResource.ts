@@ -114,7 +114,7 @@ export default class DBResource{
                 entry.rarityNumber= 4;
             }
        
-            debugger;
+         
             entry.key = entry.pokedex;
             let parts = entry.pokedex.match(/[a-zA-Z]+|[0-9]+/g)
             while (parts[0].length < 6) parts[0] = "0" + parts[0];

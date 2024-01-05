@@ -12,7 +12,7 @@ export default function PokedexPage() {
   let navigate = useNavigate(); 
   const resource = new DBResource();
   const queryParameters = new URLSearchParams(window.location.search)
-  const userParam = queryParameters.get("user");
+  const userParam = queryParameters.get("user")?.toLowerCase();
 
   //const items2 = useRef([]);
 
