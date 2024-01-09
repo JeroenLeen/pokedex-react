@@ -1,4 +1,4 @@
-import React, { Link, useState, useEffect } from 'react';
+import React, { Link, useState, useEffect,CSSProperties } from 'react';
 import './PokedexPage.css'
 import DBResource from './DBResource'
 import PokedexEntry from './PokedexEntry'
@@ -6,6 +6,10 @@ import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
+
+import ConfettiExplosion from 'react-confetti-explosion';
+
+
 export default function PokedexPage() {
   //static contextType = ThemeContext;
 
@@ -30,6 +34,8 @@ export default function PokedexPage() {
   ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
+  const [isExploding, setIsExploding] = React.useState(false);
+
 
   const routeChange = () =>{ 
     let path = `doubleFinder`; 
@@ -52,14 +58,22 @@ export default function PokedexPage() {
     }
   })();},[]);
 
+  const confettiDone = () => {
+    setIsExploding(false);
+  }
 
   const onChangeHandler = (change) => {
+
+     setIsExploding(true);
+    
+ 
     setUserValue(change);
     setSelectValue({value:"Pokedex", label:"Pokedex"});
     (async () => {
      
       console.log("finding pokemon for:" + change.value);
       await fetchAndDisplayPokemonData(change.value);
+
       })()
   };
 
@@ -184,13 +198,13 @@ export default function PokedexPage() {
       <button className='pokedexMenuItemContainer menuItemContainer'></button>
  
       <button onClick={routeChange} className='doubleFinderMenuItemContainer menuItemContainer'></button>
-   
+      {isExploding && <ConfettiExplosion onComplete={confettiDone} />}
       <button className='ExplenationMenuItemContainer menuItemContainer'></button>
       <button className='aboutSiteMenuItemContainer menuItemContainer'></button>
       </div>
 
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
       </div>
       <div className='selectorWrapper'>
       <div className='selector'>
@@ -225,7 +239,7 @@ export default function PokedexPage() {
           {
          items2.map(el =>  <div key={el.key} className="entry">
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} selectedUser={userValue.value}
           rarity={el.rarity}></PokedexEntry>
            </div>)
           }

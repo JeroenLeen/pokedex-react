@@ -1,11 +1,21 @@
 import './PokedexEntry.css'
 
 export default function PokedexEntry(  props) {
-  
-        const imageUrl2 = new URL(
-        "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
-        import.meta.url
-      ).href;
+
+        let imageUrl2 = ""
+        debugger;
+        if(props.selectedUser == "yogieisbar"){
+            imageUrl2 =   new URL(
+              "/pokemon/Normal_yogi_birthday/" + props.pokedexEntryNumber + ".png",
+              import.meta.url
+            ).href;
+        }else{
+          imageUrl2 =   new URL(
+            "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
+            import.meta.url
+          ).href;
+        }
+      
 
       
     return (
