@@ -122,6 +122,15 @@
 }
 
 
+.ExplenationMenuItemContainer{
+  background: url('/data_menu.png')  !important ;
+  background-size: 100% 100%  !important;;
+}
+
+.ExplenationMenuItemContainer:hover {
+  background: url('/data_menu_selected.png')  !important;
+  background-size: 100% 100%   !important;; 
+}
 
 .menuItemImage{
   width: 100%; 

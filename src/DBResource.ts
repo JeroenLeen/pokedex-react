@@ -92,6 +92,97 @@ export default class DBResource{
 
     }
 
+    async getTotalPokemonOverview() {
+        console.log('calling totalPokemonOverview');
+
+
+        let { data, error } = await this.supabase
+            .from('totalpokemonoverview')
+            .select("*");
+
+        let allData: PokedexEntryEntity[] = data;
+        allData.forEach(entry => {
+            if(entry.rarity == 'Common'){
+                entry.rarityNumber= 1;
+            } else  if(entry.rarity == 'Uncommon'){
+                entry.rarityNumber= 2;
+            } else  if(entry.rarity == 'Rare'){
+                entry.rarityNumber= 3;
+            } else  if(entry.rarity == 'Legendary'){
+                entry.rarityNumber= 4;
+            }
+
+            if(!entry.normalCount){
+                entry.normalCount=0;
+            }
+
+            if(!entry.shinyCount){
+                entry.shinyCount=0;
+            }
+            entry.key = entry.pokedex;
+            let parts = entry.pokedex.match(/[a-zA-Z]+|[0-9]+/g)
+            while (parts[0].length < 6) parts[0] = "0" + parts[0];
+            entry.pokedex=parts[0] + (parts[1]==undefined?"":parts[1]);
+        });
+
+
+        allData.sort(function (a, b) {
+            if (a.pokedex < b.pokedex) {
+              return -1;
+            }
+            if (a.pokedex > b.pokedex) {
+              return 1;
+            }
+            return 0;
+          });
+
+
+
+        allData.forEach(entry => {
+            entry.pokedex =   entry.pokedex.replace(/^0+/, '');
+        });
+
+       return  allData;
+    }
+
+    async getTopShinyTrainers() {
+        console.log('calling topSHinyTrainers');
+
+
+        let { data, error } = await this.supabase
+            .from('mostShinyTrainers')
+            .select("*");
+
+       return  data;
+    }
+
+    async getClosestToCompletionTrainers
+    () {
+        console.log('calling  closestToCompletionTrainers');
+
+
+        let { data, error } = await this.supabase
+            .from('closesttocompletiontrainers')
+            .select("*");
+
+       return  data;
+    }
+
+    async getMostUniqueSeasonalsTrainer
+    () {
+        console.log('calling  mostUniqueSeasonalsTrainer');
+
+
+        let { data, error } = await this.supabase
+            .from('mostuniqueseasonalstrainer')
+            .select("*");
+
+       return  data;
+    }
+
+    
+
+
     async getUniquePokedexEntries(username) {
         console.log('calling pokedex');
 

@@ -40,6 +40,12 @@ export default function DoubleFinder() {
         navigate(path);
       }
 
+      const routeToInfo = () =>{ 
+        let path = `/info`; 
+        navigate(path);
+      }
+      
+
       const onChangeHandler = (change) => {
         setPokedex(change.value);
         (async () => {
@@ -111,7 +117,7 @@ export default function DoubleFinder() {
 
       <button onClick={routeTodex}  className='pokedexMenuItemContainer menuItemContainer'></button>
       <button onClick={routeToSelf} className='doubleFinderMenuItemContainer menuItemContainer'></button>
-      <button className='ExplenationMenuItemContainer menuItemContainer'></button>
+      <button onClick={routeToInfo} className='ExplenationMenuItemContainer menuItemContainer'></button>
       <button className='aboutSiteMenuItemContainer menuItemContainer'></button>
       </div>
 

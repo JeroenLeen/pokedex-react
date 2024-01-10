@@ -36,6 +36,12 @@ export default function PokedexPage() {
     navigate(path);
   }
 
+  const routeToInfo = () =>{ 
+    let path = `info`; 
+    navigate(path);
+  }
+  
+
   useEffect(() => {
   (async () => {
     if(!usersCalled){
@@ -185,7 +191,7 @@ export default function PokedexPage() {
  
       <button onClick={routeChange} className='doubleFinderMenuItemContainer menuItemContainer'></button>
    
-      <button className='ExplenationMenuItemContainer menuItemContainer'></button>
+      <button  onClick={routeToInfo} className='ExplenationMenuItemContainer menuItemContainer'></button>
       <button className='aboutSiteMenuItemContainer menuItemContainer'></button>
       </div>
 

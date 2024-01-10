@@ -1,0 +1,4 @@
+.top10scontainer{
+    display: flex;
+    justify-content: space-around;
+}
