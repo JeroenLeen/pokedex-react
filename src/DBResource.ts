@@ -202,6 +202,21 @@ export default class DBResource{
 
        return  data;
     }
+
+    async getMagikarpTrainer
+    () {
+        console.log('calling  magikarpTrainer');
+
+
+        let { data, error } = await this.supabase
+            .from('magikarpTrainer')
+            .select("*");
+
+       return  data;
+    }
+
+    
+
     async getBestTrader
     () {
         console.log('calling  besttrader');

@@ -23,6 +23,7 @@ export default function PokedexPage() {
   const [bestGifter, setBestGifter] = useState([]);
   const [bestDueler, setBestDueler] = useState([]);
   const [bestTrader, setBestTrader] = useState([]);
+  const [magikarpTrainer, setMagikarpTrainer] = useState([]);
 
   const resource = new DBResource();
   const routeToDouble = () =>{ 
@@ -47,6 +48,7 @@ export default function PokedexPage() {
         const bestGifter = await resource.getBestGifter();
         const bestTrader = await resource.getBestTrader();
         const bestDueler = await resource.getBestDueler();
+        const magikarpTrainer = await resource.getMagikarpTrainer();
         setMostShinyTrainers(mostShinyTrainers);
         setData(foundData) ;
         setPokemonsOriginalSort(foundData);
@@ -55,6 +57,7 @@ export default function PokedexPage() {
         setBestGifter(bestGifter);
         setBestDueler(bestDueler);
         setBestTrader(bestTrader);
+        setMagikarpTrainer(magikarpTrainer);
       }
     })();},[]);
   
@@ -198,6 +201,9 @@ export default function PokedexPage() {
             <Top10 title = 'Best Trader' firstColumnData = 'username' secondColumnName='Trades completed'  secondColumnData = 'tradesCompleted' data = {bestTrader}></Top10>
             <Top10 title = 'Best Dueler' firstColumnData = 'username' secondColumnName='Duels won'  secondColumnData = 'duelsWon' data = {bestDueler}></Top10>
             <Top10 title = 'Best Gifter'firstColumnData = 'username' secondColumnName='Gifts given'  secondColumnData = 'giftsGiven' data = {bestGifter}></Top10>
+            <Top10 title = 'Most Magikarps Caught'firstColumnData = 'currentOwner' secondColumnName='Magikarps owned'  secondColumnData = 'count' data = {magikarpTrainer}></Top10>
+
+            
             </div>
         </TabPanel>
     </Tabs>
