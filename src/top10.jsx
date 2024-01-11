@@ -33,8 +33,8 @@ export default function Top10(  props) {
           { index == 1?<img className='exclusiveLogoImg' src='Collector_Silver.png'></img> : ''}
           { index == 2?<img className='exclusiveLogoImg' src='Collector_Bronze.png'></img> : ''}</td>
           <td className='nameColumn'>
-          { itemData.currentOwner}</td>
-          <td>{itemData.count}</td>
+          { itemData[props.firstColumnData]}</td>
+          <td>{itemData[props.secondColumnData]}</td>
           </tr>})
           }
          

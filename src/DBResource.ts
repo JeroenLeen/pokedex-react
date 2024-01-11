@@ -180,6 +180,41 @@ export default class DBResource{
        return  data;
     }
 
+    async getBestDueler
+    () {
+        console.log('calling  bestDueler');
+
+
+        let { data, error } = await this.supabase
+            .from('bestdueler')
+            .select("*");
+
+       return  data;
+    }
+    async getBestGifter
+    () {
+        console.log('calling  bestGifter');
+
+
+        let { data, error } = await this.supabase
+            .from('bestgifter')
+            .select("*");
+
+       return  data;
+    }
+    async getBestTrader
+    () {
+        console.log('calling  besttrader');
+
+
+        let { data, error } = await this.supabase
+            .from('besttrader')
+            .select("*");
+
+       return  data;
+    }
+
+
     
 
 
