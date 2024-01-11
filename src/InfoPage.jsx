@@ -192,12 +192,12 @@ export default function PokedexPage() {
         </TabPanel>
         <TabPanel>
           <div className="top10scontainer">
-            <Top10 title = 'Most Shiny Trainers' firstColumnData = 'currentOwner' secondColumnData = 'count' data = {mostShinyTrainers}></Top10>
-            <Top10 title = 'Closest To completed dex' firstColumnData = 'currentOwner' secondColumnData = 'count'  data = {closestToCompletionTrainers}></Top10>
-            <Top10 title = 'Most Unique Seasonals' firstColumnData = 'currentOwner' secondColumnData = 'count' data = {mostUniqueSeasonalsTrainer}></Top10>
-            <Top10 title = 'Best Trader' firstColumnData = 'username' secondColumnData = 'tradesCompleted' data = {bestTrader}></Top10>
-            <Top10 title = 'Best Dueler' firstColumnData = 'username' secondColumnData = 'duelsWon' data = {bestDueler}></Top10>
-            <Top10 title = 'Best Gifter'firstColumnData = 'username' secondColumnData = 'giftsGiven' data = {bestGifter}></Top10>
+            <Top10 title = 'Most Shiny Trainers' firstColumnData = 'currentOwner' secondColumnName='Amount' secondColumnData = 'count' data = {mostShinyTrainers}></Top10>
+            <Top10 title = 'Closest To completed dex' firstColumnData = 'currentOwner' secondColumnName='Amount' secondColumnData = 'count'  data = {closestToCompletionTrainers}></Top10>
+            <Top10 title = 'Most Unique Seasonals' firstColumnData = 'currentOwner' secondColumnName='Amount'  secondColumnData = 'count' data = {mostUniqueSeasonalsTrainer}></Top10>
+            <Top10 title = 'Best Trader' firstColumnData = 'username' secondColumnName='Trades completed'  secondColumnData = 'tradesCompleted' data = {bestTrader}></Top10>
+            <Top10 title = 'Best Dueler' firstColumnData = 'username' secondColumnName='Duels won'  secondColumnData = 'duelsWon' data = {bestDueler}></Top10>
+            <Top10 title = 'Best Gifter'firstColumnData = 'username' secondColumnName='Gifts given'  secondColumnData = 'giftsGiven' data = {bestGifter}></Top10>
             </div>
         </TabPanel>
     </Tabs>

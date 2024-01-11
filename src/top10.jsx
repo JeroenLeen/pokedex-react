@@ -22,8 +22,8 @@ export default function Top10(  props) {
         <tbody>
           <tr>
             <th></th>
-            <th>User</th>
-            <th>Amount</th>
+            <th className='nameColumn'>User</th>
+            <th>{props.secondColumnName}</th>
           </tr>
           {
             props.data.map(function (itemData, index) { 
