@@ -1,10 +1,10 @@
 .top10Container{
-  background-color: white;
-  border: 1px solid grey;
+  background-color: #505050;
+
   width: 30%;
   margin: 5px;
   border-radius: 5px;
-  box-shadow:  2px 2px grey;
+
   font-size: 20px;
 }
 

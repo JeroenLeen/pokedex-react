@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/8bit-wonder');
 .sortContainer{
     display: flex;
     justify-content: flex-end
@@ -8,5 +9,103 @@
 }
 
 .sortSelect{
-    width:80%
+    width:80%;
+    color: black;
+    font-weight: bold;
+}
+
+.selector{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: stretch;
+    align-items: flex-start;
+    width:30%;
+  }
+  
+  .selectorSelect{
+    width:100%;
+    color: black;
+    font-weight: bold;
+  
+  }
+  
+  .legendLogo{
+    width: 25px;
+    height: 25px;
+  }
+  
+  .selectAndTooltip{
+    width:100%;
+    margin-right: 10px;
+    display: flex;
+  }
+  
+  .selectTitle{
+    margin-bottom: 0;
+    display: flex;
+  }
+  
+  
+  .selectIcon{
+    display: flex;
+    align-items: center;
+  }
+  
+  .selectIconImg{
+    width: 25px;
+      height: 25px;
+      background: white;
+      border: solid 1px;
+      border-radius: 100%;
+      padding: 3px;
+      margin-left: 5px;
+  }
+  
+  .selectorWrapper{
+    width:100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .entry{
+    background-color: #505050;
+    width: 18%;
+    margin: 5px;
+    border-radius: 5px;
+ 
+    position: relative;
+    overflow: hidden;
+  }
+
+  .entryBorder1{
+    border: 2px solid #aa5eff;
+    box-shadow:  2px 2px #aa5eff;
+  }
+
+  .entryBorder4{
+    border: 2px solid #01dddd;
+    box-shadow:  2px 2px #01dddd;
+  }
+
+  .entryBorder3{
+    border: 2px solid #0094fe;
+    box-shadow:  2px 2px #0094fe;
+  }
+
+  .entryBorder2{
+    border: 2px solid #e6f2fe;
+    box-shadow:  2px 2px #e6f2fe;
+  }
+
+  .entryBorder0{
+    border: 2px solid #55d8ec;
+    box-shadow:  2px 2px #55d8ec;
+  }
+
+  
+.entries{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content:center;
 }

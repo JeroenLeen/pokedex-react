@@ -145,89 +145,15 @@ export default class DBResource{
        return  allData;
     }
 
-    async getTopShinyTrainers() {
-        console.log('calling topSHinyTrainers');
-
-
+    async getAllForTable(tableName){
+        console.log('calling data for' + tableName);
         let { data, error } = await this.supabase
-            .from('mostShinyTrainers')
-            .select("*");
+        .from(tableName)
+        .select("*");
 
-       return  data;
+        return  data;
     }
 
-    async getClosestToCompletionTrainers
-    () {
-        console.log('calling  closestToCompletionTrainers');
-
-
-        let { data, error } = await this.supabase
-            .from('closesttocompletiontrainers')
-            .select("*");
-
-       return  data;
-    }
-
-    async getMostUniqueSeasonalsTrainer
-    () {
-        console.log('calling  mostUniqueSeasonalsTrainer');
-
-
-        let { data, error } = await this.supabase
-            .from('mostuniqueseasonalstrainer')
-            .select("*");
-
-       return  data;
-    }
-
-    async getBestDueler
-    () {
-        console.log('calling  bestDueler');
-
-
-        let { data, error } = await this.supabase
-            .from('bestdueler')
-            .select("*");
-
-       return  data;
-    }
-    async getBestGifter
-    () {
-        console.log('calling  bestGifter');
-
-
-        let { data, error } = await this.supabase
-            .from('bestgifter')
-            .select("*");
-
-       return  data;
-    }
-
-    async getMagikarpTrainer
-    () {
-        console.log('calling  magikarpTrainer');
-
-
-        let { data, error } = await this.supabase
-            .from('magikarpTrainer')
-            .select("*");
-
-       return  data;
-    }
-
-    
-
-    async getBestTrader
-    () {
-        console.log('calling  besttrader');
-
-
-        let { data, error } = await this.supabase
-            .from('besttrader')
-            .select("*");
-
-       return  data;
-    }
 
 
     

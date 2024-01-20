@@ -31,15 +31,8 @@ export default function PokedexPage() {
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
 
-  const routeChange = () =>{ 
-    let path = `doubleFinder`; 
-    navigate(path);
-  }
 
-  const routeToInfo = () =>{ 
-    let path = `info`; 
-    navigate(path);
-  }
+
   
 
   useEffect(() => {
@@ -185,16 +178,6 @@ export default function PokedexPage() {
   return (
 <div className="wholeSite">
     <div className="content">
-    <div className='menu'>
-
-      <button className='pokedexMenuItemContainer menuItemContainer'></button>
- 
-      <button onClick={routeChange} className='doubleFinderMenuItemContainer menuItemContainer'></button>
-   
-      <button  onClick={routeToInfo} className='ExplenationMenuItemContainer menuItemContainer'></button>
-      <button className='aboutSiteMenuItemContainer menuItemContainer'></button>
-      </div>
-
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
@@ -229,11 +212,14 @@ export default function PokedexPage() {
       </div>
      <div className='entries'> 
           {
-         items2.map(el =>  <div key={el.key} className="entry">
+
+        items2.map(function (el, index) { 
+
+         return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
           normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
           rarity={el.rarity}></PokedexEntry>
-           </div>)
+           </div>})
           }
       </div>
       <div className="footer">
@@ -248,8 +234,6 @@ export default function PokedexPage() {
  
       </div>
      
-
-
 </div>
 
 </div>

@@ -15,7 +15,7 @@ export default function Top10(  props) {
     
     return (
       <>
-      <div className='top10Container'>
+      <div className={"entryBorder" + props.borderColor + " top10Container"} >
         <div className='top10TitleContainer'><h2>{props.title}</h2></div>
         <div className='top10DataContainer'>
         <table>
