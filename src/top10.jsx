@@ -15,15 +15,16 @@ export default function Top10(  props) {
     
     return (
       <>
-      <div className={"entryBorder" + props.borderColor + " top10Container"} >
+      <div className={'entryBorder' + props.borderColor + ' top10Container'}  >
         <div className='top10TitleContainer'><h2>{props.title}</h2></div>
         <div className='top10DataContainer'>
         <table>
         <tbody>
-          <tr>
+          <tr  className='columns'>
             <th></th>
-            <th className='nameColumn'>User</th>
-            <th>{props.secondColumnName}</th>
+            <th className='nameColumn'>{props.firstColumnName}</th>
+            <th  className='secondColumn' >{props.secondColumnName}</th>
+            {props.thirdColumnName? <th >{props.thirdColumnName}</th>:''}
           </tr>
           {
             props.data.map(function (itemData, index) { 
@@ -35,8 +36,10 @@ export default function Top10(  props) {
           <td className='nameColumn'>
           { itemData[props.firstColumnData]}</td>
           <td>{itemData[props.secondColumnData]}</td>
+          {props.thirdColumnName? <td>{itemData[props.thirdColumnData]}</td>:''}
           </tr>})
           }
+         
          
             </tbody>
         </table>

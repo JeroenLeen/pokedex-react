@@ -8,6 +8,10 @@
   font-size: 20px;
 }
 
+.double{
+  width: 60% !important;
+}
+
 .top10TitleContainer{
   display: flex;
   justify-content: center;
@@ -22,6 +26,10 @@
 .nameColumn{
   display: flex;
   justify-content: left;
+}
+
+.secondColumn{
+  vertical-align: top;
 }
 
 

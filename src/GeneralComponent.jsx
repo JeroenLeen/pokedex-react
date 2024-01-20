@@ -58,6 +58,8 @@ export default function GeneralComponent() {
         
             <button  onClick={routeToInfo} className='overviewMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToRanking} className='rankingsMenuItemContainer menuItemContainer'></button>
+
+          
           </div>
           <div className='rootDiv'>
         
