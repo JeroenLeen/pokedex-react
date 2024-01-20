@@ -33,6 +33,19 @@ export default function GeneralComponent() {
       let path = `ranking`; 
       navigate(path);
     }
+
+    useEffect(() => {
+          const img = new Image();
+          img.src = '/menuItemSelectedPokedex.png';
+          const img2 = new Image();
+          img2.src = '/menuItempokefindselected.png';
+          const img3 = new Image();
+          img3.src = '/menuItemoverviewSelected.png';
+          const img4 = new Image();
+          img4.src = '/menuItemRankingSelected.png';
+         
+      });
+  
     
   
     return (
