@@ -8,6 +8,7 @@ import RankingsPage from './RankingsPage';
 import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import './GeneralComponent.css'
+import CompareDexPage from './CompareDexPage';
 export default function GeneralComponent() {
 
     const date = new Date();
@@ -34,6 +35,11 @@ export default function GeneralComponent() {
       navigate(path);
     }
 
+    const routeToDexCompare = () =>{ 
+      let path = `dexcompare`; 
+      navigate(path);
+    }
+
     useEffect(() => {
           const img = new Image();
           img.src = '/menuItemSelectedPokedex.png';
@@ -43,7 +49,8 @@ export default function GeneralComponent() {
           img3.src = '/menuItemoverviewSelected.png';
           const img4 = new Image();
           img4.src = '/menuItemRankingSelected.png';
-         
+          const img5 = new Image();
+          img5.src = '/menuItemDexCompareSelected.png'
       });
   
     
@@ -58,7 +65,7 @@ export default function GeneralComponent() {
         
             <button  onClick={routeToInfo} className='overviewMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToRanking} className='rankingsMenuItemContainer menuItemContainer'></button>
-
+            <button onClick={routeToDexCompare} className='rankingsMenuItemDexCompare menuItemContainer'></button>
           
           </div>
           <div className='rootDiv'>
@@ -71,6 +78,8 @@ export default function GeneralComponent() {
               <Route path="/info" element={<InfoPage />}>
               </Route>
               <Route path="/ranking" element={<RankingsPage />}>
+              </Route>
+              <Route path="/dexcompare" element={<CompareDexPage />}>
               </Route>
             </Routes>
       

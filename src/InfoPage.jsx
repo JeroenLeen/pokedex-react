@@ -3,8 +3,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import React, { Link, useState, useEffect } from 'react';
 import DBResource from './DBResource'
-import PokedexEntry from './PokedexEntry'
-import Top10 from './top10'
+import PokedexEntry from './subcomponents/PokedexEntry'
+import Top10 from './subcomponents/top10'
 import Select from 'react-select'
 import './infoPage.css'
 export default function PokedexPage() {
@@ -132,7 +132,7 @@ export default function PokedexPage() {
 <div className="wholeSite">
     <div className="content">
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch data</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch overview</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
 
 

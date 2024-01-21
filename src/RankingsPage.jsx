@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DBResource from './DBResource'
 
-import Top10 from './top10'
+import Top10 from './subcomponents/top10'
 import './RankingsPage.css'
 
 export default function RankingsPage() {

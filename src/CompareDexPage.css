@@ -1,0 +1,26 @@
+.doubleEntriesContainer{
+    display: flex;
+}
+
+.compareEntry{
+    background-color: #505050;
+    width: 45%;
+    margin: 5px;
+    border-radius: 5px;
+ 
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compareEntries{
+        max-width: 50%;
+        width: 100%;
+        display: flex;
+        flex-wrap:wrap;
+        justify-content:center;
+      
+  }
+  .selectorWrapper{
+    display: flex;
+    justify-content: space-around;
+  }

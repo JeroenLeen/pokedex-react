@@ -1,7 +1,7 @@
 import React, { Link, useState, useEffect } from 'react';
 import './PokedexPage.css'
 import DBResource from './DBResource'
-import PokedexEntry from './PokedexEntry'
+import PokedexEntry from './subcomponents/PokedexEntry'
 import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
