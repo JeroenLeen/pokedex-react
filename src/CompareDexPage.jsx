@@ -24,9 +24,8 @@ export default function CompareDexPage() {
   const [userValue, setUserValue] = useState();
   const [hasData, setHasData] = useState(true);
   const [compareToValue, setCompareToValue] = useState();
-  const sortOptions = [{value:"Pokedex", label:"Pokedex"},{value:"Tradeable User 1", label:"Tradeable User 1"},{value:"Tradeable User 2", label:"Tradeable User 2"},
-  {value:"Name", label:"Name"},{value:"Number caught ↑", label:"Number caught ↑"},{value:"Number caught ↓", label:"Number caught ↓"}
-  ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}
+  const sortOptions = [{value:"Pokedex", label:"Pokedex"},{value:"Trade Offer User 1", label:"Trade Offer User 1"},{value:"Trade Offer User 2", label:"Trade Offer User 2"},
+  {value:"Name", label:"Name"}
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
 
@@ -69,25 +68,32 @@ export default function CompareDexPage() {
       setHasData(false);
       setTradeableData(data, pokemonsOriginalSort2);
       setItems2(pokemonsOriginalSort2);
+      console.log('data2 =' );
+      console.log(pokemonsOriginalSort2);
      }
-     debugger;
     setItems1(data);
     setPokemonsOriginalSort1(data);
+    console.log('data1 =' );
+    console.log(data);
   }
 
   function setTradeableData(array1, array2){
     for(let i = 0; i< array1.length; i ++){
       if((array1[i].normalNumber >=2 && array2[i].normalNumber ==0) || (array1[i].shinyNumber >=2 && array2[i].shinyNumber ==0) ){
-        array1[i].tradeableFor1 = true;
-        array2[i].tradeableFor1 = true;
+        array1[i].tradeOfferFor1 = 1;
+        array2[i].tradeOfferFor1 = 1;
+        array1[i].tradeOfferFor2 = 0;
+        array2[i].tradeOfferFor2 = 0;
       } else if((array2[i].normalNumber >=2 && array1[i].normalNumber ==0  )|| (array2[i].shinyNumber >=2 && array1[i].shinyNumber ==0)){
-        array1[i].tradeableFor2 = true;
-        array2[i].tradeableFor2 = true;
+        array1[i].tradeOfferFor2 = 1;
+        array2[i].tradeOfferFor2 = 1;
+        array1[i].tradeOfferFor1 = 0;
+        array2[i].tradeOfferFor1 = 0;
       }else{
-        array1[i].tradeableFor1 = false;
-        array2[i].tradeableFor1 = false;
-        array1[i].tradeableFor2 = false;
-        array2[i].tradeableFor2 = false;
+        array1[i].tradeOfferFor1 = 0;
+        array2[i].tradeOfferFor1 = 0;
+        array1[i].tradeOfferFor2 = 0;
+        array2[i].tradeOfferFor2 = 0;
       }
     }
   }
@@ -97,13 +103,16 @@ export default function CompareDexPage() {
     const data = await resource.getUniquePokedexEntries(value);
     if(items1.length>0){
       setHasData(false);
-      setTradeableData(data, pokemonsOriginalSort1);
+      setTradeableData(pokemonsOriginalSort1, data);
       setItems1(pokemonsOriginalSort1);
-
+        console.log('data1 =' );
+        console.log(pokemonsOriginalSort1);
      }
      debugger;
     setItems2(data);
     setPokemonsOriginalSort2(data);
+    console.log('data2 =' );
+    console.log(data);
   }
 
   function sortByFieldAsc(data, field) {
@@ -146,15 +155,15 @@ export default function CompareDexPage() {
       sortByFieldAsc(tempData2,"monName");
     }
 
-    if(change.value == "Tradeable User 1"){
-      sortByFieldDesc(tempData1,"tradeableFor2");
-      sortByFieldDesc(tempData2,"tradeableFor2");
+    if(change.value == "Trade Offer User 1"){
+      sortByFieldDesc(tempData1,"tradeOfferFor1");
+      sortByFieldDesc(tempData2,"tradeOfferFor1");
     }
 
     
-    if(change.value == "Tradeable User 2"){
-      sortByFieldDesc(tempData1,"tradeableFor1");
-      sortByFieldDesc(tempData2,"tradeableFor1");
+    if(change.value == "Trade Offer User 2"){
+      sortByFieldDesc(tempData1,"tradeOfferFor2");
+      sortByFieldDesc(tempData2,"tradeOfferFor2");
     }
 
     if(change.value == "Rarity ↑"){
