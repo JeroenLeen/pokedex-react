@@ -57,9 +57,9 @@ export default function RankingsPage() {
             <Top10 borderColor='4' firstColumnName='User' title = 'Best Trader' firstColumnData = 'username' secondColumnName='Trades completed'  secondColumnData = 'tradesCompleted' data = {bestTrader}></Top10>
             <Top10 borderColor='0' firstColumnName='User' title = 'Best Dueler' firstColumnData = 'username' secondColumnName='Duels won'  secondColumnData = 'duelsWon' data = {bestDueler}></Top10>
             <Top10 borderColor='1' firstColumnName='User' title = 'Best Gifter'firstColumnData = 'username' secondColumnName='Gifts given'  secondColumnData = 'giftsGiven' data = {bestGifter}></Top10>
-            <Top10 borderColor='4' firstColumnName='User' title = 'Most of single pokemon' firstColumnData = 'currentOwner' secondColumnName='Pokemon' thirdColumnName='Caugth on stream'  secondColumnData = 'monName' thirdColumnData = 'count' data = {pokemonCaugthRank}></Top10>
+            <Top10 borderColor='4' firstColumnName='User' title = 'Most of single pokemon' firstColumnData = 'currentOwner' secondColumnName='Pokemon' thirdColumnName='Caught on stream'  secondColumnData = 'monName' thirdColumnData = 'count' data = {pokemonCaugthRank}></Top10>
             <Top10 borderColor='2' firstColumnName='User' title = 'Most Magikarps Caught'firstColumnData = 'currentOwner' secondColumnName='Magikarps owned'  secondColumnData = 'count' double='true' data = {magikarpTrainer}></Top10>
-            <Top10 borderColor='3' firstColumnName='Streamer' title = 'Yogi vs Falcon (last 7 days)'firstColumnData = 'acquiredAt' secondColumnName='Caugth on stream'  secondColumnData = 'count' data = {yogivsfalcon}></Top10>
+            <Top10 borderColor='3' firstColumnName='Streamer' title = 'Yogi vs Falcon (last 7 days)'firstColumnData = 'acquiredAt' secondColumnName='Caught on stream'  secondColumnData = 'count' data = {yogivsfalcon}></Top10>
            
             
         </div>
