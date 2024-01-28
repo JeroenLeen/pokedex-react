@@ -1,0 +1,33 @@
+.show{
+    display: inline;
+    animation: 3s fadeIn;
+    animation-fill-mode: forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    visibility: hidden;
+  }
+  
+  .ele:hover {
+    background-color: #123;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+.hide{
+    display: none;
+}
+
+.paypalLogo{
+    height: 30px;
+    margin-right: 10px;
+}

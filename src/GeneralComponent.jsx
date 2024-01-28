@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import './GeneralComponent.css'
 import CompareDexPage from './CompareDexPage';
+import SupportPage from './SupportPage';
 export default function GeneralComponent() {
 
     const date = new Date();
@@ -40,6 +41,11 @@ export default function GeneralComponent() {
       navigate(path);
     }
 
+    const routeToSupport = () => {
+      let path = 'support';
+      navigate(path);
+    }
+
     useEffect(() => {
           const img = new Image();
           img.src = '/menuItemSelectedPokedex.png';
@@ -66,6 +72,7 @@ export default function GeneralComponent() {
             <button  onClick={routeToInfo} className='overviewMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToRanking} className='rankingsMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToDexCompare} className='rankingsMenuItemDexCompare menuItemContainer'></button>
+            <button onClick={routeToSupport} className='supportMenuItemContainer menuItemContainer'></button>
           
           </div>
           <div className='rootDiv'>
@@ -81,6 +88,7 @@ export default function GeneralComponent() {
               </Route>
               <Route path="/dexcompare" element={<CompareDexPage />}>
               </Route>
+              <Route path='/support' element={<SupportPage/>}></Route>
             </Routes>
       
           </div>
