@@ -23,7 +23,7 @@ export default function PokedexEntry(  props) {
       <div className='exclusiveLogoContainer'>
        {props.exclusiveTo? <img className='exclusiveLogoImg ' src={props.exclusiveTo + ".png"}></img> : ''} 
       <img className='rarityLogoImg ' src={props.rarity + ".png"}></img></div>
-      <div className={props.shinyNumber>0?'entry-container-shiny':'entry-container'}>
+      <div className={props.shinyNumber && !props.noShine>0?'entry-container-shiny':'entry-container'}>
       <div className="image-container">
       <img src={imageUrl2} alt="Image" className={"image "+ props.rarity} />
       </div>

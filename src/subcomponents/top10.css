@@ -1,0 +1,47 @@
+.top10Container{
+  background-color: #505050;
+
+  width: 30%;
+  margin: 5px;
+  border-radius: 5px;
+
+  font-size: 20px;
+}
+
+.double{
+  width: 60% !important;
+}
+
+.top10TitleContainer{
+  display: flex;
+  justify-content: center;
+}
+
+.top10DataContainer{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.nameColumn{
+  display: flex;
+  justify-content: left;
+}
+
+.secondColumn{
+  vertical-align: top;
+}
+
+
+@media (max-width: 1000px) {
+  .top10Container{
+    width: 90% !important;
+  }
+}
+
+@media (max-width: 1500px) {
+  .top10Container{
+    width: 45%;
+  }
+}
+

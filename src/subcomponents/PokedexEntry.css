@@ -25,6 +25,8 @@
   }
 
   .rarityLogoImg{
+    margin-top: 10px;
+    margin-left: 10px;
     width: 25px;
     height: 25px;
   }
@@ -53,7 +55,7 @@
 }
 
 .green{
-    color: green;
+    color: #53ff00;
 }
 
 .red{

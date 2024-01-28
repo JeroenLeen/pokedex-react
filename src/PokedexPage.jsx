@@ -1,7 +1,7 @@
 import React, { Link, useState, useEffect,CSSProperties } from 'react';
 import './PokedexPage.css'
 import DBResource from './DBResource'
-import PokedexEntry from './PokedexEntry'
+import PokedexEntry from './subcomponents/PokedexEntry'
 import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
@@ -37,10 +37,9 @@ export default function PokedexPage() {
   const [isExploding, setIsExploding] = React.useState(false);
 
 
-  const routeChange = () =>{ 
-    let path = `doubleFinder`; 
-    navigate(path);
-  }
+
+
+  
 
   useEffect(() => {
   (async () => {
@@ -193,18 +192,9 @@ export default function PokedexPage() {
   return (
 <div className="wholeSite">
     <div className="content">
-    <div className='menu'>
-
-      <button className='pokedexMenuItemContainer menuItemContainer'></button>
- 
-      <button onClick={routeChange} className='doubleFinderMenuItemContainer menuItemContainer'></button>
-      {isExploding && <ConfettiExplosion onComplete={confettiDone} />}
-      <button className='ExplenationMenuItemContainer menuItemContainer'></button>
-      <button className='aboutSiteMenuItemContainer menuItemContainer'></button>
-      </div>
-
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
+        {isExploding && <ConfettiExplosion onComplete={confettiDone} />}
       </div>
       <div className='selectorWrapper'>
       <div className='selector'>
@@ -237,11 +227,14 @@ export default function PokedexPage() {
       </div>
      <div className='entries'> 
           {
-         items2.map(el =>  <div key={el.key} className="entry">
+
+        items2.map(function (el, index) { 
+
+         return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
           normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} selectedUser={userValue.value}
           rarity={el.rarity}></PokedexEntry>
-           </div>)
+           </div>})
           }
       </div>
       <div className="footer">
@@ -256,8 +249,6 @@ export default function PokedexPage() {
  
       </div>
      
-
-
 </div>
 
 </div>

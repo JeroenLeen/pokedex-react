@@ -6,6 +6,8 @@ import Select from 'react-select'
 import { Tooltip } from 'react-tooltip'
 export default function DoubleFinder() {
 
+
+
     const [pokemon, setPokemon] = useState([]);
     const [pokedexCalled, setPokedexCalled] = useState(false);
     const [pokedex, setPokedex] = useState("");
@@ -13,6 +15,7 @@ export default function DoubleFinder() {
     const [imgUrl, setImgUrl] = useState([]);
     const [testArray, setTestArray] = useState([1,2,3,4,5,6,7,8,9,10]);
     const [isShiny, setIsShiny] = useState(false);
+
 
     useEffect(() => {
         (async () => {
@@ -27,18 +30,10 @@ export default function DoubleFinder() {
 
       //static contextType = ThemeContext;
     
-      let navigate = useNavigate(); 
+
       const resource = new DBResource();
 
-      const routeTodex = () =>{ 
-        let path = `/`; 
-        navigate(path);
-      }
-
-      const routeToSelf = () =>{ 
-        let path = ``; 
-        navigate(path);
-      }
+      
 
       const onChangeHandler = (change) => {
         setPokedex(change.value);
@@ -103,18 +98,9 @@ export default function DoubleFinder() {
       };
 
 
-
     return (
 <div className="wholeSite">
     <div className="content">
-    <div className='menu'>
-
-      <button onClick={routeTodex}  className='pokedexMenuItemContainer menuItemContainer'></button>
-      <button onClick={routeToSelf} className='doubleFinderMenuItemContainer menuItemContainer'></button>
-      <button className='ExplenationMenuItemContainer menuItemContainer'></button>
-      <button className='aboutSiteMenuItemContainer menuItemContainer'></button>
-      </div>
-
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Pokemon finder</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
@@ -140,19 +126,20 @@ export default function DoubleFinder() {
         <input className='shinyCheckbox' onChange={onShinyChange}  type='checkbox'></input>
       </div>
       </div>
-      <div className='dataContainer'>
+      <div id="data" className='dataContainer'>
         
         {
-         usersFound.map(el =><div className='userContainer'><div className='userText'><b>{el.currentOwner} </b> owns: <b>{el.count} </b></div>
-         <div>
+        usersFound.map(function (el, index) {
+        return <div className={"entryBorder" + index %5 + " userContainer"}>
+          <div className='userText'><b>{el.currentOwner} </b> owns: <b>{el.count} </b></div>
+         <div className='userImagesContainer'>
+  
           {
           testArray.map(number => number<=el.count? <img  className='userImage' src= {imgUrl}></img>:'')
           }
-          {
-              el.count>10?<img  className='userImage' src= "and_more.png"></img>:''
-          }
+         
         </div>
-        </div> )
+        </div>} )
           }
           {
               pokedex == "" || usersFound.length>0?'':'No Users found who own this pokemon'
