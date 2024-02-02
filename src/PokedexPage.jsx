@@ -21,7 +21,6 @@ export default function PokedexPage() {
   const [items2, setItems2] = useState([]);
   const [pokemonsOriginalSort, setPokemonsOriginalSort] = useState([]);
   const [users, setUsers] = useState([]);
-  const [logedInUser, setLogedInUser] = useState('');
   const [usersCalled, setUsersCalled] = useState(false);
   const [userValue, setUserValue] = useState();
   const [hasData, setHasData] = useState(true);
@@ -55,14 +54,6 @@ export default function PokedexPage() {
     }
   })();},[]);
 
-  const onLoginClick = () =>{ 
-    resource.signInWithTwitch();
-  }
-
-  const getUser = () =>{
-    let user = resource.getUser();
-    setLogedInUser(user);
-  }
 
 
   const onChangeHandler = (change) => {
@@ -191,8 +182,7 @@ export default function PokedexPage() {
   return (
 <div className="wholeSite">
     <div className="content">
-    <button onClick={onLoginClick} className=''>sign in</button>
-    <div>Hello {logedInUser}</div>
+   
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>

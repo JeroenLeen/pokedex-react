@@ -80,7 +80,7 @@ export default function GeneralComponent() {
             <button onClick={routeToRanking} className='rankingsMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToDexCompare} className='rankingsMenuItemDexCompare menuItemContainer'></button>
             <button onClick={routeToSupport} className='supportMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToSupport} className='settingsMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToSetting} className='settingsMenuItemContainer menuItemContainer'></button>
           </div>
           <div className='rootDiv'>
         
