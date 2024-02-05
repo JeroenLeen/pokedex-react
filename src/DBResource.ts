@@ -110,6 +110,8 @@ export default class DBResource{
                 entry.rarityNumber= 3;
             } else  if(entry.rarity == 'Legendary'){
                 entry.rarityNumber= 4;
+            } else  if(entry.rarity == 'Unattainable'){
+                entry.rarityNumber= 5;
             }
 
             if(!entry.normalCount){
@@ -179,6 +181,8 @@ export default class DBResource{
                 entry.rarityNumber= 3;
             } else  if(entry.rarity == 'Legendary'){
                 entry.rarityNumber= 4;
+            } else if(entry.rarity == 'Unattainable'){
+                entry.rarityNumber= 5;
             }
        
          
