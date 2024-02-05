@@ -2,11 +2,11 @@ import { createClient } from '@supabase/supabase-js'
 import { PokedexEntryEntity } from './pokedexEntryEntity'
 export default class DBResource{
 
-     //supabaseUrl = 'https://wvbhoxbxpwxmvprlcxno.supabase.co'
+     supabaseUrl = 'https://wvbhoxbxpwxmvprlcxno.supabase.co'
      SERVICE_KEY = 'SUPABASE_SERVICE_KEY'
-     //supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2YmhveGJ4cHd4bXZwcmxjeG5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA3MTM1MDMsImV4cCI6MjAwNjI4OTUwM30.GFaiNe-24OBUZ-J-qNepju6I28QYBszwFHYkh4igt5k'
-     supabaseUrl = 'https://eunjjgnbameseuzsjjig.supabase.co'
-     supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1bmpqZ25iYW1lc2V1enNqamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDI4MzE3NTMsImV4cCI6MjAxODQwNzc1M30.DX2dElDvtV0bYheXro8oBDZsD1mRUhh3xmDfEGC5GGo'
+     supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2YmhveGJ4cHd4bXZwcmxjeG5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA3MTM1MDMsImV4cCI6MjAwNjI4OTUwM30.GFaiNe-24OBUZ-J-qNepju6I28QYBszwFHYkh4igt5k'
+     //supabaseUrl = 'https://eunjjgnbameseuzsjjig.supabase.co'
+     //supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1bmpqZ25iYW1lc2V1enNqamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDI4MzE3NTMsImV4cCI6MjAxODQwNzc1M30.DX2dElDvtV0bYheXro8oBDZsD1mRUhh3xmDfEGC5GGo'
    
      
      supabase = createClient(this.supabaseUrl, this.supabaseKey);
@@ -16,6 +16,12 @@ export default class DBResource{
           provider: 'twitch',
         })
       }
+
+      async signOutWithTwitch() {
+        const { } = await this.supabase.auth.signOut();
+        window.location.reload();
+      }
+
 
       async insertRow(){
         const { data, error } = await this.supabase

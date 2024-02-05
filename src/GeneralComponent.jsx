@@ -11,12 +11,27 @@ import './GeneralComponent.css'
 import CompareDexPage from './CompareDexPage';
 import SupportPage from './SupportPage';
 import SettingPage from './SettingPage';
+import DBResource from './DBResource'
 export default function GeneralComponent() {
-
+    const resource = new DBResource();
     const date = new Date();
+    const [logedInUser, setLogedInUser] = useState('');
+    const [userImage, setUserImage] = useState('');
+    const [menuShown, setMenuShown] = useState(false);
     const showTime = date.getHours() 
         + ':' + date.getMinutes() ;
-    let navigate = useNavigate(); 
+    let navigate = useNavigate();
+
+
+    useEffect(() => {
+      (async () => {
+        let user = await resource.getUser();
+        setLogedInUser(user?.user_metadata?.full_name);
+        setUserImage(user?.user_metadata?.avatar_url);
+        
+      }
+      )();},[]);
+
     const routeChange = () =>{ 
       let path = `doubleFinder`; 
       navigate(path);
@@ -47,11 +62,29 @@ export default function GeneralComponent() {
       navigate(path);
     }
 
+    const onLoginClick = () =>{ 
+      resource.signInWithTwitch();
+    }
+
+    const onLogoutClick = () =>{ 
+      resource.signOutWithTwitch();
+    }
+
     
     const routeToSetting = () => {
       let path = 'settings';
       navigate(path);
     }
+
+    const showMenu = () => {
+      setMenuShown(true);
+    }
+
+
+    const hideMenu = () => {
+      setMenuShown(false);
+    }
+
 
     useEffect(() => {
           const img = new Image();
@@ -70,7 +103,13 @@ export default function GeneralComponent() {
   
     return (
       <div>
-          <div className='menuTopDecorator'><div className='menuTopDecoratorTime'>{showTime}</div><img src="/battery.png"></img></div>
+          <div className='menuTopDecorator'><div className='menuTopDecoratorTime'>{showTime}</div><div className='menuTopDecorator'><img src={logedInUser?"/batteryLogedIn.png":"/battery.png"}></img>
+          { logedInUser? <div onMouseEnter={showMenu} onMouseLeave={hideMenu}><button className='loginWithTwitchButton'> <img className='loggedInWithTwitchIcon' src={userImage}></img> {logedInUser}</button>
+          {menuShown?<button  onClick={onLogoutClick} className='popupMenu'>  <img className='loginWithTwitchIcon' src="/logout.png"></img>  Log Out</button>:''}
+          </div>:<button className='loginWithTwitchButton' onClick={onLoginClick} ><img className='loginWithTwitchIcon' src='/twitch-icon.png'></img>Login with Twitch</button>
+          }
+          </div>
+          </div>
           <div className='menu'>
             <button onClick={routeToDex} className='pokedexMenuItemContainer menuItemContainer'></button>
       

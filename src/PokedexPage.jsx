@@ -38,13 +38,14 @@ export default function PokedexPage() {
     if(!usersCalled){
       setUsersCalled(true);
       console.log("calling unique users:");
-      //const foundUsers  = await resource.getUniqueUsers()
-      //setUsers(foundUsers) ;
-      let user = await resource.getUser();
-      await resource.insertRow();
+      const foundUsers  = await resource.getUniqueUsers()
       debugger;
-      setLogedInUser(user?.user_metadata?.full_name);
-      setUsers([]);
+      setUsers(foundUsers) ;
+      //let user = await resource.getUser();
+      //await resource.insertRow();
+
+      //setLogedInUser(user?.user_metadata?.full_name);
+      //setUsers([]);
       if(userParam){
         console.log("found value")
         setUserValue({label:userParam, value:userParam});
