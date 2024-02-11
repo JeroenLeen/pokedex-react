@@ -84,7 +84,7 @@ export default function SettingPage() {
             setChangedetected(true);
             setNotFindablePokemonSearch(!notFindablePokemonSearch);
           }} type='checkbox'></input></div>
-        <div  className='savebuttonContainer'><button  onClick={saveSettings} disabled={!logedInUser || !changedetected}>Save settings</button></div>
+        <div  className='savebuttonContainer'><button  className='savebutton' onClick={saveSettings} disabled={!logedInUser || !changedetected}>Save settings</button></div>
         </div>
         </div>
        
