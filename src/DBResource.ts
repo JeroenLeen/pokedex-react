@@ -5,7 +5,80 @@ export default class DBResource{
      supabaseUrl = 'https://wvbhoxbxpwxmvprlcxno.supabase.co'
      SERVICE_KEY = 'SUPABASE_SERVICE_KEY'
      supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2YmhveGJ4cHd4bXZwcmxjeG5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA3MTM1MDMsImV4cCI6MjAwNjI4OTUwM30.GFaiNe-24OBUZ-J-qNepju6I28QYBszwFHYkh4igt5k'
+ 
+     
      supabase = createClient(this.supabaseUrl, this.supabaseKey);
+
+     async signInWithTwitch() {
+        const { data, error } = await this.supabase.auth.signInWithOAuth({
+          provider: 'twitch',
+        })
+      }
+
+
+      async signOutWithTwitch() {
+        const { } = await this.supabase.auth.signOut();
+        window.location.reload();
+      }
+
+      async updateSettings(settings, notFindableTrade,notFindablePokemonSearch){
+
+        const { data, error } = await this.supabase
+        .from('UserSetting')
+        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', notFindableTrade: notFindableTrade, twitchid: settings.twitchid, notfindablepokemonsearch:notFindablePokemonSearch })
+        .eq('id',  settings.id);
+        debugger;
+        if(!!error){
+            return null;
+        }
+        return await this.getSettings();
+      }
+
+      async saveSettings(notFindableTrade,notFindablePokemonSearch){
+        const { data: { user } } = await this.supabase.auth.getUser();
+
+        console.log("providerid: " + user?.user_metadata.provider_id);
+        const { data, error } = await this.supabase
+        .from('UserSetting')
+        .insert(
+            {username: user?.user_metadata.full_name, userid: user?.id + '', notFindableTrade: notFindableTrade, twitchid:user?.user_metadata.sub, notfindablepokemonsearch:notFindablePokemonSearch}
+        )
+        if(!!error){
+            return null;
+        }
+        return await this.getSettings();
+      }
+
+      async getSettings(){
+        
+        const { data: { user } } = await this.supabase.auth.getUser();
+        if(user){
+        let { data: settings, error } = await this.supabase
+            .from('UserSetting')
+            .select("*")
+            // Filters
+            .eq('userid',  user?.id);
+            return settings;
+        }
+      }
+
+
+      async insertRow(){
+        const { data, error } = await this.supabase
+            .from('test2')
+            .insert([
+                { valueee: 'valueee' },
+            ])
+            .select()
+      }
+
+      
+     async getUser() {
+        const { data: { user } } = await this.supabase.auth.getUser();
+        console.log(user);
+            return user;
+    }
+
 
     async sendRequest(username) {
         console.log('calling');
@@ -37,6 +110,22 @@ export default class DBResource{
     }
 
     
+    async getUniqueUsersPokedexCompare() {
+        console.log('calling');
+   
+
+        let { data: distinctusers, error } = await this.supabase
+            .from('distinctuserspokedexcompare')
+            .select("*");
+
+        
+     
+        let options = distinctusers.map(user=> {return {value:user.originalOwner, label:user.originalOwner}}) ; 
+        return  options;
+    }
+
+
+    
     async getPokedex() {
         let { data, error } = await this.supabase
         .from('PokemonData')
@@ -48,7 +137,7 @@ export default class DBResource{
 
     async getUsersWhoOwnPokemon(pokedex) {
         let { data: AllUserData, error:error2} = await this.supabase
-        .from('pokemonCaugthCounter')
+        .from('pokemonCaugthCounterWithSettings')
         .select("*")
         // Filters
         .eq('pokedex', pokedex);
@@ -71,7 +160,7 @@ export default class DBResource{
 
     async getUsersWhoOwnShinyPokemon(pokedex) {
         let { data: AllUserData, error:error2} = await this.supabase
-        .from('shinyPokemonCaugthCounter')
+        .from('shinyPokemonCaugthCounterWithSettings')
         .select("*")
         // Filters
         .eq('pokedex', pokedex);

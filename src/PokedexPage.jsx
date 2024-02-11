@@ -6,10 +6,12 @@ import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
+
+
 export default function PokedexPage() {
   //static contextType = ThemeContext;
 
-  let navigate = useNavigate(); 
+
   const resource = new DBResource();
   const queryParameters = new URLSearchParams(window.location.search)
   const userParam = queryParameters.get("user")?.toLowerCase();
@@ -31,17 +33,19 @@ export default function PokedexPage() {
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
 
-
-
-  
-
   useEffect(() => {
   (async () => {
     if(!usersCalled){
       setUsersCalled(true);
       console.log("calling unique users:");
       const foundUsers  = await resource.getUniqueUsers()
+      debugger;
       setUsers(foundUsers) ;
+      //let user = await resource.getUser();
+      //await resource.insertRow();
+
+      //setLogedInUser(user?.user_metadata?.full_name);
+      //setUsers([]);
       if(userParam){
         console.log("found value")
         setUserValue({label:userParam, value:userParam});
@@ -50,6 +54,7 @@ export default function PokedexPage() {
    
     }
   })();},[]);
+
 
 
   const onChangeHandler = (change) => {
@@ -178,6 +183,7 @@ export default function PokedexPage() {
   return (
 <div className="wholeSite">
     <div className="content">
+   
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>

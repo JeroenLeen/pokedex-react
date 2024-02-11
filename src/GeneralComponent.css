@@ -100,6 +100,11 @@
     background-size: 100% 100%   !important;; 
   }
 
+  .settingsMenuItemContainer {
+    background: url('/menuItemSettings.png')  !important;
+    background-size: 100% 100%   !important;; 
+  }
+
   
 
   .rootDiv {
@@ -153,4 +158,52 @@
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.loginWithTwitchButton{
+  background-color: #6441a5;
+  height: 50px;
+  width: 300px;
+  border-radius: 0px !important;
+  padding:5px !important;
+  display: flex;
+  justify-content: start;
+  color: white;
+  align-items: center;
+}
+
+.loginWithTwitchIcon{
+  height: 30px;
+  width: 30px;
+  margin-right: 40px;
+  margin-left: 10px;
+}
+
+
+.loggedInWithTwitchIcon{
+  height: 40px;
+  width: 40px;
+  margin-right: 20px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+.logoutIcon{
+  height: 30px;
+  width: 30px;
+  margin-right: 20px;
+  margin-left: 5px;
+  border-radius: 50%;
+
+}
+
+.popupMenu{
+  width: 300px;
+  position: absolute;
+  height: 50px;
+  background-color: white;
+  color: black;
+  display: flex;
+  border-radius: 0px !important;
+  align-items: center;
 }
