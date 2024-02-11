@@ -12,6 +12,9 @@ export default class DBResource{
      async signInWithTwitch() {
         const { data, error } = await this.supabase.auth.signInWithOAuth({
           provider: 'twitch',
+          options: {
+            redirectTo: "https://testpokedex.onrender.com/",
+            },
         })
       }
 
