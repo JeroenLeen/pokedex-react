@@ -27,3 +27,25 @@
 .loginExplenation{
     margin: 10px;
 }
+
+.errorDisplay{
+    color: red;
+}
+
+.confirmDisplayContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.confirmDisplay{
+    padding: 5px 10px 5px 10px;
+    background-color: #0ed145;
+    color: black;
+    width: fit-content;
+    border-radius: 5%;
+}
+
+.savebuttonContainer{
+    margin-top: 10px;
+}

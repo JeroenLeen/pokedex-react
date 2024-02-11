@@ -188,6 +188,15 @@
   border-radius: 50%;
 }
 
+.logoutIcon{
+  height: 30px;
+  width: 30px;
+  margin-right: 20px;
+  margin-left: 5px;
+  border-radius: 50%;
+
+}
+
 .popupMenu{
   width: 300px;
   position: absolute;

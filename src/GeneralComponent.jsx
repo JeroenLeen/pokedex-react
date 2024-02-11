@@ -105,7 +105,7 @@ export default function GeneralComponent() {
       <div>
           <div className='menuTopDecorator'><div className='menuTopDecoratorTime'>{showTime}</div><div className='menuTopDecorator'><img src={logedInUser?"/batteryLogedIn.png":"/battery.png"}></img>
           { logedInUser? <div onMouseEnter={showMenu} onMouseLeave={hideMenu}><button className='loginWithTwitchButton'> <img className='loggedInWithTwitchIcon' src={userImage}></img> {logedInUser}</button>
-          {menuShown?<button  onClick={onLogoutClick} className='popupMenu'>  <img className='loginWithTwitchIcon' src="/logout.png"></img>  Log Out</button>:''}
+          {menuShown?<button  onClick={onLogoutClick} className='popupMenu'>  <img className='logoutIcon' src="/logout.png"></img>  Log Out</button>:''}
           </div>:<button className='loginWithTwitchButton' onClick={onLoginClick} ><img className='loginWithTwitchIcon' src='/twitch-icon.png'></img>Login with Twitch</button>
           }
           </div>
