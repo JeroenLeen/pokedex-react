@@ -96,7 +96,9 @@ export default function GeneralComponent() {
           const img4 = new Image();
           img4.src = '/menuItemRankingSelected.png';
           const img5 = new Image();
-          img5.src = '/menuItemDexCompareSelected.png'
+          img5.src = '/menuItemDexCompareSelected.png';
+          const img6 = new Image();
+          img6.src = '/menuItemSettingsSelected.png';
       });
   
     
