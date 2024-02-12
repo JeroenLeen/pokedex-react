@@ -27,11 +27,13 @@ export default function PokedexPage() {
   const [pokemonCaugth, setPokemonCaugth] = useState(0);
   const [uniquePokemonCaugth, setUniquePokemonCaugth] = useState(0);
   const [totalShinyCaugth, setTotalShinyCaugth] = useState(0);
+  const [disableSort2, setDisableSort2] = useState(true);
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},
   {value:"Name", label:"Name"},{value:"Number caught ↑", label:"Number caught ↑"},{value:"Number caught ↓", label:"Number caught ↓"}
   ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
+  const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
 
   useEffect(() => {
   (async () => {
@@ -39,13 +41,8 @@ export default function PokedexPage() {
       setUsersCalled(true);
       console.log("calling unique users:");
       const foundUsers  = await resource.getUniqueUsers()
-      debugger;
-      setUsers(foundUsers) ;
-      //let user = await resource.getUser();
-      //await resource.insertRow();
 
-      //setLogedInUser(user?.user_metadata?.full_name);
-      //setUsers([]);
+      setUsers(foundUsers) ;
       if(userParam){
         console.log("found value")
         setUserValue({label:userParam, value:userParam});
@@ -87,98 +84,174 @@ export default function PokedexPage() {
     setPokemonsOriginalSort(data);
   }
 
+  function sortByFieldAscPrimary(data, primaryField, secondaryField ) {
+
+    data.sort(function (a, b) {
+      if (a[primaryField] < b[primaryField]) {
+        return -1;
+      }
+      if (a[primaryField] > b[primaryField]) {
+        return 1;
+      }
+      return secondarySort(a,b,secondaryField);
+    });
+  
+}
+
+function sortByFieldDescPrimary(data, primaryField, secondaryField) {
+  data.sort(function (a, b) {
+    if (a[primaryField] > b[primaryField]) {
+      return -1;
+    }
+    if (a[primaryField] < b[primaryField]) {
+      return 1;
+    }
+    return secondarySort(a,b,secondaryField);
+  });
+}
+
+  function sortByFieldAsc(a,b, field) {
+      if (a[field] < b[field]) {
+        return -1;
+      }
+      if (a[field] > b[field]) {
+        return 1;
+      }
+      return 0;
+}
+
+function sortByFieldDesc(a,b, field) {
+    if (a[field] > b[field]) {
+      return -1;
+    }
+    if (a[field] < b[field]) {
+      return 1;
+    }
+    return 0;
+}
+
+const secondarySort = (a,b,secondaryFilter) => {
+  
+
+  if(secondaryFilter == "Pokedex"){
+    return sortByFieldAsc(a,b,"pokedex");
+  }
+
+  if(secondaryFilter == "Name"){
+    return sortByFieldAsc(a,b,"monName");
+  }
+
+  if(secondaryFilter == "Number caught ↑"){
+    return sortByFieldAsc(a,b,"normalNumber");
+  }
+
+  if(secondaryFilter == "Number caught ↓"){
+    return sortByFieldDesc(a,b,"normalNumber");
+  }
+
+  if(secondaryFilter == "Shiny's caught ↑"){
+    return sortByFieldAsc(a,b,"shinyNumber");
+  }
+
+  if(secondaryFilter == "Shiny's caught ↓"){
+    return sortByFieldDesc(a,b,"shinyNumber");
+  }
+
+  if(secondaryFilter == "Rarity ↑"){
+    return sortByFieldAsc(a,b,"rarityNumber");
+  }
+
+  if(secondaryFilter == "Rarity ↓"){
+    return sortByFieldDesc(a,b,"rarityNumber");
+  }
+  
+};
 
   const onSortChangeHandler = (change) => {
   
     setSelectValue(change);
     let tempData = pokemonsOriginalSort.map(a => {return {...a}}) ;
 
-    if(change.value == "Name"){
-      tempData.sort(function (a, b) {
-        if (a.monName < b.monName) {
-          return -1;
-        }
-        if (a.monName > b.monName) {
-          return 1;
-        }
-        return 0;
-      });
+    if(change.value == "Pokedex"){
+      setDisableSort2(true);
     }
+  
+    if(change.value == "Name"){
+      sortByFieldAscPrimary(tempData,"monName", selectValue2.value);
+      setDisableSort2(true);
+    }
+
     if(change.value == "Number caught ↑"){
-      tempData.sort(function (a, b) {
-        if (a.normalNumber < b.normalNumber) {
-          return -1;
-        }
-        if (a.normalNumber > b.normalNumber) {
-          return 1;
-        }
-        return 0;
-      });
+      sortByFieldAscPrimary(tempData,"normalNumber", selectValue2.value);
+      setDisableSort2(false);
     }
 
     if(change.value == "Number caught ↓"){
-      tempData.sort(function (a, b) {
-        if (a.normalNumber > b.normalNumber) {
-          return -1;
-        }
-        if (a.normalNumber < b.normalNumber) {
-          return 1;
-        }
-        return 0;
-      });
+      sortByFieldDescPrimary(tempData,"normalNumber", selectValue2.value);
+      setDisableSort2(false);
     }
 
     if(change.value == "Shiny's caught ↑"){
-      tempData.sort(function (a, b) {
-        if (a.shinyNumber < b.shinyNumber) {
-          return -1;
-        }
-        if (a.shinyNumber > b.shinyNumber) {
-          return 1;
-        }
-        return 0;
-      });
+      sortByFieldAscPrimary(tempData,"shinyNumber", selectValue2.value);
+      setDisableSort2(false);
     }
 
     if(change.value == "Shiny's caught ↓"){
-      tempData.sort(function (a, b) {
-        if (a.shinyNumber > b.shinyNumber) {
-          return -1;
-        }
-        if (a.shinyNumber < b.shinyNumber) {
-          return 1;
-        }
-        return 0;
-      });
+      sortByFieldDescPrimary(tempData,"shinyNumber", selectValue2.value);
+      setDisableSort2(false);
     }
 
     if(change.value == "Rarity ↑"){
-      tempData.sort(function (a, b) {
-        if (a.rarityNumber < b.rarityNumber) {
-          return -1;
-        }
-        if (a.rarityNumber > b.rarityNumber) {
-          return 1;
-        }
-        return 0;
-      });
+      sortByFieldAscPrimary(tempData,"rarityNumber", selectValue2.value);
+      setDisableSort2(false);
     }
   
-      if(change.value == "Rarity ↓"){
-        tempData.sort(function (a, b) {
-          if (a.rarityNumber > b.rarityNumber) {
-            return -1;
-          }
-          if (a.rarityNumber < b.rarityNumber) {
-            return 1;
-          }
-          return 0;
-        });
+    if(change.value == "Rarity ↓"){
+      sortByFieldDescPrimary(tempData,"rarityNumber", selectValue2.value);
+      setDisableSort2(false);
+    }
+    
+    setItems2(tempData) ;
+  };
+
+  
+  const onSortChangeHandler2 = (change) => {
+  
+    setSelectValue2(change);
+    let tempData = pokemonsOriginalSort.map(a => {return {...a}}) ;
+    if(selectValue.value == "Name"){
+      sortByFieldAscPrimary(tempData,"monName",change.value);
+    }
+
+
+    if(selectValue.value == "Number caught ↑"){
+      sortByFieldAscPrimary(tempData,"normalNumber",change.value);
+    }
+
+    if(selectValue.value == "Number caught ↓"){
+      sortByFieldDescPrimary(tempData,"normalNumber",change.value);
+    }
+
+    if(selectValue.value == "Shiny's caught ↑"){
+      sortByFieldAscPrimary(tempData,"shinyNumber",change.value);
+    }
+
+    if(selectValue.value == "Shiny's caught ↓"){
+      sortByFieldDescPrimary(tempData,"shinyNumber",change.value);
+    }
+
+    if(selectValue.value == "Rarity ↑"){
+      sortByFieldAscPrimary(tempData,"rarityNumber",change.value);
+    }
+  
+      if(selectValue.value == "Rarity ↓"){
+        sortByFieldDescPrimary(tempData,"rarityNumber",change.value);
       }
     
 
     setItems2(tempData) ;
   };
+
 
   return (
 <div className="wholeSite">
@@ -213,7 +286,9 @@ export default function PokedexPage() {
 
     </div>
     <div className='sortContainer'>
-      <div className='sortSelectContainer' ><h4 className='selectTitle'>Sort:</h4> <Select isDisabled={hasData} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler}  value={selectValue}></Select>
+      <div className='sortSelectContainer' ><h4 className='selectTitle'>Primary sort:</h4> <Select isDisabled={hasData} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler}  value={selectValue}></Select>
+      </div>
+      <div className='sortSelectContainer' ><h4 className='selectTitle'>Secondary sort:</h4> <Select isDisabled={hasData || disableSort2} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler2}  value={selectValue2}></Select>
       </div>
       </div>
      <div className='entries'> 
