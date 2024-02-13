@@ -68,8 +68,6 @@ export default function CompareDexPage() {
   };
 
   async function fetchAndDisplayPokemonData(value) {
-
-
     const data = await resource.getUniquePokedexEntries(value);
     if(items2.length>0){
       setHasData(false);
@@ -192,7 +190,7 @@ export default function CompareDexPage() {
         <div className="content">
         <div className='confetti'>   {isExploding && <ConfettiExplosion onComplete={confettiDone} />}</div>
           <div className="header">
-            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Compare pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Compare pokedex</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
           </div>
           <div className='selectorsWrapper'>
           <div className='selector'>

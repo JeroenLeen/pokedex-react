@@ -71,7 +71,7 @@ export default function SettingPage() {
         <div>
         <div className='errorDisplay'>{errorMessage}</div>
         <div className="header">
-            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>SettingsPage</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>SettingsPage</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
         </div>
         <div className='confirmDisplayContainer'>{confirmMessage?<div className='confirmDisplay'>{confirmMessage}</div>:''}</div>
         <div className='loginContainer'>
