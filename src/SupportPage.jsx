@@ -20,6 +20,9 @@ export default function SupportPage() {
             </div>
             <button  onClick={routeChange}  className={reveal?'hide':''}>reveal</button>
             <div className={reveal?'show':'hide'}> <a href="https://www.paypal.com/"><img className='paypalLogo' src='/paypal-logo.jpg'></img></a> Donate to: jenniferprytz@gmail.com</div>
+
+            <div className="monkeyAylexImagePlacer">         <div className="monkeyAylexImageContainer"><img className="monkeyAylexImage" src="/logoDesign.png"></img></div></div>
+   
         </div>
         </div>
       );

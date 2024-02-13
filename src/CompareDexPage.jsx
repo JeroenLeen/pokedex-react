@@ -34,7 +34,7 @@ export default function CompareDexPage() {
     if(!usersCalled){
       setUsersCalled(true);
       console.log("calling unique users:");
-      const foundUsers  = await resource.getUniqueUsers()
+      const foundUsers  = await resource.getUniqueUsersPokedexCompare()
       setUsers(foundUsers) ;
     }
   })();},[]);
@@ -108,7 +108,6 @@ export default function CompareDexPage() {
         console.log('data1 =' );
         console.log(pokemonsOriginalSort1);
      }
-     debugger;
     setItems2(data);
     setPokemonsOriginalSort2(data);
     console.log('data2 =' );
@@ -147,7 +146,7 @@ export default function CompareDexPage() {
     setSelectValue(change);
     let tempData1 = pokemonsOriginalSort1.map(a => {return {...a}}) ;
     let tempData2 = pokemonsOriginalSort2.map(a => {return {...a}}) ;
-    debugger;
+
 
 
     if(change.value == "Name"){

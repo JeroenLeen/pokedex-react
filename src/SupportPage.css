@@ -31,3 +31,24 @@
     height: 30px;
     margin-right: 10px;
 }
+
+.monkeyAylexImage{
+  margin-top: 15px;
+  max-width: 80%;
+  border-radius: 100%;
+  border: black solid 30px;
+
+}
+
+.monkeyAylexImageContainer{
+  display: flex;
+  justify-content: center;
+  max-width: 30%;
+}
+
+
+.monkeyAylexImagePlacer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

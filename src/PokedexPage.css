@@ -68,6 +68,11 @@
     justify-content: center;
   }
 
+  .confetti{
+    display: flex;
+    justify-content: center;
+  }
+
   .entry{
     background-color: #505050;
     width: 18%;

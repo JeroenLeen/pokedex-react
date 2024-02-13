@@ -1,0 +1,55 @@
+.loginWithTwitchButton{
+    background-color: #6441a5;
+    height: 50px;
+    width: 300px;
+    border-radius: 0px !important;
+    padding:5px !important;
+    display: flex;
+    justify-content: start;
+    color: white;
+    align-items: center;
+}
+
+.loginWithTwitchIcon{
+    height: 30px;
+    width: 30px;
+    margin-right: 40px;
+    margin-left: 10px;
+}
+
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginExplenation{
+    margin: 10px;
+}
+
+.errorDisplay{
+    color: red;
+}
+
+.confirmDisplayContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.confirmDisplay{
+    padding: 5px 10px 5px 10px;
+    background-color: #0ed145;
+    color: black;
+    width: fit-content;
+    border-radius: 5%;
+}
+
+.savebuttonContainer{
+    margin-top: 10px;
+}
+
+.savebutton{
+    color: black;
+}
