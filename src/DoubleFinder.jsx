@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import React, { Link, useState, useEffect } from 'react';
 import Select from 'react-select'
 import { Tooltip } from 'react-tooltip'
+import ConfettiExplosion from 'react-confetti-explosion';
 export default function DoubleFinder() {
 
 
@@ -15,7 +16,7 @@ export default function DoubleFinder() {
     const [imgUrl, setImgUrl] = useState([]);
     const [testArray, setTestArray] = useState([1,2,3,4,5,6,7,8,9,10]);
     const [isShiny, setIsShiny] = useState(false);
-
+    const [isExploding, setIsExploding] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -28,6 +29,10 @@ export default function DoubleFinder() {
           }
         })();},[]);
 
+        const confettiDone = () => {
+          setIsExploding(false);
+        }
+
       //static contextType = ThemeContext;
     
 
@@ -37,6 +42,7 @@ export default function DoubleFinder() {
 
       const onChangeHandler = (change) => {
         setPokedex(change.value);
+        setIsExploding(true);
         (async () => {
           console.log("finding users for pokedex:" + change.value);
           let data;
@@ -101,6 +107,7 @@ export default function DoubleFinder() {
     return (
 <div className="wholeSite">
     <div className="content">
+    <div className='confetti'>   {isExploding && <ConfettiExplosion onComplete={confettiDone} />}</div>
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Pokemon finder</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
