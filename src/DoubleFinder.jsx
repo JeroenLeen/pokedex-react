@@ -1,5 +1,5 @@
 import './DoubleFinder.css'
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import { useNavigate } from "react-router-dom";
 import React, { Link, useState, useEffect } from 'react';
 import Select from 'react-select'
@@ -31,7 +31,7 @@ export default function DoubleFinder() {
       //static contextType = ThemeContext;
     
 
-      const resource = new DBResource();
+      const resource = singletondDbResource;
 
       
 

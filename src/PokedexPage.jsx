@@ -1,18 +1,18 @@
-import React, { Link, useState, useEffect } from 'react';
+import React, { useContext , useState, useEffect } from 'react';
 import './PokedexPage.css'
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import PokedexEntry from './subcomponents/PokedexEntry'
 import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
-
+import { UserContext } from './GeneralComponent';
 
 export default function PokedexPage() {
   //static contextType = ThemeContext;
 
 
-  const resource = new DBResource();
+  const resource =singletondDbResource;
   const queryParameters = new URLSearchParams(window.location.search)
   const userParam = queryParameters.get("user")?.toLowerCase();
 
@@ -34,14 +34,14 @@ export default function PokedexPage() {
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
   const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
-
+  const {logedInUser, setLogedInUser} = useContext(UserContext);
+  const [pokemonsettings, setPokemonSettings] = useState([]);
   useEffect(() => {
   (async () => {
     if(!usersCalled){
       setUsersCalled(true);
       console.log("calling unique users:");
-      const foundUsers  = await resource.getUniqueUsers()
-
+      const foundUsers  = await resource.getUniqueUsers();
       setUsers(foundUsers) ;
       if(userParam){
         console.log("found value")
@@ -60,6 +60,7 @@ export default function PokedexPage() {
     (async () => {
      
       console.log("finding pokemon for:" + change.value);
+    
       await fetchAndDisplayPokemonData(change.value);
       })()
   };
@@ -67,6 +68,11 @@ export default function PokedexPage() {
   async function fetchAndDisplayPokemonData(value) {
     window.history.pushState({path:'?user=' + value },'','?user=' + value );
     setHasData(false);
+    let test;
+    if(logedInUser ===value){
+      const settingdata = await resource.getPokemonSettings();
+      setPokemonSettings(settingdata);
+    }
     const data = await resource.getUniquePokedexEntries(value);
 
     let shinySum = 0;
@@ -298,7 +304,7 @@ const secondarySort = (a,b,secondaryFilter) => {
 
          return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={pokemonsettings.find((set)=>set.pokedex == el.pokedex)}
           rarity={el.rarity}></PokedexEntry>
            </div>})
           }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 
 import Top10 from './subcomponents/top10'
 import './RankingsPage.css'
@@ -16,7 +16,7 @@ export default function RankingsPage() {
     const [magikarpTrainer, setMagikarpTrainer] = useState([]);
     const [yogivsfalcon, setYogivsfalcon] = useState([]);
     const [pokemonCaugthRank, setPokemonCaugthRank] = useState([]);
-    const resource = new DBResource();
+    const resource = singletondDbResource;
 
 
   

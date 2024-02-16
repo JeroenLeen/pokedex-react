@@ -11,9 +11,11 @@ import './GeneralComponent.css'
 import CompareDexPage from './CompareDexPage';
 import SupportPage from './SupportPage';
 import SettingPage from './SettingPage';
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
+export const UserContext = React.createContext(null);
+
 export default function GeneralComponent() {
-    const resource = new DBResource();
+    const resource =singletondDbResource;
     const date = new Date();
     const [logedInUser, setLogedInUser] = useState('');
     const [userImage, setUserImage] = useState('');
@@ -124,7 +126,7 @@ export default function GeneralComponent() {
             <button onClick={routeToSetting} className='settingsMenuItemContainer menuItemContainer'></button>
           </div>
           <div className='rootDiv'>
-        
+          <UserContext.Provider value={{ logedInUser: logedInUser, setLogedInUser: setLogedInUser }}>
             <Routes>
               <Route path="/" element={<PokedexPage />}>
               </Route>
@@ -139,7 +141,7 @@ export default function GeneralComponent() {
               <Route path='/support' element={<SupportPage/>}></Route>
               <Route path='/settings' element={<SettingPage/>}></Route>
             </Routes>
-      
+            </UserContext.Provider>
           </div>
       </div>
     )

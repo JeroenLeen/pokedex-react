@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import './PokedexEntry.css'
 import { FaBalanceScale, FaBeer, FaSearch } from "react-icons/fa";
+import singletondDbResource from './../DBResourceSingleton'
 export default function PokedexEntry(  props) {
-        const [pokemonSettings, setPokemonSettings] = useState({});
+
+  const resource = singletondDbResource;
+        const [pokemonSettings, setPokemonSettings] = useState(props.setting);
         const imageUrl2 = new URL(
         "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
         import.meta.url
@@ -16,22 +19,26 @@ export default function PokedexEntry(  props) {
       const saveSettings = () =>{ 
         (async () => {
         if(pokemonSettings?.id){
-          let data = await resource.updatePokemonSettings(pokemonSettings, tradeable);
+          let data = await resource.updatePokemonSettings(pokemonSettings, !pokemonSettings?.wanttrade);
           if(data==null){
-            showError();
+            //showError();
           }else{
-            setConfirmMessage("Saved")
+            debugger;
+            setPokemonSettings(data[0]);
+           /* setConfirmMessage("Saved")
             handleSettingsFetch(data);
             setChangedetected(false);
             setTimeout(function() {
               setConfirmMessage(null);
-            }, 4000);
+            }, 4000);*/
           }
         }else{
-          let data = await resource.savePokemonSettings(tradeable);
+          let data = await resource.savePokemonSettings(props.pokedexEntryNumber, !pokemonSettings?.wanttrade);
           if(data==null){
            // showError();
           }else{
+            debugger;
+            setPokemonSettings(data[0]);
             /*
            setConfirmMessage("Saved")
             handleSettingsFetch(data);
