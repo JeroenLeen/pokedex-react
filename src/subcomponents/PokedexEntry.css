@@ -1,3 +1,4 @@
+
 .image{
     width: 60%;
 }
@@ -66,3 +67,25 @@ body {
     background: aliceblue;
   }
  
+  .searchLogoImg{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    fill: black;
+  }
+
+  .tradeLogoImg{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+
+    fill: black;
+  }
+
+  .fillGreen{
+    fill: green !important;
+  }

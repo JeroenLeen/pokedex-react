@@ -52,6 +52,54 @@ export default class DBResource{
         return await this.getSettings();
       }
 
+
+      async updatePokemonSettings(settings, wanttrade){
+
+        const { data, error } = await this.supabase
+        .from('PokemonUserSetting')
+        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', wanttrade: wanttrade, twitchid: settings.twitchid})
+        .eq('id',  settings.id);
+        debugger;
+        if(!!error){
+            return null;
+        }
+        return await this.getSettings();
+      }
+
+      async savePokemonSettings(wanttrade){
+        const { data: { user } } = await this.supabase.auth.getUser();
+
+        console.log("providerid: " + user?.user_metadata.provider_id);
+        const { data, error } = await this.supabase
+        .from('PokemonUserSetting')
+        .insert(
+            {username: user?.user_metadata.full_name, userid: user?.id + '', wanttrade: wanttrade, twitchid:user?.user_metadata.sub}
+        )
+        if(!!error){
+            return null;
+        }
+        return await this.getSettings();
+      }
+
+      
+      async getPokemonSettings(){
+        
+        const { data: { user } } = await this.supabase.auth.getUser();
+        if(user){
+        let { data: settings, error } = await this.supabase
+            .from('PokemonUserSetting')
+            .select("*")
+            // Filters
+            .eq('userid',  user?.id);
+            return settings;
+        }
+      }
+
+
+
+      
+
+
       async getSettings(){
         
         const { data: { user } } = await this.supabase.auth.getUser();

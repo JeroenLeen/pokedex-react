@@ -1,7 +1,16 @@
 @import url('https://fonts.cdnfonts.com/css/8bit-wonder');
 .sortContainer{
     display: flex;
-    justify-content: flex-end
+    justify-content: flex-end;
+    top: 0px;
+    align-items: center;
+    background-color: #2c2c2f;
+    padding-bottom: 5px;
+}
+
+.savebutton{
+  height: 60%;
+  margin-right: auto;
 }
 
 .sortSelectContainer{
