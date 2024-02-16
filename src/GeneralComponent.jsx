@@ -124,7 +124,7 @@ export default function GeneralComponent() {
             <button onClick={routeToSetting} className='settingsMenuItemContainer menuItemContainer'></button>
           </div>
           <div className='rootDiv'>
-        
+              <div class='warninglogin'><h1>Site under maintenance ! login will not work</h1></div>
             <Routes>
               <Route path="/" element={<PokedexPage />}>
               </Route>
