@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './PokedexPage.css'
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import PokedexEntry from './subcomponents/PokedexEntry'
 import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -9,7 +9,7 @@ import './CompareDexPage.css'
 export default function CompareDexPage() {
       
  
-  const resource = new DBResource();
+  const resource = singletondDbResource;
   const queryParameters = new URLSearchParams(window.location.search)
   const userParam = queryParameters.get("user")?.toLowerCase();
 
@@ -64,6 +64,10 @@ export default function CompareDexPage() {
 
 
     const data = await resource.getUniquePokedexEntries(value);
+    let settingdata = await resource.getPokemonSettingsForUser(value);
+    data.forEach(entry => {
+     entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
+    });
     if(items2.length>0){
       setHasData(false);
       setTradeableData(data, pokemonsOriginalSort2);
@@ -79,12 +83,12 @@ export default function CompareDexPage() {
 
   function setTradeableData(array1, array2){
     for(let i = 0; i< array1.length; i ++){
-      if((array1[i].normalNumber >=2 && array2[i].normalNumber ==0) || (array1[i].shinyNumber >=2 && array2[i].shinyNumber ==0) ){
+      if((array1[i].normalNumber >=2 && (array2[i].normalNumber ==0)|| array2[i].setting?.wanttrade ) || (array1[i].shinyNumber >=2 && array2[i].shinyNumber ==0 || array2[i].setting?.wanttrade) ){
         array1[i].tradeOfferFor1 = 1;
         array2[i].tradeOfferFor1 = 1;
         array1[i].tradeOfferFor2 = 0;
         array2[i].tradeOfferFor2 = 0;
-      } else if((array2[i].normalNumber >=2 && array1[i].normalNumber ==0  )|| (array2[i].shinyNumber >=2 && array1[i].shinyNumber ==0)){
+      } else if((array2[i].normalNumber >=2 && (array1[i].normalNumber ==0 || array1[i].setting?.wanttrade) )|| (array2[i].shinyNumber >=2 && (array1[i].shinyNumber ==0 || array1[i].setting?.wanttrade))){
         array1[i].tradeOfferFor2 = 1;
         array2[i].tradeOfferFor2 = 1;
         array1[i].tradeOfferFor1 = 0;
@@ -101,6 +105,10 @@ export default function CompareDexPage() {
 
   async function fetchAndDisplayPokemonData2(value) {
     const data = await resource.getUniquePokedexEntries(value);
+    let settingdata = await resource.getPokemonSettingsForUser(value);
+    data.forEach(entry => {
+     entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
+    });
     if(items1.length>0){
       setHasData(false);
       setTradeableData(pokemonsOriginalSort1, data);
@@ -230,7 +238,7 @@ export default function CompareDexPage() {
              return <div key={el.key} className={"entryBorder" + index %4 + " compareEntry"}>
               <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
               normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
-              rarity={el.rarity}></PokedexEntry>
+              rarity={el.rarity} setting={el.setting} compareEntry={true}></PokedexEntry>
                </div>})
               }
           </div>
@@ -241,7 +249,7 @@ export default function CompareDexPage() {
     
              return <div key={el.key} className={"entryBorder" + index %4 + " compareEntry"}>
               <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-              normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
+              normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}  setting={el.setting} compareEntry={true}
               rarity={el.rarity}></PokedexEntry>
                </div>})
               }

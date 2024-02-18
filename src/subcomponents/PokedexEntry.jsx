@@ -2,50 +2,33 @@ import { useState } from 'react';
 import './PokedexEntry.css'
 import { FaBalanceScale, FaBeer, FaSearch } from "react-icons/fa";
 import singletondDbResource from './../DBResourceSingleton'
+import React, { useEffect } from 'react';
 export default function PokedexEntry(  props) {
 
   const resource = singletondDbResource;
-        const [pokemonSettings, setPokemonSettings] = useState(props.setting);
         const imageUrl2 = new URL(
         "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
         import.meta.url
       ).href;
 
-      const showError = () =>{
-        setErrorMessage("Something went wrong, please contact forodor");
-      }
-  
 
       const saveSettings = () =>{ 
         (async () => {
-        if(pokemonSettings?.id){
-          let data = await resource.updatePokemonSettings(pokemonSettings, !pokemonSettings?.wanttrade);
+        if(props.setting?.id){
+          let data = await resource.updatePokemonSettings(props.setting, !props.setting?.wanttrade);
           if(data==null){
-            //showError();
+
           }else{
-            debugger;
-            setPokemonSettings(data[0]);
-           /* setConfirmMessage("Saved")
-            handleSettingsFetch(data);
-            setChangedetected(false);
-            setTimeout(function() {
-              setConfirmMessage(null);
-            }, 4000);*/
+            props.valuechange(props.pokedexEntryNumber, data[0]);
+ 
           }
         }else{
-          let data = await resource.savePokemonSettings(props.pokedexEntryNumber, !pokemonSettings?.wanttrade);
+          let data = await resource.savePokemonSettings(props.pokedexEntryNumber, !props.setting?.wanttrade);
           if(data==null){
-           // showError();
+  
           }else{
-            debugger;
-            setPokemonSettings(data[0]);
-            /*
-           setConfirmMessage("Saved")
-            handleSettingsFetch(data);
-            setChangedetected(false);
-            setTimeout(function() {
-              setConfirmMessage(null);
-            }, 4000);*/
+            props.valuechange(props.pokedexEntryNumber, data[0]);
+          
           }
         }
       })();
@@ -53,20 +36,18 @@ export default function PokedexEntry(  props) {
 
 
     const changeTrade = () =>{ 
-      debugger;
-     if(pokemonSettings?.wanttrade){
-      setPokemonSettings({...pokemonSettings, wanttrade: false});
-     }else{
-      setPokemonSettings({...pokemonSettings, wanttrade: true});
-     }
+    
      saveSettings();
     }
 
     return (
       <>
       <div className='exclusiveLogoContainer'>
-      <div> {props.exclusiveTo? <img className='exclusiveLogoImg ' src={props.exclusiveTo + ".png"}></img> : ''} </div>
+      {props.exclusiveTo? <img className='exclusiveLogoImg ' src={props.exclusiveTo + ".png"}></img> : ''} 
       <img className='rarityLogoImg' src={props.rarity + ".png"}></img>
+      {props.compareEntry? 
+        <FaBalanceScale className={props.setting?.wanttrade ?'tradeLogoImg fillGreen':'hide'} />
+      :''}
       </div>
       <div className={props.shinyNumber && !props.noShine>0?'entry-container-shiny':'entry-container'}>
       <div className="image-container">
@@ -79,10 +60,12 @@ export default function PokedexEntry(  props) {
         <div className={props.shinyNumber>0?'green':'red'}>Shiny: {props.shinyNumber }</div></div>
       </div>
       </div>
-      <div className='exclusiveLogoContainer'> 
-        <FaSearch className='searchLogoImg' />
-        <FaBalanceScale className={pokemonSettings?.wanttrade ?'tradeLogoImg fillGreen':'tradeLogoImg'} onClick={changeTrade} />
-      </div>
+      {props.compareEntry? '': <div className='actionsLogoContainer'> 
+        <div>     <FaSearch className='searchLogoImg' /></div>
+   
+        <div><FaBalanceScale className={props.setting?.wanttrade ?'tradeLogoImg pointer fillGreen':'tradeLogoImg pointer'} onClick={changeTrade} /></div>
+      </div>}
+     
     </>
     )
   }

@@ -7,6 +7,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from './GeneralComponent';
+import { UserLoadedContext } from './GeneralComponent';
 
 export default function PokedexPage() {
   //static contextType = ThemeContext;
@@ -35,23 +36,32 @@ export default function PokedexPage() {
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
   const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
   const {logedInUser, setLogedInUser} = useContext(UserContext);
-  const [pokemonsettings, setPokemonSettings] = useState([]);
+  const {userLoaded, setUserLoaded0} = useContext(UserLoadedContext);
+
   useEffect(() => {
   (async () => {
-    if(!usersCalled){
+    console.log("here i am " + userLoaded);
+    if(!usersCalled && userLoaded){
       setUsersCalled(true);
       console.log("calling unique users:");
       const foundUsers  = await resource.getUniqueUsers();
       setUsers(foundUsers) ;
       if(userParam){
-        console.log("found value")
+
         setUserValue({label:userParam, value:userParam});
         await fetchAndDisplayPokemonData(userParam);
       }
    
     }
-  })();},[]);
+  })();},[userLoaded]);
 
+  const setNewValue = (pokedex,value) => {
+    items2.forEach(i=>{if(i.pokedex===pokedex){
+      i.setting = value;
+    }});
+    setItems2( [...items2]);
+
+  }
 
 
   const onChangeHandler = (change) => {
@@ -68,11 +78,13 @@ export default function PokedexPage() {
   async function fetchAndDisplayPokemonData(value) {
     window.history.pushState({path:'?user=' + value },'','?user=' + value );
     setHasData(false);
-    let test;
+    let settingdata = [];
+    console.log("before check");
     if(logedInUser ===value){
-      const settingdata = await resource.getPokemonSettings();
-      setPokemonSettings(settingdata);
+      settingdata = await resource.getPokemonSettings();
+      console.log("in check");
     }
+    console.log("after check");
     const data = await resource.getUniquePokedexEntries(value);
 
     let shinySum = 0;
@@ -81,12 +93,16 @@ export default function PokedexPage() {
     data.forEach(entry => {
       shinySum += entry.shinyNumber;
       totalSum += entry.normalNumber + entry.shinyNumber;
+      if(logedInUser === value){
+        entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
+      }
     });
 
     setPokemonCaugth(totalSum);
     setTotalShinyCaugth(shinySum);
     setUniquePokemonCaugth(data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal).length);
     setItems2(data);
+    
     setPokemonsOriginalSort(data);
   }
 
@@ -271,7 +287,7 @@ const secondarySort = (a,b,secondaryFilter) => {
            <h4 className='selectTitle'>
             User:
             </h4><div className='selectAndTooltip' >
-              <Select className='selectorSelect' value={userValue} options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select>
+              <Select className='selectorSelect' value={userValue} options={users} onChange={onChangeHandler}  defaultValue={"User"} ></Select>
               <div className="selectIcon">
               <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
               <Tooltip id="my-tooltip" 
@@ -304,8 +320,8 @@ const secondarySort = (a,b,secondaryFilter) => {
 
          return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={pokemonsettings.find((set)=>set.pokedex == el.pokedex)}
-          rarity={el.rarity}></PokedexEntry>
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={el.setting}
+          rarity={el.rarity} valuechange={setNewValue}></PokedexEntry>
            </div>})
           }
       </div>
