@@ -3,9 +3,12 @@ import './PokedexEntry.css'
 import { FaBalanceScale, FaBeer, FaSearch } from "react-icons/fa";
 import singletondDbResource from './../DBResourceSingleton'
 import React, { useEffect } from 'react';
+import { Tooltip } from 'react-tooltip';
+import { useNavigate } from "react-router-dom";
 export default function PokedexEntry(  props) {
 
   const resource = singletondDbResource;
+  let navigate = useNavigate();
         const imageUrl2 = new URL(
         "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
         import.meta.url
@@ -34,6 +37,10 @@ export default function PokedexEntry(  props) {
       })();
     }
 
+    const routeChange = () =>{ 
+      let path = `doubleFinder?pokedex=` +props.pokedexEntryNumber + '&pokename='+ props.name; 
+      navigate(path);
+    }
 
     const changeTrade = () =>{ 
     
@@ -61,9 +68,10 @@ export default function PokedexEntry(  props) {
       </div>
       </div>
       {props.compareEntry? '': <div className='actionsLogoContainer'> 
-        <div>     <FaSearch className='searchLogoImg' /></div>
-   
-        <div><FaBalanceScale className={props.setting?.wanttrade ?'tradeLogoImg pointer fillGreen':'tradeLogoImg pointer'} onClick={changeTrade} /></div>
+        <button className='buttondiv pointer' onClick={routeChange}>  <FaSearch className='searchLogoImg' /></button>
+        <button className='buttondiv pointer' disabled={!props.mydex} onClick={changeTrade}><FaBalanceScale className={!props.mydex? 'disabledbutton':props.setting?.wanttrade ?'tradeLogoImg  fillGreen':'tradeLogoImg' }/></button>
+
+     
       </div>}
      
     </>

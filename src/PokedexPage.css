@@ -118,3 +118,8 @@
   flex-wrap:wrap;
   justify-content:center;
 }
+
+.explain-logo{
+  width: 25px;
+  height: 25px;
+}
