@@ -23,6 +23,10 @@ export default function CompareDexPage() {
   const [usersCalled, setUsersCalled] = useState(false);
   const [userValue, setUserValue] = useState();
   const [hasData, setHasData] = useState(true);
+
+  const [nothingToOffer1, setNothingToOffer1] = useState(false);
+  const [nothingToOffer2, setNothingToOffer2] = useState(false);
+
   const [compareToValue, setCompareToValue] = useState();
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},{value:"Trade Offer User 1", label:"Trade Offer User 1"},{value:"Trade Offer User 2", label:"Trade Offer User 2"},
   {value:"Name", label:"Name"}
@@ -42,6 +46,8 @@ export default function CompareDexPage() {
 
   const onChangeHandler = (change) => {
     setUserValue(change);
+    setNothingToOffer1(false);
+    setNothingToOffer2(false);
     setSelectValue({value:"Pokedex", label:"Pokedex"});
     (async () => {
      
@@ -52,6 +58,8 @@ export default function CompareDexPage() {
 
   const onChangeCompareToHandler = (change) => {
     setCompareToValue(change);
+    setNothingToOffer1(false);
+    setNothingToOffer2(false);
     setSelectValue({value:"Pokedex", label:"Pokedex"});
     (async () => {
      
@@ -163,12 +171,22 @@ export default function CompareDexPage() {
     }
 
     if(change.value == "Trade Offer User 1"){
+      let tradeOffer  = tempData1.filter(obj => {
+        return obj.tradeOfferFor1 === 1
+      })
+      debugger;
+      setNothingToOffer1(tradeOffer.length==0);
       sortByFieldDesc(tempData1,"tradeOfferFor1");
       sortByFieldDesc(tempData2,"tradeOfferFor1");
     }
 
     
     if(change.value == "Trade Offer User 2"){
+      let tradeOffer  = tempData2.filter(obj => {
+        return obj.tradeOfferFor2 === 1
+      })
+      setNothingToOffer2(tradeOffer.length==0);
+      debugger;
       sortByFieldDesc(tempData1,"tradeOfferFor2");
       sortByFieldDesc(tempData2,"tradeOfferFor2");
     }
@@ -230,8 +248,9 @@ export default function CompareDexPage() {
           </div>
           </div>
           <div className='doubleEntriesContainer'>
-         <div className='compareEntries'> 
-              {
+         <div className='compareEntries'>
+          {nothingToOffer1?<div className='nothingToOffer'>This player has nothing to offer</div> :<div className='nothingToOffer'></div>}           
+             {
     
             items1.map(function (el, index) { 
     
@@ -243,6 +262,7 @@ export default function CompareDexPage() {
               }
           </div>
           <div className='compareEntries'> 
+          {nothingToOffer2?<div className='nothingToOffer'>This player has nothing to offer</div> :<div className='nothingToOffer'></div>}    
               {
     
             items2.map(function (el, index) { 

@@ -7,8 +7,8 @@ import { Tooltip } from 'react-tooltip'
 export default function DoubleFinder() {
 
   const queryParameters = new URLSearchParams(window.location.search)
-  const pokedexParam = queryParameters.get("pokedex")?.toLowerCase();
-  const pokeNameParam = queryParameters.get("pokename")?.toLowerCase();
+  const pokedexParam = queryParameters.get("pokedex");
+  const pokeNameParam = queryParameters.get("pokename");
 
     const [pokemon, setPokemon] = useState([]);
     const [pokedexCalled, setPokedexCalled] = useState(false);
