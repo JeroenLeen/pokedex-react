@@ -101,16 +101,13 @@ export default class DBResource{
 
       
       async getPokemonSettingsForUser(username){
-        
-        const { data: { user } } = await this.supabase.auth.getUser();
-        if(user){
         let { data: settings, error } = await this.supabase
             .from('PokemonUserSetting')
             .select("*")
             // Filters
             .eq('username',  username);
             return settings;
-        }
+        
       }
 
       async getPokemonSetting(pokedex){

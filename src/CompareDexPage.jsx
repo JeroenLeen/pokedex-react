@@ -73,9 +73,11 @@ export default function CompareDexPage() {
 
     const data = await resource.getUniquePokedexEntries(value);
     let settingdata = await resource.getPokemonSettingsForUser(value);
+    if(settingdata){
     data.forEach(entry => {
      entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
     });
+  }
     if(items2.length>0){
       setHasData(false);
       setTradeableData(data, pokemonsOriginalSort2);
@@ -113,10 +115,14 @@ export default function CompareDexPage() {
 
   async function fetchAndDisplayPokemonData2(value) {
     const data = await resource.getUniquePokedexEntries(value);
+
     let settingdata = await resource.getPokemonSettingsForUser(value);
+    
+    if(settingdata){
     data.forEach(entry => {
      entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
     });
+  }
     if(items1.length>0){
       setHasData(false);
       setTradeableData(pokemonsOriginalSort1, data);
