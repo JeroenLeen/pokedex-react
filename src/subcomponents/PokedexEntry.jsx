@@ -53,7 +53,7 @@ export default function PokedexEntry(  props) {
       {props.exclusiveTo? <img className='exclusiveLogoImg ' src={props.exclusiveTo + ".png"}></img> : ''} 
       <img className='rarityLogoImg' src={props.rarity + ".png"}></img>
       {props.compareEntry? 
-        <FaBalanceScale className={props.setting?.wanttrade ?'tradeLogoImg fillGreen':'hide'} />
+        <FaBalanceScale className={props.setting?.wanttrade ?'rarityLogoImg fillGreen':'hide'} />
       :''}
       </div>
       <div className={props.shinyNumber && !props.noShine>0?'entry-container-shiny':'entry-container'}>
