@@ -109,12 +109,12 @@
     background: url('/menuItemSettingsSelected.png')  !important;
     background-size: 100% 100%   !important;; 
   }
-  
 
   .warninglogin{
     color:red
   }
   
+
 
   .rootDiv {
     max-width: 70%;

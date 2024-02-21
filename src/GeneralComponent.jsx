@@ -11,12 +11,16 @@ import './GeneralComponent.css'
 import CompareDexPage from './CompareDexPage';
 import SupportPage from './SupportPage';
 import SettingPage from './SettingPage';
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
+export const UserContext = React.createContext(null);
+export const UserLoadedContext = React.createContext(null);
+
 export default function GeneralComponent() {
-    const resource = new DBResource();
+    const resource =singletondDbResource;
     const date = new Date();
     const [logedInUser, setLogedInUser] = useState('');
     const [userImage, setUserImage] = useState('');
+    const [userLoaded, setUserLoaded] = useState(false);
     const [menuShown, setMenuShown] = useState(false);
     const showTime = date.getHours() 
         + ':' + date.getMinutes() ;
@@ -26,6 +30,7 @@ export default function GeneralComponent() {
     useEffect(() => {
       (async () => {
         let user = await resource.getUser();
+        setUserLoaded(true);
         setLogedInUser(user?.user_metadata?.full_name);
         setUserImage(user?.user_metadata?.avatar_url);
         
@@ -124,22 +129,25 @@ export default function GeneralComponent() {
             <button onClick={routeToSetting} className='settingsMenuItemContainer menuItemContainer'></button>
           </div>
           <div className='rootDiv'>
-             
-            <Routes>
-              <Route path="/" element={<PokedexPage />}>
-              </Route>
-              <Route path="/doubleFinder" element={<DoubleFinder />}>
-              </Route>
-              <Route path="/info" element={<InfoPage />}>
-              </Route>
-              <Route path="/ranking" element={<RankingsPage />}>
-              </Route>
-              <Route path="/dexcompare" element={<CompareDexPage />}>
-              </Route>
-              <Route path='/support' element={<SupportPage/>}></Route>
-              <Route path='/settings' element={<SettingPage/>}></Route>
-            </Routes>
-      
+          <UserLoadedContext.Provider value={{ userLoaded: userLoaded, setUserLoaded: setUserLoaded }}>
+            <UserContext.Provider value={{ logedInUser: logedInUser, setLogedInUser: setLogedInUser }}>
+              <Routes>
+                <Route path="/" element={<PokedexPage />}>
+                </Route>
+                <Route path="/doubleFinder" element={<DoubleFinder />}>
+                </Route>
+                <Route path="/info" element={<InfoPage />}>
+                </Route>
+                <Route path="/ranking" element={<RankingsPage />}>
+                </Route>
+                <Route path="/dexcompare" element={<CompareDexPage />}>
+                </Route>
+                <Route path='/support' element={<SupportPage/>}></Route>
+                <Route path='/settings' element={<SettingPage/>}></Route>
+              </Routes>
+              </UserContext.Provider>
+           </UserLoadedContext.Provider>
+
           </div>
       </div>
     )

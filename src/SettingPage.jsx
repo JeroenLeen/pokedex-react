@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import './SettingPage.css'
 export default function SettingPage() {
     const [reveal, setReveal] = useState(false);
@@ -10,7 +10,7 @@ export default function SettingPage() {
     const [confirmMessage, setConfirmMessage] = useState("");
     const [changedetected, setChangedetected] = useState(false);
     const [notFindablePokemonSearch, setNotFindablePokemonSearch] = useState(false);
-    const resource = new DBResource();
+    const resource = singletondDbResource;
     const saveSettings = () =>{ 
       (async () => {
       if(settings){

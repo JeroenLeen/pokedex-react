@@ -1,18 +1,20 @@
-import React, { Link, useState, useEffect } from 'react';
+import React, { useContext , useState, useEffect } from 'react';
 import './PokedexPage.css'
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import PokedexEntry from './subcomponents/PokedexEntry'
 import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
-
+import { UserContext } from './GeneralComponent';
+import { UserLoadedContext } from './GeneralComponent';
+import { FaBalanceScale, FaBeer, FaSearch } from "react-icons/fa";
 
 export default function PokedexPage() {
   //static contextType = ThemeContext;
 
 
-  const resource = new DBResource();
+  const resource =singletondDbResource;
   const queryParameters = new URLSearchParams(window.location.search)
   const userParam = queryParameters.get("user")?.toLowerCase();
 
@@ -28,30 +30,40 @@ export default function PokedexPage() {
   const [uniquePokemonCaugth, setUniquePokemonCaugth] = useState(0);
   const [totalShinyCaugth, setTotalShinyCaugth] = useState(0);
   const [disableSort2, setDisableSort2] = useState(true);
+  const [mydex, setMydex] = useState(false);
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},
   {value:"Name", label:"Name"},{value:"Number caught ↑", label:"Number caught ↑"},{value:"Number caught ↓", label:"Number caught ↓"}
   ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
   const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
+  const {logedInUser, setLogedInUser} = useContext(UserContext);
+  const {userLoaded, setUserLoaded0} = useContext(UserLoadedContext);
 
   useEffect(() => {
   (async () => {
-    if(!usersCalled){
+    console.log("here i am " + userLoaded);
+    if(!usersCalled && userLoaded){
       setUsersCalled(true);
       console.log("calling unique users:");
-      const foundUsers  = await resource.getUniqueUsers()
-
+      const foundUsers  = await resource.getUniqueUsers();
       setUsers(foundUsers) ;
       if(userParam){
-        console.log("found value")
+
         setUserValue({label:userParam, value:userParam});
         await fetchAndDisplayPokemonData(userParam);
       }
    
     }
-  })();},[]);
+  })();},[userLoaded]);
 
+  const setNewValue = (pokedex,value) => {
+    items2.forEach(i=>{if(i.pokedex===pokedex){
+      i.setting = value;
+    }});
+    setItems2( [...items2]);
+
+  }
 
 
   const onChangeHandler = (change) => {
@@ -60,6 +72,7 @@ export default function PokedexPage() {
     (async () => {
      
       console.log("finding pokemon for:" + change.value);
+    
       await fetchAndDisplayPokemonData(change.value);
       })()
   };
@@ -67,6 +80,13 @@ export default function PokedexPage() {
   async function fetchAndDisplayPokemonData(value) {
     window.history.pushState({path:'?user=' + value },'','?user=' + value );
     setHasData(false);
+    let settingdata = [];
+
+    if(logedInUser ===value){
+      settingdata = await resource.getPokemonSettings();
+
+    }
+
     const data = await resource.getUniquePokedexEntries(value);
 
     let shinySum = 0;
@@ -75,12 +95,17 @@ export default function PokedexPage() {
     data.forEach(entry => {
       shinySum += entry.shinyNumber;
       totalSum += entry.normalNumber + entry.shinyNumber;
+      if(logedInUser === value){
+        entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
+      }
     });
 
     setPokemonCaugth(totalSum);
     setTotalShinyCaugth(shinySum);
     setUniquePokemonCaugth(data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal).length);
     setItems2(data);
+    debugger;
+    setMydex(userValue.value===logedInUser);
     setPokemonsOriginalSort(data);
   }
 
@@ -265,7 +290,7 @@ const secondarySort = (a,b,secondaryFilter) => {
            <h4 className='selectTitle'>
             User:
             </h4><div className='selectAndTooltip' >
-              <Select className='selectorSelect' value={userValue} options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select>
+              <Select className='selectorSelect' value={userValue} options={users} onChange={onChangeHandler}  defaultValue={"User"} ></Select>
               <div className="selectIcon">
               <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
               <Tooltip id="my-tooltip" 
@@ -285,7 +310,12 @@ const secondarySort = (a,b,secondaryFilter) => {
     </div>
 
     </div>
-    <div className='sortContainer'>
+
+      <div>
+        <img className='explain-logo' src='/Common.png'></img> = Common <img className='explain-logo' src='/Uncommon.png'></img> = Uncommon <img className='explain-logo' src='/Rare.png'></img> = Rare <img className='explain-logo' src='/Legendary.png'></img> = Legendary <img className='explain-logo' src='/yogieisbar.png'></img> = YogiEisbar exclusive <img className='explain-logo' src='/streamingfalcon.png'></img> = StreamingFalcon exclusive 
+        </div><div><FaSearch className='explain-logo' /> = Find pokemon  <FaBalanceScale className='explain-logo' /> = Login only. Your own dex only. Mark as 'wanted for trade'
+      </div>
+      <div className='sortContainer'>
       <div className='sortSelectContainer' ><h4 className='selectTitle'>Primary sort:</h4> <Select isDisabled={hasData} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler}  value={selectValue}></Select>
       </div>
       <div className='sortSelectContainer' ><h4 className='selectTitle'>Secondary sort:</h4> <Select isDisabled={hasData || disableSort2} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler2}  value={selectValue2}></Select>
@@ -298,8 +328,8 @@ const secondarySort = (a,b,secondaryFilter) => {
 
          return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
-          rarity={el.rarity}></PokedexEntry>
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={el.setting}
+          rarity={el.rarity} valuechange={setNewValue} mydex={userValue.value===logedInUser}></PokedexEntry>
            </div>})
           }
       </div>

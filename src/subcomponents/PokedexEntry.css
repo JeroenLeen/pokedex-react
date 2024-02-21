@@ -1,3 +1,4 @@
+
 .image{
     width: 60%;
 }
@@ -29,6 +30,14 @@
     margin-left: 10px;
     width: 25px;
     height: 25px;
+  }
+
+  .exclusiveLogoImg{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+
   }
 
 
@@ -66,3 +75,65 @@ body {
     background: aliceblue;
   }
  
+  .searchLogoImg{
+    margin: 5px;
+
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    fill: black;
+  }
+
+  .hide{
+    display: none;
+  }
+
+  .tradeLogoImg{
+    margin: 5px;
+    width: 25px;
+    height: 25px;
+
+
+    fill: black;
+  }
+
+  
+
+  .pointer{
+    cursor: pointer;
+  }
+
+  .fillGreen{
+    fill: green;
+  }
+
+  .exclusiveLogoContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+  .actionsLogoContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .buttondiv{
+     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 0px !important;
+  }
+
+  .disabledbutton{
+    fill: gray !important;
+    margin: 5px;
+    width: 25px;
+    height: 25px;
+  }
+
