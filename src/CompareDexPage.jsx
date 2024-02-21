@@ -91,7 +91,7 @@ export default function CompareDexPage() {
 
   function setTradeableData(array1, array2){
     for(let i = 0; i< array1.length; i ++){
-      if((array1[i].normalNumber >=2 && (array2[i].normalNumber ==0)|| array2[i].setting?.wanttrade ) || (array1[i].shinyNumber >=2 && array2[i].shinyNumber ==0 || array2[i].setting?.wanttrade) ){
+      if((array1[i].normalNumber >=2 && (array2[i].normalNumber ==0|| array2[i].setting?.wanttrade )) || (array1[i].shinyNumber >=2 && (array2[i].shinyNumber ==0 || array2[i].setting?.wanttrade)) ){
         array1[i].tradeOfferFor1 = 1;
         array2[i].tradeOfferFor1 = 1;
         array1[i].tradeOfferFor2 = 0;
