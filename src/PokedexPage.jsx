@@ -105,7 +105,7 @@ export default function PokedexPage() {
     setUniquePokemonCaugth(data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal).length);
     setItems2(data);
     debugger;
-    setMydex(userValue.value===logedInUser);
+    setMydex(userValue?.value===logedInUser);
     setPokemonsOriginalSort(data);
   }
 
