@@ -12,6 +12,7 @@ import CompareDexPage from './CompareDexPage';
 import SupportPage from './SupportPage';
 import SettingPage from './SettingPage';
 import singletondDbResource from './DBResourceSingleton'
+import HallOfFame from './HallOfFame';
 export const UserContext = React.createContext(null);
 export const UserLoadedContext = React.createContext(null);
 
@@ -81,6 +82,11 @@ export default function GeneralComponent() {
       navigate(path);
     }
 
+    const routeToHoF = () => {
+      let path = 'hof';
+      navigate(path);
+    }
+
     const showMenu = () => {
       setMenuShown(true);
     }
@@ -104,6 +110,9 @@ export default function GeneralComponent() {
           img5.src = '/menuItemDexCompareSelected.png';
           const img6 = new Image();
           img6.src = '/menuItemSettingsSelected.png';
+          const img7 = new Image();
+          img7.src = '/menuItemHofSelected.png';
+          
       });
   
     
@@ -124,6 +133,7 @@ export default function GeneralComponent() {
         
             <button  onClick={routeToInfo} className='overviewMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToRanking} className='rankingsMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToHoF} className='hofMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToDexCompare} className='rankingsMenuItemDexCompare menuItemContainer'></button>
             <button onClick={routeToSupport} className='supportMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToSetting} className='settingsMenuItemContainer menuItemContainer'></button>
@@ -144,6 +154,7 @@ export default function GeneralComponent() {
                 </Route>
                 <Route path='/support' element={<SupportPage/>}></Route>
                 <Route path='/settings' element={<SettingPage/>}></Route>
+                <Route path='/hof' element={<HallOfFame/>}></Route>
               </Routes>
               </UserContext.Provider>
            </UserLoadedContext.Provider>

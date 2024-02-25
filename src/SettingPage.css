@@ -53,3 +53,15 @@
 .savebutton{
     color: black;
 }
+
+.trainerSelect{
+    margin-top: 5px;
+    margin-left: 5px;
+    width:300px;
+    color: black;
+    font-weight: bold;
+  
+  }
+  .trainerContainer{
+    display: flex;
+  }

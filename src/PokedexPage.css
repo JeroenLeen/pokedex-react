@@ -88,27 +88,27 @@
   }
 
   .entryBorder1{
-    border: 2px solid #aa5eff;
+    border: 2px solid #aa5eff !important;
     box-shadow:  2px 2px #aa5eff;
   }
 
   .entryBorder4{
-    border: 2px solid #01dddd;
+    border: 2px solid #01dddd !important;
     box-shadow:  2px 2px #01dddd;
   }
 
   .entryBorder3{
-    border: 2px solid #0094fe;
+    border: 2px solid #0094fe !important;
     box-shadow:  2px 2px #0094fe;
   }
 
   .entryBorder2{
-    border: 2px solid #e6f2fe;
+    border: 2px solid #e6f2fe !important;
     box-shadow:  2px 2px #e6f2fe;
   }
 
   .entryBorder0{
-    border: 2px solid #55d8ec;
+    border: 2px solid #55d8ec !important;
     box-shadow:  2px 2px #55d8ec;
   }
 
@@ -122,4 +122,8 @@
 .explain-logo{
   width: 25px;
   height: 25px;
+}
+
+.trainerImage{
+  height: 80px;
 }

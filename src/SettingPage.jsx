@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import singletondDbResource from './DBResourceSingleton'
+import trainerarray from './PictureArray';
 import './SettingPage.css'
+import Select from 'react-select'
 export default function SettingPage() {
     const [reveal, setReveal] = useState(false);
     const [settings, setSettings] = useState(false);
@@ -10,11 +12,14 @@ export default function SettingPage() {
     const [confirmMessage, setConfirmMessage] = useState("");
     const [changedetected, setChangedetected] = useState(false);
     const [notFindablePokemonSearch, setNotFindablePokemonSearch] = useState(false);
+    const [hidePokedex, setHidePokedex] = useState(false);
+    const [trainerValue, setTrainerValue] = useState({});
+    const [trainerImage, setTrainerImage] = useState("");
     const resource = singletondDbResource;
     const saveSettings = () =>{ 
       (async () => {
       if(settings){
-        let data = await resource.updateSettings(settings, notFindableTrade,notFindablePokemonSearch);
+        let data = await resource.updateSettings(settings, notFindableTrade,notFindablePokemonSearch, trainerValue.valuen, hidePokedex);
         if(data==null){
           showError();
         }else{
@@ -26,7 +31,7 @@ export default function SettingPage() {
           }, 4000);
         }
       }else{
-        let data = await resource.saveSettings(notFindableTrade,notFindablePokemonSearch);
+        let data = await resource.saveSettings(notFindableTrade,notFindablePokemonSearch, trainerValue.value,hidePokedex);
         if(data==null){
           showError();
         }else{
@@ -49,6 +54,9 @@ export default function SettingPage() {
         setSettings(settingsArray[0]);
         setNotFindableTrade(settingsArray[0].notFindableTrade);
         setNotFindablePokemonSearch(settingsArray[0].notfindablepokemonsearch);
+        setHidePokedex(settingsArray[0].hidedex)
+        setTrainerImage("/trainers/bulk/"+settingsArray[0].trainerimage);
+        setTrainerValue({label:settingsArray[0].trainerimage?.replace(/\.[^/.]+$/, ""), value:settingsArray[0].trainerimage});
       }
     }
 
@@ -65,6 +73,12 @@ export default function SettingPage() {
           handleSettingsFetch(settingsArray);
         }
         )();},[]);
+
+        const onTrainerSelect = ( value) =>{ 
+          setChangedetected(true);
+          setTrainerValue(value);
+          setTrainerImage("/trainers/bulk/"+value.value);
+        }
   
 
     return (
@@ -84,6 +98,12 @@ export default function SettingPage() {
             setChangedetected(true);
             setNotFindablePokemonSearch(!notFindablePokemonSearch);
           }} type='checkbox'></input></div>
+          <div>Hide my pokedex <input disabled={!logedInUser} checked={hidePokedex}  onChange={event => {
+            setChangedetected(true);
+            setHidePokedex(!hidePokedex);
+          }} type='checkbox'></input></div>
+          <div  className='trainerContainer'>  Trainer (<a href='https://play.pokemonshowdown.com/sprites/trainers/'>Full list here</a>): <Select className='trainerSelect' isDisabled={!logedInUser} value={trainerValue} options={trainerarray} onChange={onTrainerSelect} ></Select></div>
+          <div>  <img src= {trainerImage}></img></div>
         <div  className='savebuttonContainer'><button  className='savebutton' onClick={saveSettings} disabled={!logedInUser || !changedetected}>Save settings</button></div>
         </div>
         </div>

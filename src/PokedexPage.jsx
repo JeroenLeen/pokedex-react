@@ -39,6 +39,8 @@ export default function PokedexPage() {
   const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
   const {logedInUser, setLogedInUser} = useContext(UserContext);
   const {userLoaded, setUserLoaded0} = useContext(UserLoadedContext);
+  const [trainerImage,setTrainerImage] = useState();
+  
 
   useEffect(() => {
   (async () => {
@@ -46,10 +48,16 @@ export default function PokedexPage() {
     if(!usersCalled && userLoaded){
       setUsersCalled(true);
       console.log("calling unique users:");
-      const foundUsers  = await resource.getUniqueUsers();
+      const foundUsers  = await resource.getUniqueUsersPokedex();
       setUsers(foundUsers) ;
       if(userParam){
 
+        const data = await resource.getSettingsForUser(userParam);
+        if(data.length==1 && data[0].trainerimage){
+          setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
+        }else{
+          setTrainerImage(undefined);
+        }
         setUserValue({label:userParam, value:userParam});
         await fetchAndDisplayPokemonData(userParam);
       }
@@ -68,11 +76,18 @@ export default function PokedexPage() {
 
   const onChangeHandler = (change) => {
     setUserValue(change);
+
     setSelectValue({value:"Pokedex", label:"Pokedex"});
     (async () => {
      
       console.log("finding pokemon for:" + change.value);
-    
+      const data = await resource.getSettingsForUser(change.value);
+      if(data.length==1 && data[0].trainerimage){
+        setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
+      }else{
+        setTrainerImage(undefined);
+      }
+   
       await fetchAndDisplayPokemonData(change.value);
       })()
   };
@@ -104,7 +119,6 @@ export default function PokedexPage() {
     setTotalShinyCaugth(shinySum);
     setUniquePokemonCaugth(data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal).length);
     setItems2(data);
-    debugger;
     setMydex(userValue?.value===logedInUser);
     setPokemonsOriginalSort(data);
   }
@@ -286,6 +300,7 @@ const secondarySort = (a,b,secondaryFilter) => {
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
       <div className='selectorWrapper'>
+      {trainerImage?<img className='trainerImage' src={trainerImage}></img>:''}
       <div className='selector'>
            <h4 className='selectTitle'>
             User:
@@ -300,6 +315,7 @@ const secondarySort = (a,b,secondaryFilter) => {
             </div>
             </div>
       </div>
+      {trainerImage?<img className='trainerImage' src={trainerImage}></img>:''}
       </div>
 
     <div>

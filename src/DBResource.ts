@@ -26,11 +26,11 @@ export default class DBResource{
         window.location.reload();
       }
 
-      async updateSettings(settings, notFindableTrade,notFindablePokemonSearch){
+      async updateSettings(settings, notFindableTrade,notFindablePokemonSearch,trainerImage, hidedex){
 
         const { data, error } = await this.supabase
         .from('UserSetting')
-        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', notFindableTrade: notFindableTrade, twitchid: settings.twitchid, notfindablepokemonsearch:notFindablePokemonSearch })
+        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', notFindableTrade: notFindableTrade, twitchid: settings.twitchid, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex })
         .eq('id',  settings.id);
 
         if(!!error){
@@ -39,14 +39,14 @@ export default class DBResource{
         return await this.getSettings();
       }
 
-      async saveSettings(notFindableTrade,notFindablePokemonSearch){
+      async saveSettings(notFindableTrade,notFindablePokemonSearch,trainerImage,hidedex){
         const { data: { user } } = await this.supabase.auth.getUser();
 
         console.log("providerid: " + user?.user_metadata.provider_id);
         const { data, error } = await this.supabase
         .from('UserSetting')
         .insert(
-            {username: user?.user_metadata.full_name, userid: user?.id + '', notFindableTrade: notFindableTrade, twitchid:user?.user_metadata.sub, notfindablepokemonsearch:notFindablePokemonSearch}
+            {username: user?.user_metadata.full_name, userid: user?.id + '', notFindableTrade: notFindableTrade, twitchid:user?.user_metadata.sub, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex}
         )
         if(!!error){
             return null;
@@ -124,11 +124,6 @@ export default class DBResource{
         }
       }
 
-
-
-      
-
-
       async getSettings(){
         
         const { data: { user } } = await this.supabase.auth.getUser();
@@ -140,6 +135,19 @@ export default class DBResource{
             .eq('userid',  user?.id);
             return settings;
         }
+      }
+
+      
+      async getSettingsForUser(username){
+        
+
+        let { data: settings, error } = await this.supabase
+            .from('UserSetting')
+            .select("*")
+            // Filters
+            .eq('username',  username);
+            return settings;
+        
       }
 
 
@@ -188,6 +196,21 @@ export default class DBResource{
         let options = distinctusers.map(user=> {return {value:user.originalOwner, label:user.originalOwner}}) ; 
         return  options;
     }
+
+    async getUniqueUsersPokedex() {
+        console.log('calling');
+   
+
+        let { data: distinctusers, error } = await this.supabase
+            .from('distinctuserspokedex')
+            .select("*");
+
+        
+     
+        let options = distinctusers.map(user=> {return {value:user.originalOwner, label:user.originalOwner}}) ; 
+        return  options;
+    }
+
 
     
     async getUniqueUsersPokedexCompare() {

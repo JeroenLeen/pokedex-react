@@ -110,6 +110,16 @@
     background-size: 100% 100%   !important;; 
   }
 
+  .hofMenuItemContainer {
+    background: url('/menuItemHof.png')  !important;
+    background-size: 100% 100%   !important;; 
+  }
+
+  .hofMenuItemContainer:hover {
+    background: url('/menuItemHofSelected.png')  !important;
+    background-size: 100% 100%   !important;; 
+  }
+
   .warninglogin{
     color:red
   }
