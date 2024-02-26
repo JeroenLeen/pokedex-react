@@ -40,26 +40,27 @@ export default function PokedexPage() {
   const {logedInUser, setLogedInUser} = useContext(UserContext);
   const {userLoaded, setUserLoaded0} = useContext(UserLoadedContext);
   const [trainerImage,setTrainerImage] = useState();
-  
+  const [badBoy,setBadBoy] = useState(false);
 
   useEffect(() => {
   (async () => {
-    console.log("here i am " + userLoaded);
     if(!usersCalled && userLoaded){
       setUsersCalled(true);
       console.log("calling unique users:");
       const foundUsers  = await resource.getUniqueUsersPokedex();
       setUsers(foundUsers) ;
       if(userParam){
-
-        const data = await resource.getSettingsForUser(userParam);
-        if(data.length==1 && data[0].trainerimage){
-          setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
-        }else{
-          setTrainerImage(undefined);
-        }
-        setUserValue({label:userParam, value:userParam});
-        await fetchAndDisplayPokemonData(userParam);
+        if(!foundUsers.find(s=>s.label==userParam)){
+           setBadBoy(true);
+        }else { const data = await resource.getSettingsForUser(userParam);
+          if(data.length==1 && data[0].trainerimage){
+            setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
+          }else{
+            setTrainerImage(undefined);
+          }
+          setUserValue({label:userParam, value:userParam});
+          await fetchAndDisplayPokemonData(userParam);}
+       
       }
    
     }
@@ -76,7 +77,7 @@ export default function PokedexPage() {
 
   const onChangeHandler = (change) => {
     setUserValue(change);
-
+    setBadBoy(false);
     setSelectValue({value:"Pokedex", label:"Pokedex"});
     (async () => {
      
@@ -336,6 +337,9 @@ const secondarySort = (a,b,secondaryFilter) => {
       </div>
       <div className='sortSelectContainer' ><h4 className='selectTitle'>Secondary sort:</h4> <Select isDisabled={hasData || disableSort2} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler2}  value={selectValue2}></Select>
       </div>
+      </div>
+      <div>
+        {badBoy?<img src= "nono.gif"></img>: ""}
       </div>
      <div className='entries'> 
           {
