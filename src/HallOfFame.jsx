@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import singletondDbResource from './DBResourceSingleton'
-
+import moment from 'moment';
 import './HallOfFame.css'
 import Select from 'react-select'
 export default function HallOfFame() {
@@ -37,7 +37,7 @@ export default function HallOfFame() {
                     <div className='favdiv'><img className='fav' src={el.shiny?"/pokemon/Shiny/"+ el.pokedex+".png":"/pokemon/Normal/"+ el.pokedex+".png"}></img><div className='emptydiv'></div></div>
                 </div>
             </div>
-            <div className='userdata'><h2>{el.dexCompletedDate}</h2><h2>{el.username}</h2></div>
+            <div className='userdata'><h2>{moment(el.dexCompletedDate).format('DD/MM/YYYY')}</h2><h2>{el.username}</h2></div>
         </div>
        return 
         })
