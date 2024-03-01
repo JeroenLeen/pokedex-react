@@ -427,8 +427,10 @@ export default class DBResource{
 
         });
 
+        
 
-       return  allData;
+
+       return  allData?.filter(test=>{ return !(test.rarityNumber == 5 && test.shinyNumber == 0 && test.normalNumber == 0  )});
     }
   
 }
