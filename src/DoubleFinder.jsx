@@ -116,7 +116,7 @@ export default function DoubleFinder() {
 <div className="wholeSite">
     <div className="content">
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Pokemon finder</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Pokemon finder</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
       <div className='selectorWrapper'>
       <div className='selector'>

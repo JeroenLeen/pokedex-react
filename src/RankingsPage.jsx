@@ -48,7 +48,7 @@ export default function RankingsPage() {
     return (
       <div>
         <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch rankings</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hatch & Catch rankings</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
         <div className="top10scontainer">
             <Top10 borderColor='1'  firstColumnName='User' title = 'Most Shiny Trainers' firstColumnData = 'currentOwner' secondColumnName='Amount' secondColumnData = 'count' double={false}  data = {mostShinyTrainers}></Top10>

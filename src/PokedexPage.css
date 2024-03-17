@@ -17,6 +17,13 @@
     width:20%
 }
 
+@media (max-width: 1000px) {
+
+  .sortSelectContainer{
+    width:40% !important
+}
+}
+
 .sortSelect{
     width:80%;
     color: black;
@@ -29,7 +36,15 @@
     flex-direction: column;
     align-content: stretch;
     align-items: flex-start;
-    width:30%;
+    width:40%;
+  }
+
+  @media (max-width: 1000px) {
+
+    .selector{
+      width: 80% !important;;
+    }
+  
   }
   
   .selectorSelect{
@@ -87,6 +102,22 @@
     overflow: hidden;
   }
 
+  @media (max-width: 600px) {
+
+    .entry{
+      width: 30% !important;
+    }
+  
+  }
+
+  @media (max-width: 400px) {
+
+    .entry{
+      width: 40% !important;
+    }
+  
+  }
+
   .entryBorder1{
     border: 2px solid #aa5eff !important;
     box-shadow:  2px 2px #aa5eff;
@@ -126,4 +157,46 @@
 
 .trainerImage{
   height: 80px;
+}
+
+.legend{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: space-between;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 5px;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #777;
+  
+}
+
+.legendButton{
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 80%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    border-radius: 0 0 0 0;
+}
+
+.legendButton:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: white !important;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+.hide {
+  display: none;
 }

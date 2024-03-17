@@ -13,6 +13,8 @@ import SupportPage from './SupportPage';
 import SettingPage from './SettingPage';
 import singletondDbResource from './DBResourceSingleton'
 import HallOfFame from './HallOfFame';
+import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
+import YogiWheel from './YogiWheel';
 export const UserContext = React.createContext(null);
 export const UserLoadedContext = React.createContext(null);
 
@@ -23,10 +25,12 @@ export default function GeneralComponent() {
     const [userImage, setUserImage] = useState('');
     const [userLoaded, setUserLoaded] = useState(false);
     const [menuShown, setMenuShown] = useState(false);
+    const [menuMinimized, setMenuMinimized] = useState(false);
     const showTime = date.getHours() 
         + ':' + date.getMinutes() ;
     let navigate = useNavigate();
-
+    const upArrow = '&#129169;';
+    const downArrow = '&#129171;';
 
     useEffect(() => {
       (async () => {
@@ -96,6 +100,15 @@ export default function GeneralComponent() {
       setMenuShown(false);
     }
 
+    const toggleMenuHide = () =>{
+      setMenuMinimized(!menuMinimized);
+    }
+
+    const routeToWheel = () => {
+        let path = 'wheel';
+        navigate(path);
+    }
+
 
     useEffect(() => {
           const img = new Image();
@@ -112,6 +125,8 @@ export default function GeneralComponent() {
           img6.src = '/menuItemSettingsSelected.png';
           const img7 = new Image();
           img7.src = '/menuItemHofSelected.png';
+          const img8 = new Image();
+          img8.src = 'menuItemWheelSelected.png';
           
       });
   
@@ -119,14 +134,14 @@ export default function GeneralComponent() {
   
     return (
       <div>
-          <div className='menuTopDecorator'><div className='menuTopDecoratorTime'>{showTime}</div><div className='menuTopDecorator'><img src={logedInUser?"/batteryLogedIn.png":"/battery.png"}></img>
+          <div className='menuTopDecorator'><div className='menuTopDecoratorTime'>{showTime}</div><div className='menuTopDecoratorMiddle'><img className="menuMiddleImage"  src={logedInUser?"/batteryLogedIn.png":"/battery.png"}></img>
           { logedInUser? <div onMouseEnter={showMenu} onMouseLeave={hideMenu}><button className='loginWithTwitchButton'> <img className='loggedInWithTwitchIcon' src={userImage}></img> {logedInUser}</button>
           {menuShown?<button  onClick={onLogoutClick} className='popupMenu'>  <img className='logoutIcon' src="/logout.png"></img>  Log Out</button>:''}
           </div>:<button className='loginWithTwitchButton' onClick={onLoginClick} ><img className='loginWithTwitchIcon' src='/twitch-icon.png'></img>Login with Twitch</button>
           }
           </div>
           </div>
-          <div className='menu'>
+          <div className={menuMinimized?'hideMenu':'menu'}>
             <button onClick={routeToDex} className='pokedexMenuItemContainer menuItemContainer'></button>
       
             <button onClick={routeChange} className='pokemonFinderMenuItemContainer menuItemContainer'></button>
@@ -134,10 +149,13 @@ export default function GeneralComponent() {
             <button  onClick={routeToInfo} className='overviewMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToRanking} className='rankingsMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToHoF} className='hofMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToWheel} className='wheelMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToDexCompare} className='rankingsMenuItemDexCompare menuItemContainer'></button>
             <button onClick={routeToSupport} className='supportMenuItemContainer menuItemContainer'></button>
             <button onClick={routeToSetting} className='settingsMenuItemContainer menuItemContainer'></button>
+        
           </div>
+          <div className='minimizeMenuContainer'><button className='minimizeMenuButton' onClick={toggleMenuHide} >{menuMinimized? <div><FaAngleDown/><FaAngleDown/><FaAngleDown/></div>: <div><FaAngleUp/><FaAngleUp/><FaAngleUp/></div>}</button></div>
           <div className='rootDiv'>
           <UserLoadedContext.Provider value={{ userLoaded: userLoaded, setUserLoaded: setUserLoaded }}>
             <UserContext.Provider value={{ logedInUser: logedInUser, setLogedInUser: setLogedInUser }}>
@@ -155,6 +173,7 @@ export default function GeneralComponent() {
                 <Route path='/support' element={<SupportPage/>}></Route>
                 <Route path='/settings' element={<SettingPage/>}></Route>
                 <Route path='/hof' element={<HallOfFame/>}></Route>
+                <Route path='/wheel' element={<YogiWheel/>}></Route>
               </Routes>
               </UserContext.Provider>
            </UserLoadedContext.Provider>

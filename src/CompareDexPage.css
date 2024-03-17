@@ -12,6 +12,8 @@
     overflow: hidden;
   }
 
+
+
   .compareEntries{
         max-width: 50%;
         width: 100%;
@@ -20,6 +22,19 @@
         justify-content:center;
       
   }
+
+  @media (max-width: 1000px) {
+    .compareEntry{
+      background-color: #505050;
+      width: 100%;
+      margin: 5px;
+      border-radius: 5px;
+   
+      position: relative;
+      overflow: hidden;
+    }
+  }
+
   .selectorsWrapper{
     display: flex;
     justify-content: space-around;

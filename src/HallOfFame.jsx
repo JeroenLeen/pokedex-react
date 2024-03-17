@@ -23,13 +23,13 @@ export default function HallOfFame() {
     return (
         <div>
         <div className="header">
-            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hall of fame</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hall of fame</h1><img src="yogieisbar.png" alt="Image" className="logo" />
         </div>
         <div className='hofentries'> 
         {
 
     hallOfFame.map(function (el, index) { 
-        return <div  className={"entryBorder" + index %4 + " entry hallOfFameContainer"}> 
+        return <div  className={"entryBorder" + index %4 + " hofentry hallOfFameContainer"}> 
             <div><h2>Hatch & Catch Champion</h2></div>
             <div className='hallOfFameEntry'>
                 <div className='hallOfFameBackground'>

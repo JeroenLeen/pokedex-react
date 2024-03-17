@@ -4,6 +4,19 @@
     background-color: #181818;
 }
 
+.menuTopDecoratorMiddle{
+  display: flex;
+  justify-content: space-between;
+  background-color: #181818;
+}
+
+@media (max-width: 1094px) {
+  .menuMiddleImage{
+    display: none;
+  }
+}
+
+
 .menuTopDecoratorTime{
     font-size: 20px;
     color: white;
@@ -11,6 +24,20 @@
     align-items: center;
     font-family: '8BIT WONDER', sans-serif;
     margin-left: 10px;
+}
+
+@media (max-width: 400px) {
+  .menuTopDecoratorTime{
+    display: none;
+  }
+
+  .menuTopDecoratorMiddle{
+    width: 100%;
+  }
+}
+
+.hideMenu{
+  display: none;
 }
 
 .menu{
@@ -23,7 +50,7 @@
   }
   
   .menuItemContainer {
-    width: 20%; 
+    width: 19%; 
     aspect-ratio: 450/150;
     border: none !important;
     outline: none !important;
@@ -119,6 +146,17 @@
     background-size: 100% 100%   !important;; 
   }
 
+  .wheelMenuItemContainer {
+    background: url('/menuItemWheel.png')  !important;
+    background-size: 100% 100%   !important;; 
+  }
+
+  .wheelMenuItemContainer:hover {
+    background: url('/menuItemWheelSelected.png')  !important;
+    background-size: 100% 100%   !important;; 
+  }
+
+
   .warninglogin{
     color:red
   }
@@ -137,15 +175,18 @@
     border: black 3px solid;
   }
 
+  
   @media (max-width: 1000px) {
     .rootDiv {
       max-width: 100%;
       width:100%;
       background-color: #2c2c2f;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 0;
       text-align: center;
       min-height: 100vh;
+      border: 0;
+      border-top: black 3px solid;
     }
 
     .menu{
@@ -155,6 +196,23 @@
     .menuItemContainer {
         width: 40%; 
     }
+  }
+
+.minimizeMenuContainer{
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .minimizeMenuContainer {
+    display: block;
+    width: 100%;
+  }
+
+  .minimizeMenuButton{
+    width: 100%;
+    border-radius: 0px;
+    background: gray;
+  }
   }
 
   
@@ -169,6 +227,7 @@
 
 
 .logo {
+  font-size:1vw;
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -189,6 +248,14 @@
   color: white;
   align-items: center;
 }
+
+@media (max-width: 400px) {
+  .loginWithTwitchButton{
+    width: 100% !important;
+  }
+}
+
+
 
 .loginWithTwitchIcon{
   height: 30px;
@@ -224,4 +291,8 @@
   display: flex;
   border-radius: 0px !important;
   align-items: center;
+}
+
+.titleText{
+  font-size:4vw;
 }

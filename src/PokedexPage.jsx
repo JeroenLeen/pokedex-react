@@ -41,6 +41,7 @@ export default function PokedexPage() {
   const {userLoaded, setUserLoaded0} = useContext(UserLoadedContext);
   const [trainerImage,setTrainerImage] = useState();
   const [badBoy,setBadBoy] = useState(false);
+  const [legend,setLegend] = useState(false);
 
   useEffect(() => {
   (async () => {
@@ -292,13 +293,16 @@ const secondarySort = (a,b,secondaryFilter) => {
     setItems2(tempData) ;
   };
 
+  const toggleLegend = () => {
+    setLegend(!legend);
+  }
 
   return (
 <div className="wholeSite">
     <div className="content">
    
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
       <div className='selectorWrapper'>
       {trainerImage?<img className='trainerImage' src={trainerImage}></img>:''}
@@ -327,10 +331,16 @@ const secondarySort = (a,b,secondaryFilter) => {
     </div>
 
     </div>
-
-      <div>
-        <img className='explain-logo' src='/Common.png'></img> = Common <img className='explain-logo' src='/Uncommon.png'></img> = Uncommon <img className='explain-logo' src='/Rare.png'></img> = Rare <img className='explain-logo' src='/Legendary.png'></img> = Legendary <img className='explain-logo' src='/yogieisbar.png'></img> = YogiEisbar exclusive <img className='explain-logo' src='/streamingfalcon.png'></img> = StreamingFalcon exclusive 
-        </div><div><FaSearch className='explain-logo' /> = Find pokemon  <FaBalanceScale className='explain-logo' /> = Login only. Your own dex only. Mark as 'wanted for trade'
+      <button className={legend?'legendButton active':'legendButton'} onClick={toggleLegend}>Legend</button>
+      <div className={legend?'legend':'hide'}>
+        <div><img className='explain-logo' src='/Common.png'></img> = Common</div> 
+        <div><img className='explain-logo' src='/Uncommon.png'></img> = Uncommon</div>
+        <div><img className='explain-logo' src='/Rare.png'></img> = Rare</div> 
+        <div><img className='explain-logo' src='/Legendary.png'></img> = Legendary </div>
+        <div><img className='explain-logo' src='/yogieisbar.png'></img> = YogiEisbar exclusive </div>
+        <div><img className='explain-logo' src='/streamingfalcon.png'></img> = StreamingFalcon exclusive </div> 
+        <div><FaSearch className='explain-logo' /> = Find pokemon</div>
+        <div><FaBalanceScale className='explain-logo' /> = Login only. Your own dex only. Mark as 'wanted for trade'</div>
       </div>
       <div className='sortContainer'>
       <div className='sortSelectContainer' ><h4 className='selectTitle'>Primary sort:</h4> <Select isDisabled={hasData} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler}  value={selectValue}></Select>

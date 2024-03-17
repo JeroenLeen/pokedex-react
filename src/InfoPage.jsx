@@ -132,7 +132,7 @@ export default function PokedexPage() {
 <div className="wholeSite">
     <div className="content">
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch overview</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hatch & Catch overview</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
 
 
