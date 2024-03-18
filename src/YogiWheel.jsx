@@ -13,17 +13,7 @@ export default function YogiWheel() {
             setDataCalled(true);
             console.log("calling data:");
             let wheelData = await resource.getAllForTable("yogiwheel");
-            wheelData= wheelData.filter(d=>d.wheelPoints>0);
-            wheelData.sort(function (a, b) {
-                if (a.wheelPoints > b.wheelPoints) {
-                  return -1;
-                }
-                if (a.wheelPoints < b.wheelPoints) {
-                  return 1;
-                }
-                return 0;
-              });
-          
+        
             setAllWheelData(wheelData);
           }
         })();},[]);
