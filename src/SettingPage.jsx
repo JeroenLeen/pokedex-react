@@ -19,7 +19,6 @@ export default function SettingPage() {
     const saveSettings = () =>{ 
       (async () => {
       if(settings){
-        debugger;
         let data = await resource.updateSettings(settings, notFindableTrade,notFindablePokemonSearch, trainerValue.value, hidePokedex);
         if(data==null){
           showError();
@@ -32,7 +31,6 @@ export default function SettingPage() {
           }, 4000);
         }
       }else{
-        debugger;
         let data = await resource.saveSettings(notFindableTrade,notFindablePokemonSearch, trainerValue.value,hidePokedex);
         if(data==null){
           showError();

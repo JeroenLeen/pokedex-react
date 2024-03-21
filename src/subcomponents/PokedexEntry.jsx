@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './PokedexEntry.css'
-import { FaBalanceScale, FaBeer, FaSearch } from "react-icons/fa";
+import { FaBalanceScale, FaBeer, FaLock, FaSearch } from "react-icons/fa";
 import singletondDbResource from './../DBResourceSingleton'
 import React, { useEffect } from 'react';
 import { Tooltip } from 'react-tooltip';
@@ -55,6 +55,8 @@ export default function PokedexEntry(  props) {
       {props.compareEntry? 
         <FaBalanceScale className={props.setting?.wanttrade ?'rarityLogoImg fillGreen':'hide'} />
       :''}
+      <FaLock className={props.lock?.id ?'rarityLogoImg fillGreen':'hide'} />
+      
       </div>
       <div className={props.shinyNumber && !props.noShine>0?'entry-container-shiny':'entry-container'}>
       <div className="image-container">

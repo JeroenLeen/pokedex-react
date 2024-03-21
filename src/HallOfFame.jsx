@@ -14,7 +14,6 @@ export default function HallOfFame() {
             setDataCalled(true);
             console.log("calling data:");
             const halloffame = await resource.getAllForTable('halloffame');
-           debugger;
             setHallOfFame(halloffame);
            
           }

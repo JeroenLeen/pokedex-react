@@ -8,7 +8,7 @@ import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from './GeneralComponent';
 import { UserLoadedContext } from './GeneralComponent';
-import { FaBalanceScale, FaBeer, FaSearch } from "react-icons/fa";
+import { FaBalanceScale, FaBeer, FaSearch, FaLock } from "react-icons/fa";
 
 export default function PokedexPage() {
   //static contextType = ThemeContext;
@@ -98,12 +98,11 @@ export default function PokedexPage() {
     window.history.pushState({path:'?user=' + value },'','?user=' + value );
     setHasData(false);
     let settingdata = [];
-
+    let lockdata = [];
     if(logedInUser ===value){
       settingdata = await resource.getPokemonSettings();
-
     }
-
+    lockdata = await resource.getPokemonLock(value);
     const data = await resource.getUniquePokedexEntries(value);
 
     let shinySum = 0;
@@ -115,8 +114,8 @@ export default function PokedexPage() {
       if(logedInUser === value){
         entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
       }
+      entry.lock = lockdata.find((set)=>set.dex == entry.pokedex);
     });
-
     setPokemonCaugth(totalSum);
     setTotalShinyCaugth(shinySum);
     setUniquePokemonCaugth(data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal).length);
@@ -341,6 +340,7 @@ const secondarySort = (a,b,secondaryFilter) => {
         <div><img className='explain-logo' src='/streamingfalcon.png'></img> = StreamingFalcon exclusive </div> 
         <div><FaSearch className='explain-logo' /> = Find pokemon</div>
         <div><FaBalanceScale className='explain-logo' /> = Login only. Your own dex only. Mark as 'wanted for trade'</div>
+        <div> <FaLock className='explain-logo fillGreen' /> Locked pokemon, can't be gifted</div>
       </div>
       <div className='sortContainer'>
       <div className='sortSelectContainer' ><h4 className='selectTitle'>Primary sort:</h4> <Select isDisabled={hasData} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler}  value={selectValue}></Select>
@@ -358,7 +358,7 @@ const secondarySort = (a,b,secondaryFilter) => {
 
          return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={el.setting}
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={el.setting} lock={el.lock}
           rarity={el.rarity} valuechange={setNewValue} mydex={userValue.value===logedInUser}></PokedexEntry>
            </div>})
           }

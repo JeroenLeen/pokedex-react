@@ -162,7 +162,7 @@
 .legend{
   display: flex;
   flex-wrap:wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-left: 10%;
   margin-right: 10%;
   padding: 5px;

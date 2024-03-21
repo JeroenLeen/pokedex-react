@@ -181,7 +181,6 @@ export default function CompareDexPage() {
       let tradeOffer  = tempData1.filter(obj => {
         return obj.tradeOfferFor1 === 1
       })
-      debugger;
       setNothingToOffer1(tradeOffer.length==0);
       sortByFieldDesc(tempData1,"tradeOfferFor1");
       sortByFieldDesc(tempData2,"tradeOfferFor1");
@@ -193,7 +192,6 @@ export default function CompareDexPage() {
         return obj.tradeOfferFor2 === 1
       })
       setNothingToOffer2(tradeOffer.length==0);
-      debugger;
       sortByFieldDesc(tempData1,"tradeOfferFor2");
       sortByFieldDesc(tempData2,"tradeOfferFor2");
     }

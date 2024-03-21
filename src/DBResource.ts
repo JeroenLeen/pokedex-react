@@ -99,6 +99,16 @@ export default class DBResource{
         }
       }
 
+      async getPokemonLock(username){
+    
+        let { data: settings, error } = await this.supabase
+            .from('LockedMons')
+            .select("*")
+            // Filters
+            .eq('username',  username);
+            return settings;
+      }
+
       
       async getPokemonSettingsForUser(username){
         let { data: settings, error } = await this.supabase
