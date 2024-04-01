@@ -144,15 +144,15 @@ export default function GeneralComponent() {
           <div className={menuMinimized?'hideMenu':'menu'}>
             <button onClick={routeToDex} className='pokedexMenuItemContainer menuItemContainer'></button>
       
-            <button onClick={routeChange} className='pokemonFinderMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToSetting} className='pokemonFinderMenuItemContainer menuItemContainer'></button>
         
-            <button  onClick={routeToInfo} className='overviewMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToRanking} className='rankingsMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToHoF} className='hofMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToWheel} className='wheelMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToDexCompare} className='rankingsMenuItemDexCompare menuItemContainer'></button>
-            <button onClick={routeToSupport} className='supportMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToSetting} className='settingsMenuItemContainer menuItemContainer'></button>
+            <button  onClick={ routeChange } className='overviewMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToInfo } className='rankingsMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToRanking } className='hofMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToHoF } className='wheelMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToWheel } className='rankingsMenuItemDexCompare menuItemContainer'></button>
+            <button onClick={routeToDexCompare } className='supportMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToSupport } className='settingsMenuItemContainer menuItemContainer'></button>
         
           </div>
           <div className='minimizeMenuContainer'><button className='minimizeMenuButton' onClick={toggleMenuHide} >{menuMinimized? <div><FaAngleDown/><FaAngleDown/><FaAngleDown/></div>: <div><FaAngleUp/><FaAngleUp/><FaAngleUp/></div>}</button></div>
