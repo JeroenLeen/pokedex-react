@@ -38,7 +38,7 @@ export default function PokedexEntry(  props) {
     }
 
     const routeChange = () =>{ 
-      let path = `doubleFinder?pokedex=` +props.pokedexEntryNumber + '&pokename='+ props.name; 
+      let path = `/doubleFinder?pokedex=` +props.pokedexEntryNumber + '&pokename='+ props.name; 
       navigate(path);
     }
 

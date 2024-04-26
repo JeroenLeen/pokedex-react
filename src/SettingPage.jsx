@@ -3,6 +3,7 @@ import singletondDbResource from './DBResourceSingleton'
 import trainerarray from './PictureArray';
 import './SettingPage.css'
 import Select from 'react-select'
+import DropDownWithImage from './subcomponents/DropDownWithImage';
 export default function SettingPage() {
     const [reveal, setReveal] = useState(false);
     const [settings, setSettings] = useState(false);
@@ -15,28 +16,36 @@ export default function SettingPage() {
     const [hidePokedex, setHidePokedex] = useState(false);
     const [trainerValue, setTrainerValue] = useState({});
     const [trainerImage, setTrainerImage] = useState("");
+    const [ownedMons, setOwnedMons] = useState([]);
+    const [pokedexfav1, setPokedexfav1] = useState({});
+    const [pokedexfav2, setPokedexfav2] = useState({});
+    const [pokedexfav3, setPokedexfav3] = useState({});
+    const [pokedexfav4, setPokedexfav4] = useState({});
+    const [pokedexfav5, setPokedexfav5] = useState({});
+
     const resource = singletondDbResource;
     const saveSettings = () =>{ 
       (async () => {
+        debugger;
       if(settings){
-        let data = await resource.updateSettings(settings, notFindableTrade,notFindablePokemonSearch, trainerValue.value, hidePokedex);
+        let data = await resource.updateSettings(settings, notFindableTrade,notFindablePokemonSearch, trainerValue.value, hidePokedex,pokedexfav1?.value,pokedexfav2?.value,pokedexfav3?.value,pokedexfav4?.value,pokedexfav5?.value);
         if(data==null){
           showError();
         }else{
           setConfirmMessage("Saved")
-          handleSettingsFetch(data);
+          handleSettingsFetch(data,ownedMons);
           setChangedetected(false);
           setTimeout(function() {
             setConfirmMessage(null);
           }, 4000);
         }
       }else{
-        let data = await resource.saveSettings(notFindableTrade,notFindablePokemonSearch, trainerValue.value,hidePokedex);
+        let data = await resource.saveSettings(notFindableTrade,notFindablePokemonSearch, trainerValue.value,hidePokedex,pokedexfav1?.value,pokedexfav2?.value,pokedexfav3?.value,pokedexfav4?.value,pokedexfav5?.value);
         if(data==null){
           showError();
         }else{
           setConfirmMessage("Saved")
-          handleSettingsFetch(data);
+          handleSettingsFetch(data,ownedMons);
           setChangedetected(false);
           setTimeout(function() {
             setConfirmMessage(null);
@@ -47,7 +56,7 @@ export default function SettingPage() {
  
     }
 
-    function handleSettingsFetch(settingsArray) {
+    function handleSettingsFetch(settingsArray,optionsOwnedMons) {
       if (settingsArray.length > 1) {
         setErrorMessage("Something went wrong, please contact forodor");
       } else if (settingsArray.length == 1) {
@@ -57,7 +66,39 @@ export default function SettingPage() {
         setHidePokedex(settingsArray[0].hidedex)
         setTrainerImage("/trainers/bulk/"+settingsArray[0].trainerimage);
         setTrainerValue({label:settingsArray[0].trainerimage?.replace(/\.[^/.]+$/, ""), value:settingsArray[0].trainerimage});
+        debugger;
+        setPokedexfav1(optionsOwnedMons.find(s=>s.value==settingsArray[0].pokedexextrafav1));
+        setPokedexfav2(optionsOwnedMons.find(s=>s.value==settingsArray[0].pokedexextrafav2));
+        setPokedexfav3(optionsOwnedMons.find(s=>s.value==settingsArray[0].pokedexextrafav3));
+        setPokedexfav4(optionsOwnedMons.find(s=>s.value==settingsArray[0].pokedexextrafav4));
+        setPokedexfav5(optionsOwnedMons.find(s=>s.value==settingsArray[0].pokedexextrafav5));
+     
       }
+    }
+
+    const handleFav1Changed = (fav,value) => {
+      setChangedetected(true);
+      setPokedexfav1(value);
+    }
+
+    const handleFav2Changed = (fav,value) => {
+      setChangedetected(true);
+      setPokedexfav2(value);
+    }
+
+    const handleFav3Changed = (fav,value) => {
+      setChangedetected(true);
+      setPokedexfav3(value);
+    }
+
+    const handleFav4Changed = (fav,value) => {
+      setChangedetected(true);
+      setPokedexfav4(value);
+    }
+
+    const handleFav5Changed = (fav,value) => {
+      setChangedetected(true);
+      setPokedexfav5(value);
     }
 
     const showError = () =>{
@@ -69,8 +110,14 @@ export default function SettingPage() {
         (async () => {
           let user = await resource.getUser();
           setLogedInUser(user?.user_metadata?.full_name);   
+          let ownedPokemons = await resource.getUniquePokedexEntries(user?.user_metadata?.full_name);
+          let options = ownedPokemons.map(mon=> {return {value:mon.pokedex, label:mon.monName}}) ; 
+          debugger;
+          setOwnedMons(options);
           let settingsArray = await resource.getSettings();
-          handleSettingsFetch(settingsArray);
+          handleSettingsFetch(settingsArray,options);
+         
+  
         }
         )();},[]);
 
@@ -104,6 +151,14 @@ export default function SettingPage() {
           }} type='checkbox'></input></div>
           <div  className='trainerContainer'>  Trainer (<a href='https://play.pokemonshowdown.com/sprites/trainers/'>Full list here</a>): <Select className='trainerSelect' isDisabled={!logedInUser} value={trainerValue} options={trainerarray} onChange={onTrainerSelect} ></Select></div>
           <div>  <img src= {trainerImage}></img></div>
+          <div className='extraFavContainer'>
+            <div  className="extraFav">  <DropDownWithImage  number={1} data={pokedexfav1} valueChange={handleFav1Changed} options={ownedMons} title={'Extra fav1'}></DropDownWithImage></div>
+        
+            <div  className="extraFav"> <DropDownWithImage number={2}  data={pokedexfav2} valueChange={handleFav2Changed}  options={ownedMons} title={'Extra fav2'}></DropDownWithImage></div>
+            <div  className="extraFav"> <DropDownWithImage number={3}  data={pokedexfav3}  valueChange={handleFav3Changed}  options={ownedMons} title={'Extra fav3'}></DropDownWithImage></div>
+            <div  className="extraFav"> <DropDownWithImage number={4}  data={pokedexfav4} valueChange={handleFav4Changed}  options={ownedMons} title={'Extra fav4'}></DropDownWithImage></div>
+            <div  className="extraFav"> <DropDownWithImage number={5}  data={pokedexfav5}  valueChange={handleFav5Changed}  options={ownedMons} title={'Extra fav5'}></DropDownWithImage></div>
+            </div>
         <div  className='savebuttonContainer'><button  className='savebutton' onClick={saveSettings} disabled={!logedInUser || !changedetected}>Save settings</button></div>
         </div>
         </div>

@@ -13,6 +13,7 @@ import SupportPage from './SupportPage';
 import SettingPage from './SettingPage';
 import singletondDbResource from './DBResourceSingleton'
 import HallOfFame from './HallOfFame';
+import ManualPage from './ManualPage'
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import YogiWheel from './YogiWheel';
 export const UserContext = React.createContext(null);
@@ -69,6 +70,11 @@ export default function GeneralComponent() {
 
     const routeToSupport = () => {
       let path = 'support';
+      navigate(path);
+    }
+
+    const routeToManual = () => {
+      let path = 'manual';
       navigate(path);
     }
 
@@ -144,16 +150,16 @@ export default function GeneralComponent() {
           <div className={menuMinimized?'hideMenu':'menu'}>
             <button onClick={routeToDex} className='pokedexMenuItemContainer menuItemContainer'></button>
       
-            <button onClick={routeToSetting} className='pokemonFinderMenuItemContainer menuItemContainer'></button>
+           
+            <button  onClick={ routeChange } className='pokemonFinderMenuItemContainer  menuItemContainer'></button>
+            <button onClick={routeToInfo } className='overviewMenuItemContainer menuItemContainer'></button>
+            <button onClick={routeToRanking } className='rankingsMenuItemContainer  menuItemContainer'></button>
+            <button onClick={routeToHoF } className='hofMenuItemContainer  menuItemContainer'></button>
+            <button onClick={routeToWheel } className='wheelMenuItemContainer  menuItemContainer'></button>
+            <button onClick={routeToDexCompare } className='rankingsMenuItemDexCompare  menuItemContainer'></button>
+            <button onClick={routeToSupport } className='supportMenuItemContainer  menuItemContainer'></button>
         
-            <button  onClick={ routeChange } className='overviewMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToInfo } className='rankingsMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToRanking } className='hofMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToHoF } className='wheelMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToWheel } className='rankingsMenuItemDexCompare menuItemContainer'></button>
-            <button onClick={routeToDexCompare } className='supportMenuItemContainer menuItemContainer'></button>
-            <button onClick={routeToSupport } className='settingsMenuItemContainer menuItemContainer'></button>
-        
+            <button onClick={routeToSetting} className='settingsMenuItemContainer  menuItemContainer'></button>
           </div>
           <div className='minimizeMenuContainer'><button className='minimizeMenuButton' onClick={toggleMenuHide} >{menuMinimized? <div><FaAngleDown/><FaAngleDown/><FaAngleDown/></div>: <div><FaAngleUp/><FaAngleUp/><FaAngleUp/></div>}</button></div>
           <div className='rootDiv'>
@@ -174,6 +180,7 @@ export default function GeneralComponent() {
                 <Route path='/settings' element={<SettingPage/>}></Route>
                 <Route path='/hof' element={<HallOfFame/>}></Route>
                 <Route path='/wheel' element={<YogiWheel/>}></Route>
+                <Route path='/manual' element={<ManualPage/>}></Route>
               </Routes>
               </UserContext.Provider>
            </UserLoadedContext.Provider>

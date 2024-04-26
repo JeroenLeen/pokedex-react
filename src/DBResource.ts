@@ -26,11 +26,11 @@ export default class DBResource{
         window.location.reload();
       }
 
-      async updateSettings(settings, notFindableTrade,notFindablePokemonSearch,trainerImage, hidedex){
+      async updateSettings(settings, notFindableTrade,notFindablePokemonSearch,trainerImage, hidedex,pokedexfav1,pokedexfav2,pokedexfav3,pokedexfav4,pokedexfav5){
 
         const { data, error } = await this.supabase
         .from('UserSetting')
-        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', notFindableTrade: notFindableTrade, twitchid: settings.twitchid, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex })
+        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', notFindableTrade: notFindableTrade, twitchid: settings.twitchid, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex ,pokedexextrafav1:pokedexfav1,pokedexextrafav2:pokedexfav2,pokedexextrafav3:pokedexfav3,pokedexextrafav4:pokedexfav4,pokedexextrafav5:pokedexfav5})
         .eq('id',  settings.id);
 
         if(!!error){
@@ -39,14 +39,14 @@ export default class DBResource{
         return await this.getSettings();
       }
 
-      async saveSettings(notFindableTrade,notFindablePokemonSearch,trainerImage,hidedex){
+      async saveSettings(notFindableTrade,notFindablePokemonSearch,trainerImage,hidedex,pokedexfav1,pokedexfav2,pokedexfav3,pokedexfav4,pokedexfav5){
         const { data: { user } } = await this.supabase.auth.getUser();
 
         console.log("providerid: " + user?.user_metadata.provider_id);
         const { data, error } = await this.supabase
         .from('UserSetting')
         .insert(
-            {username: user?.user_metadata.full_name, userid: user?.id + '', notFindableTrade: notFindableTrade, twitchid:user?.user_metadata.sub, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex}
+            {username: user?.user_metadata.full_name, userid: user?.id + '', notFindableTrade: notFindableTrade, twitchid:user?.user_metadata.sub, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex,pokedexextrafav1:pokedexfav1,pokedexextrafav2:pokedexfav2,pokedexextrafav3:pokedexfav3,pokedexextrafav4:pokedexfav4,pokedexextrafav5:pokedexfav5}
         )
         if(!!error){
             return null;
@@ -346,7 +346,7 @@ export default class DBResource{
             entry.pokedex =   entry.pokedex.replace(/^0+/, '');
         });
 
-       return  allData;
+       return  allData?.filter(test=>{ return !(test.rarityNumber == 5)});
     }
 
     async getAllForTable(tableName){

@@ -65,3 +65,12 @@
   .trainerContainer{
     display: flex;
   }
+  .extraFavContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .extraFav{
+    width: 19%;
+  }
