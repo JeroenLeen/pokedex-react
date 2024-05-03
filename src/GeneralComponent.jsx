@@ -158,7 +158,7 @@ export default function GeneralComponent() {
             <button onClick={routeToWheel } className='wheelMenuItemContainer  menuItemContainer'></button>
             <button onClick={routeToDexCompare } className='rankingsMenuItemDexCompare  menuItemContainer'></button>
             <button onClick={routeToSupport } className='supportMenuItemContainer  menuItemContainer'></button>
-        
+
             <button onClick={routeToSetting} className='settingsMenuItemContainer  menuItemContainer'></button>
           </div>
           <div className='minimizeMenuContainer'><button className='minimizeMenuButton' onClick={toggleMenuHide} >{menuMinimized? <div><FaAngleDown/><FaAngleDown/><FaAngleDown/></div>: <div><FaAngleUp/><FaAngleUp/><FaAngleUp/></div>}</button></div>

@@ -110,7 +110,7 @@ export default function SettingPage() {
         (async () => {
           let user = await resource.getUser();
           setLogedInUser(user?.user_metadata?.full_name);   
-          let ownedPokemons = await resource.getUniquePokedexEntries(user?.user_metadata?.full_name);
+          let ownedPokemons = (await resource.getUniquePokedexEntries(user?.user_metadata?.full_name)).filter(s=>!(s.shinyNumber == 0 && s.normalNumber == 0));
           let options = ownedPokemons.map(mon=> {return {value:mon.pokedex, label:mon.monName}}) ; 
           debugger;
           setOwnedMons(options);
