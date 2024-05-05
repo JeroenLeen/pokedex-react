@@ -38,7 +38,8 @@ export default function CompareDexPage() {
     if(!usersCalled){
       setUsersCalled(true);
       console.log("calling unique users:");
-      const foundUsers  = await resource.getUniqueUsersPokedexCompare()
+      const foundUsers  = await resource.getUniqueUsersPokedexCompare();
+
       setUsers(foundUsers) ;
     }
   })();},[]);

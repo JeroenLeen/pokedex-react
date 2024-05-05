@@ -317,11 +317,15 @@ export default class DBResource{
             }
 
             if(!entry.normalCount){
-                entry.normalCount=0;
+                entry.normalNumber=0;
+            }else {
+                entry.normalNumber=entry.normalCount;
             }
 
             if(!entry.shinyCount){
-                entry.shinyCount=0;
+                entry.shinyNumber=0;
+            }else{
+                entry.shinyNumber=entry.shinyCount;
             }
             entry.key = entry.pokedex;
             let parts = entry.pokedex.match(/[a-zA-Z]+|[0-9]+/g)
@@ -441,6 +445,23 @@ export default class DBResource{
 
 
        return  allData?.filter(test=>{ return !(test.rarityNumber == 5 && test.shinyNumber == 0 && test.normalNumber == 0  )});
+    }
+
+
+    
+    async getBadges(username) {
+        console.log('calling');
+   
+
+        let { data: badgesData, error } = await this.supabase
+            .from('siteBadgeView')
+            .select("*")
+            // Filters
+            .eq('username', username);
+
+      
+
+        return  badgesData;
     }
   
 }

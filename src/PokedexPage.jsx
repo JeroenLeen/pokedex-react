@@ -42,13 +42,14 @@ export default function PokedexPage() {
   const [trainerImage,setTrainerImage] = useState();
   const [badBoy,setBadBoy] = useState(false);
   const [legend,setLegend] = useState(false);
-
+  const [badgeData,setBadgeData] = useState({});
   useEffect(() => {
   (async () => {
     if(!usersCalled && userLoaded){
       setUsersCalled(true);
       console.log("calling unique users:");
       const foundUsers  = await resource.getUniqueUsersPokedex();
+      foundUsers.push({value:"overview", label:"overview"});
       setUsers(foundUsers) ;
       if(userParam){
         if(!foundUsers.find(s=>s.label==userParam)){
@@ -62,6 +63,9 @@ export default function PokedexPage() {
           setUserValue({label:userParam, value:userParam});
           await fetchAndDisplayPokemonData(userParam);}
        
+      } else{
+        setUserValue({label:"overview", value:"overview"});
+        await fetchAndDisplayPokemonData("overview");
       }
    
     }
@@ -83,7 +87,9 @@ export default function PokedexPage() {
     (async () => {
      
       console.log("finding pokemon for:" + change.value);
-      const data = await resource.getSettingsForUser(change.value);
+      const data= await resource.getSettingsForUser(change.value);
+   
+
       if(data.length==1 && data[0].trainerimage){
         setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
       }else{
@@ -99,11 +105,22 @@ export default function PokedexPage() {
     setHasData(false);
     let settingdata = [];
     let lockdata = [];
+    let badgesData;
     if(logedInUser ===value){
       settingdata = await resource.getPokemonSettings();
     }
     lockdata = await resource.getPokemonLock(value);
-    const data = await resource.getUniquePokedexEntries(value);
+    badgesData = await resource.getBadges(value);
+    if(badgesData.length>0){
+      setBadgeData(badgesData[0]);
+    }
+    debugger;
+    let data 
+    if(value=="overview"){
+      data  = await resource.getTotalPokemonOverview();
+    }else{
+      data= await resource.getUniquePokedexEntries(value);
+    }
 
     let shinySum = 0;
     let totalSum = 0;
@@ -330,6 +347,17 @@ const secondarySort = (a,b,secondaryFilter) => {
     </div>
 
     </div>
+    <div className='badgearea'>
+  
+      <div className='badgeContainer'>
+      <div className='badgeTitle'>Site Badges</div>
+      <div className='badgeList'>
+      <img className='badge'  src={badgeData?.tradesBadge? '/tradebadge.png':'/emptytradebadge.png'}></img>
+      <img className='badge' src={badgeData?.giftsBadge? '/giftbadge.png':'/emptygiftbadge.png'}></img>
+      <img className='badge'  src={badgeData?.newGamePlusBadge? '/newgameplus.png':'/emptynewgameplus.png'}></img>
+      <img className='badge' src={badgeData?.DuelBadge? '/duelbadge.png':'/emptyduelbadge.png'}></img></div>
+      </div>
+    </div>
       <button className={legend?'legendButton active':'legendButton'} onClick={toggleLegend}>Legend</button>
       <div className={legend?'legend':'hide'}>
         <div><img className='explain-logo' src='/Common.png'></img> = Common</div> 
@@ -359,7 +387,7 @@ const secondarySort = (a,b,secondaryFilter) => {
          return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
           normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={el.setting} lock={el.lock}
-          rarity={el.rarity} valuechange={setNewValue} mydex={userValue.value===logedInUser}></PokedexEntry>
+          rarity={el.rarity} valuechange={setNewValue} mydex={userValue.value===logedInUser}  noShine={userValue.value==="overview"}></PokedexEntry>
            </div>})
           }
       </div>
