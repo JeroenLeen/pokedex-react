@@ -1,20 +1,28 @@
-import React, { Link, useState, useEffect,CSSProperties } from 'react';
+
+import React, { useContext , useState, useEffect } from 'react';
+
 import './PokedexPage.css'
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import PokedexEntry from './subcomponents/PokedexEntry'
 import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
+
 import ConfettiExplosion from 'react-confetti-explosion';
 
+
+
+import { UserContext } from './GeneralComponent';
+import { UserLoadedContext } from './GeneralComponent';
+import { FaBalanceScale, FaBeer, FaSearch, FaLock } from "react-icons/fa";
 
 
 export default function PokedexPage() {
   //static contextType = ThemeContext;
 
 
-  const resource = new DBResource();
+  const resource =singletondDbResource;
   const queryParameters = new URLSearchParams(window.location.search)
   const userParam = queryParameters.get("user")?.toLowerCase();
 
@@ -30,6 +38,7 @@ export default function PokedexPage() {
   const [uniquePokemonCaugth, setUniquePokemonCaugth] = useState(0);
   const [totalShinyCaugth, setTotalShinyCaugth] = useState(0);
   const [disableSort2, setDisableSort2] = useState(true);
+  const [mydex, setMydex] = useState(false);
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},
   {value:"Name", label:"Name"},{value:"Number caught ↑", label:"Number caught ↑"},{value:"Number caught ↓", label:"Number caught ↓"}
   ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}
@@ -37,26 +46,52 @@ export default function PokedexPage() {
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
   const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
   const [isExploding, setIsExploding] = useState(false);
+  const {logedInUser, setLogedInUser} = useContext(UserContext);
+  const {userLoaded, setUserLoaded0} = useContext(UserLoadedContext);
+  const [trainerImage,setTrainerImage] = useState();
+  const [badBoy,setBadBoy] = useState(false);
+  const [legend,setLegend] = useState(false);
+  const [badgeData,setBadgeData] = useState({});
 
   useEffect(() => {
   (async () => {
-    if(!usersCalled){
+    if(!usersCalled && userLoaded){
       setUsersCalled(true);
       console.log("calling unique users:");
-      const foundUsers  = await resource.getUniqueUsers()
-
+      const foundUsers  = await resource.getUniqueUsersPokedex();
+      foundUsers.push({value:"overview", label:"overview"});
       setUsers(foundUsers) ;
       if(userParam){
-        console.log("found value")
-        setUserValue({label:userParam, value:userParam});
-        await fetchAndDisplayPokemonData(userParam);
+        if(!foundUsers.find(s=>s.label==userParam)){
+           setBadBoy(true);
+        }else { const data = await resource.getSettingsForUser(userParam);
+          if(data.length==1 && data[0].trainerimage){
+            setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
+          }else{
+            setTrainerImage(undefined);
+          }
+          setUserValue({label:userParam, value:userParam});
+          await fetchAndDisplayPokemonData(userParam);}
+       
+      } else{
+        setUserValue({label:"overview", value:"overview"});
+        await fetchAndDisplayPokemonData("overview");
       }
    
     }
-  })();},[]);
+  })();},[userLoaded]);
+
+  const setNewValue = (pokedex,value) => {
+    items2.forEach(i=>{if(i.pokedex===pokedex){
+      i.setting = value;
+    }});
+    setItems2( [...items2]);
+  }
+
 
   const confettiDone = () => {
     setIsExploding(false);
+
   }
 
 
@@ -66,10 +101,20 @@ export default function PokedexPage() {
     
  
     setUserValue(change);
+    setBadBoy(false);
     setSelectValue({value:"Pokedex", label:"Pokedex"});
     (async () => {
      
       console.log("finding pokemon for:" + change.value);
+      const data= await resource.getSettingsForUser(change.value);
+   
+
+      if(data.length==1 && data[0].trainerimage){
+        setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
+      }else{
+        setTrainerImage(undefined);
+      }
+   
       await fetchAndDisplayPokemonData(change.value);
 
       })()
@@ -78,7 +123,24 @@ export default function PokedexPage() {
   async function fetchAndDisplayPokemonData(value) {
     window.history.pushState({path:'?user=' + value },'','?user=' + value );
     setHasData(false);
-    const data = await resource.getUniquePokedexEntries(value);
+    let settingdata = [];
+    let lockdata = [];
+    let badgesData;
+    if(logedInUser ===value){
+      settingdata = await resource.getPokemonSettings();
+    }
+    lockdata = await resource.getPokemonLock(value);
+    badgesData = await resource.getBadges(value);
+    if(badgesData.length>0){
+      setBadgeData(badgesData[0]);
+    }
+    debugger;
+    let data 
+    if(value=="overview"){
+      data  = await resource.getTotalPokemonOverview();
+    }else{
+      data= await resource.getUniquePokedexEntries(value);
+    }
 
     let shinySum = 0;
     let totalSum = 0;
@@ -86,12 +148,16 @@ export default function PokedexPage() {
     data.forEach(entry => {
       shinySum += entry.shinyNumber;
       totalSum += entry.normalNumber + entry.shinyNumber;
+      if(logedInUser === value){
+        entry.setting = settingdata.find((set)=>set.pokedex == entry.pokedex);
+      }
+      entry.lock = lockdata.find((set)=>set.dex == entry.pokedex);
     });
-
     setPokemonCaugth(totalSum);
     setTotalShinyCaugth(shinySum);
     setUniquePokemonCaugth(data.filter((entry) => (entry.normalNumber > 0 | entry.shinyNumber > 0) && !entry.isSeasonal).length);
     setItems2(data);
+    setMydex(userValue?.value===logedInUser);
     setPokemonsOriginalSort(data);
   }
 
@@ -263,21 +329,38 @@ const secondarySort = (a,b,secondaryFilter) => {
     setItems2(tempData) ;
   };
 
+  const toggleLegend = () => {
+    setLegend(!legend);
+  }
 
   return (
 <div className="wholeSite">
+    <div class="bird-container bird-container-one">
+      <div class="bird bird-one"></div>
+    </div>        
+    <div class="bird-container bird-container-two">
+      <div class="bird bird-two"></div>
+    </div>  
+    <div class="bird-container bird-container-three">
+      <div class="bird bird-three"></div>
+    </div> 
+    <div class="bird-container bird-container-four">
+      <div class="bird bird-four"></div>
+    </div>
+
     <div className="content">
       <div className='confetti'>   {isExploding && <ConfettiExplosion onComplete={confettiDone} />}</div>
  
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch Pokedex</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
       <div className='selectorWrapper'>
+      {trainerImage?<img className='trainerImage' src={trainerImage}></img>:''}
       <div className='selector'>
            <h4 className='selectTitle'>
             User:
             </h4><div className='selectAndTooltip' >
-              <Select className='selectorSelect' value={userValue} options={users} onChange={onChangeHandler}  defaultValue={"User"}></Select>
+              <Select className='selectorSelect' value={userValue} options={users} onChange={onChangeHandler}  defaultValue={"User"} ></Select>
               <div className="selectIcon">
               <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
               <Tooltip id="my-tooltip" 
@@ -287,6 +370,7 @@ const secondarySort = (a,b,secondaryFilter) => {
             </div>
             </div>
       </div>
+      {trainerImage?<img className='trainerImage' src={trainerImage}></img>:''}
       </div>
 
     <div>
@@ -297,11 +381,37 @@ const secondarySort = (a,b,secondaryFilter) => {
     </div>
 
     </div>
-    <div className='sortContainer'>
+    <div className='badgearea'>
+  
+      <div className='badgeContainer'>
+      <div className='badgeTitle'>Site Badges</div>
+      <div className='badgeList'>
+      <img className='badge'  src={badgeData?.tradesBadge? '/tradebadge.png':'/emptytradebadge.png'}></img>
+      <img className='badge' src={badgeData?.giftsBadge? '/giftbadge.png':'/emptygiftbadge.png'}></img>
+      <img className='badge'  src={badgeData?.newGamePlusBadge? '/newgameplus.png':'/emptynewgameplus.png'}></img>
+      <img className='badge' src={badgeData?.DuelBadge? '/duelbadge.png':'/emptyduelbadge.png'}></img></div>
+      </div>
+    </div>
+      <button className={legend?'legendButton active':'legendButton'} onClick={toggleLegend}>Legend</button>
+      <div className={legend?'legend':'hide'}>
+        <div><img className='explain-logo' src='/Common.png'></img> = Common</div> 
+        <div><img className='explain-logo' src='/Uncommon.png'></img> = Uncommon</div>
+        <div><img className='explain-logo' src='/Rare.png'></img> = Rare</div> 
+        <div><img className='explain-logo' src='/Legendary.png'></img> = Legendary </div>
+        <div><img className='explain-logo' src='/yogieisbar.png'></img> = YogiEisbar exclusive </div>
+        <div><img className='explain-logo' src='/streamingfalcon.png'></img> = StreamingFalcon exclusive </div> 
+        <div><FaSearch className='explain-logo' /> = Find pokemon</div>
+        <div><FaBalanceScale className='explain-logo' /> = Login only. Your own dex only. Mark as 'wanted for trade'</div>
+        <div> <FaLock className='explain-logo fillGreen' /> Locked pokemon, can't be gifted</div>
+      </div>
+      <div className='sortContainer'>
       <div className='sortSelectContainer' ><h4 className='selectTitle'>Primary sort:</h4> <Select isDisabled={hasData} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler}  value={selectValue}></Select>
       </div>
       <div className='sortSelectContainer' ><h4 className='selectTitle'>Secondary sort:</h4> <Select isDisabled={hasData || disableSort2} className='sortSelect'  options={sortOptions} onChange={onSortChangeHandler2}  value={selectValue2}></Select>
       </div>
+      </div>
+      <div>
+        {badBoy?<img src= "nono.gif"></img>: ""}
       </div>
      <div className='entries'> 
           {
@@ -310,8 +420,9 @@ const secondarySort = (a,b,secondaryFilter) => {
 
          return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} selectedUser={userValue.value}
-          rarity={el.rarity}></PokedexEntry>
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={el.setting} lock={el.lock}
+          rarity={el.rarity} valuechange={setNewValue} mydex={userValue.value===logedInUser} selectedUser={userValue.value} noShine={userValue.value==="overview"}></PokedexEntry>
+
            </div>})
           }
       </div>

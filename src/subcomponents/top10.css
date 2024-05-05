@@ -26,6 +26,7 @@
 .nameColumn{
   display: flex;
   justify-content: left;
+  font-size: 18px;
 }
 
 .secondColumn{

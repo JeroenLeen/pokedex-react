@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import React, { Link, useState, useEffect } from 'react';
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import PokedexEntry from './subcomponents/PokedexEntry'
 import Top10 from './subcomponents/top10'
 import Select from 'react-select'
@@ -19,7 +19,7 @@ export default function PokedexPage() {
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
   const [pokemonsOriginalSort, setPokemonsOriginalSort] = useState([]);
 
-  const resource = new DBResource();
+  const resource =singletondDbResource;
   
 
   useEffect(() => {
@@ -132,7 +132,8 @@ export default function PokedexPage() {
 <div className="wholeSite">
     <div className="content">
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch overview</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hatch & Catch overview</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+
       </div>
 
 

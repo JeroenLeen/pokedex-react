@@ -1,5 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { PokedexEntryEntity } from './pokedexEntryEntity'
+
+
 export default class DBResource{
 
      supabaseUrl = 'https://wvbhoxbxpwxmvprlcxno.supabase.co'
@@ -24,32 +26,112 @@ export default class DBResource{
         window.location.reload();
       }
 
-      async updateSettings(settings, notFindableTrade,notFindablePokemonSearch){
+      async updateSettings(settings, notFindableTrade,notFindablePokemonSearch,trainerImage, hidedex,pokedexfav1,pokedexfav2,pokedexfav3,pokedexfav4,pokedexfav5){
 
         const { data, error } = await this.supabase
         .from('UserSetting')
-        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', notFindableTrade: notFindableTrade, twitchid: settings.twitchid, notfindablepokemonsearch:notFindablePokemonSearch })
+        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', notFindableTrade: notFindableTrade, twitchid: settings.twitchid, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex ,pokedexextrafav1:pokedexfav1,pokedexextrafav2:pokedexfav2,pokedexextrafav3:pokedexfav3,pokedexextrafav4:pokedexfav4,pokedexextrafav5:pokedexfav5})
         .eq('id',  settings.id);
-        debugger;
+
         if(!!error){
             return null;
         }
         return await this.getSettings();
       }
 
-      async saveSettings(notFindableTrade,notFindablePokemonSearch){
+      async saveSettings(notFindableTrade,notFindablePokemonSearch,trainerImage,hidedex,pokedexfav1,pokedexfav2,pokedexfav3,pokedexfav4,pokedexfav5){
         const { data: { user } } = await this.supabase.auth.getUser();
 
         console.log("providerid: " + user?.user_metadata.provider_id);
         const { data, error } = await this.supabase
         .from('UserSetting')
         .insert(
-            {username: user?.user_metadata.full_name, userid: user?.id + '', notFindableTrade: notFindableTrade, twitchid:user?.user_metadata.sub, notfindablepokemonsearch:notFindablePokemonSearch}
+            {username: user?.user_metadata.full_name, userid: user?.id + '', notFindableTrade: notFindableTrade, twitchid:user?.user_metadata.sub, notfindablepokemonsearch:notFindablePokemonSearch, trainerimage:trainerImage, hidedex:hidedex,pokedexextrafav1:pokedexfav1,pokedexextrafav2:pokedexfav2,pokedexextrafav3:pokedexfav3,pokedexextrafav4:pokedexfav4,pokedexextrafav5:pokedexfav5}
         )
         if(!!error){
             return null;
         }
         return await this.getSettings();
+      }
+
+
+      async updatePokemonSettings(settings, wanttrade){
+
+        const { data, error } = await this.supabase
+        .from('PokemonUserSetting')
+        .update({ id: settings.id, username: settings.username, userid:settings.userid + '', wanttrade: wanttrade, pokedex:settings.pokedex, twitchid: settings.twitchid})
+        .eq('id',  settings.id);
+
+        if(!!error){
+            return null;
+        }
+        return await this.getPokemonSetting(settings.pokedex);
+      }
+
+      async savePokemonSettings(pokedex,wanttrade){
+
+        const { data: { user } } = await this.supabase.auth.getUser();
+
+        console.log("providerid: " + user?.user_metadata.provider_id);
+        const { data, error } = await this.supabase
+        .from('PokemonUserSetting')
+        .insert(
+            {username: user?.user_metadata.full_name, userid: user?.id + '', wanttrade: wanttrade, pokedex:pokedex, twitchid:user?.user_metadata.sub}
+        )
+  
+        if(!!error){
+            return null;
+        }
+        return await this.getPokemonSetting(pokedex);
+      }
+
+      
+      async getPokemonSettings(){
+        
+        const { data: { user } } = await this.supabase.auth.getUser();
+        if(user){
+        let { data: settings, error } = await this.supabase
+            .from('PokemonUserSetting')
+            .select("*")
+            // Filters
+            .eq('userid',  user?.id);
+            return settings;
+        }
+      }
+
+      async getPokemonLock(username){
+    
+        let { data: settings, error } = await this.supabase
+            .from('LockedMons')
+            .select("*")
+            // Filters
+            .eq('username',  username);
+            return settings;
+      }
+
+      
+      async getPokemonSettingsForUser(username){
+        let { data: settings, error } = await this.supabase
+            .from('PokemonUserSetting')
+            .select("*")
+            // Filters
+            .eq('username',  username);
+            return settings;
+        
+      }
+
+      async getPokemonSetting(pokedex){
+        
+        const { data: { user } } = await this.supabase.auth.getUser();
+        if(user){
+        let { data: settings, error } = await this.supabase
+            .from('PokemonUserSetting')
+            .select("*")
+            // Filters
+            .eq('userid',  user?.id)
+            .eq('pokedex',pokedex);
+            return settings;
+        }
       }
 
       async getSettings(){
@@ -63,6 +145,19 @@ export default class DBResource{
             .eq('userid',  user?.id);
             return settings;
         }
+      }
+
+      
+      async getSettingsForUser(username){
+        
+
+        let { data: settings, error } = await this.supabase
+            .from('UserSetting')
+            .select("*")
+            // Filters
+            .eq('username',  username);
+            return settings;
+        
       }
 
 
@@ -111,6 +206,21 @@ export default class DBResource{
         let options = distinctusers.map(user=> {return {value:user.originalOwner, label:user.originalOwner}}) ; 
         return  options;
     }
+
+    async getUniqueUsersPokedex() {
+        console.log('calling');
+   
+
+        let { data: distinctusers, error } = await this.supabase
+            .from('distinctuserspokedex')
+            .select("*");
+
+        
+     
+        let options = distinctusers.map(user=> {return {value:user.originalOwner, label:user.originalOwner}}) ; 
+        return  options;
+    }
+
 
     
     async getUniqueUsersPokedexCompare() {
@@ -207,11 +317,15 @@ export default class DBResource{
             }
 
             if(!entry.normalCount){
-                entry.normalCount=0;
+                entry.normalNumber=0;
+            }else {
+                entry.normalNumber=entry.normalCount;
             }
 
             if(!entry.shinyCount){
-                entry.shinyCount=0;
+                entry.shinyNumber=0;
+            }else{
+                entry.shinyNumber=entry.shinyCount;
             }
             entry.key = entry.pokedex;
             let parts = entry.pokedex.match(/[a-zA-Z]+|[0-9]+/g)
@@ -236,7 +350,7 @@ export default class DBResource{
             entry.pokedex =   entry.pokedex.replace(/^0+/, '');
         });
 
-       return  allData;
+       return  allData?.filter(test=>{ return !(test.rarityNumber == 5)});
     }
 
     async getAllForTable(tableName){
@@ -327,8 +441,28 @@ export default class DBResource{
 
         });
 
+        
 
-       return  allData;
+
+       return  allData?.filter(test=>{ return !(test.rarityNumber == 5 && test.shinyNumber == 0 && test.normalNumber == 0  )});
+    }
+
+
+    
+    async getBadges(username) {
+        console.log('calling');
+   
+
+        let { data: badgesData, error } = await this.supabase
+            .from('siteBadgeView')
+            .select("*")
+            // Filters
+            .eq('username', username);
+
+      
+
+        return  badgesData;
     }
   
 }
+

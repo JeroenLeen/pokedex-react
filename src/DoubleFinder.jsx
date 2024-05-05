@@ -1,5 +1,5 @@
 import './DoubleFinder.css'
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 import { useNavigate } from "react-router-dom";
 import React, { Link, useState, useEffect } from 'react';
 import Select from 'react-select'
@@ -7,7 +7,9 @@ import { Tooltip } from 'react-tooltip'
 import ConfettiExplosion from 'react-confetti-explosion';
 export default function DoubleFinder() {
 
-
+  const queryParameters = new URLSearchParams(window.location.search)
+  const pokedexParam = queryParameters.get("pokedex");
+  const pokeNameParam = queryParameters.get("pokename");
 
     const [pokemon, setPokemon] = useState([]);
     const [pokedexCalled, setPokedexCalled] = useState(false);
@@ -17,6 +19,8 @@ export default function DoubleFinder() {
     const [testArray, setTestArray] = useState([1,2,3,4,5,6,7,8,9,10]);
     const [isShiny, setIsShiny] = useState(false);
     const [isExploding, setIsExploding] = useState(false);
+    const [selectedvalue, setSelectedvalue] = useState();
+    
 
     useEffect(() => {
         (async () => {
@@ -26,6 +30,12 @@ export default function DoubleFinder() {
             const foundPokemon  = await resource.getPokedex();
             console.log(foundPokemon);
             setPokemon(foundPokemon) ;
+
+            if(pokedexParam){
+              setSelectedvalue({value: pokeNameParam, label:pokeNameParam});
+              displayPokemon(pokedexParam);
+            }
+    
           }
         })();},[]);
 
@@ -36,40 +46,47 @@ export default function DoubleFinder() {
       //static contextType = ThemeContext;
     
 
-      const resource = new DBResource();
+      const resource = singletondDbResource;
 
       
 
       const onChangeHandler = (change) => {
-        setPokedex(change.value);
         setIsExploding(true);
+        window.history.pushState({ path: '?pokedex=' + change.value + "&pokename=" + change.label }, '', '?pokedex=' + change.value + "&pokename=" + change.label);
+        setSelectedvalue(change);
+        displayPokemon(change.value);
+      };
+      
+      
+      function displayPokemon(value) {
+        setPokedex(value);
+
         (async () => {
-          console.log("finding users for pokedex:" + change.value);
+          console.log("finding users for pokedex:" + value);
           let data;
-            if(isShiny){
-              data = await resource.getUsersWhoOwnShinyPokemon(change.value);
-            }else {
-              data  = await resource.getUsersWhoOwnPokemon(change.value);
-            }
-          console.log( data);
+          if (isShiny) {
+            data = await resource.getUsersWhoOwnShinyPokemon(value);
+          } else {
+            data = await resource.getUsersWhoOwnPokemon(value);
+          }
+          console.log(data);
           setUsersFound(data);
 
-          let imageUrl2 ;
-          if(isShiny){
+          let imageUrl2;
+          if (isShiny) {
             imageUrl2 = new URL(
-            "/pokemon/Shiny/" + change.value + ".png",
-            import.meta.url
-          ).href;
-          }else{
+              "/pokemon/Shiny/" + value + ".png",
+              import.meta.url
+            ).href;
+          } else {
             imageUrl2 = new URL(
-              "/pokemon/Normal/" + change.value + ".png",
+              "/pokemon/Normal/" + value + ".png",
               import.meta.url
             ).href;
           }
           setImgUrl(imageUrl2);
-          })()
-      
-      };
+        })();
+      }
 
       const onShinyChange = (change) => {
         setIsShiny(change.target.checked);
@@ -109,7 +126,7 @@ export default function DoubleFinder() {
     <div className="content">
     <div className='confetti'>   {isExploding && <ConfettiExplosion onComplete={confettiDone} />}</div>
       <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Pokemon finder</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Pokemon finder</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
       <div className='selectorWrapper'>
       <div className='selector'>
@@ -117,7 +134,7 @@ export default function DoubleFinder() {
             Pokemon:
             </h4><div className='selectAndTooltip'>
              
-              <Select className='selectorSelect'  options={pokemon} onChange={onChangeHandler}  defaultValue={"pokemon"}></Select>
+              <Select className='selectorSelect'  options={pokemon} onChange={onChangeHandler}  defaultValue={"pokemon"}  value={selectedvalue}></Select>
               <div className="selectIcon">
               <img data-tooltip-id="my-tooltip"  className='selectIconImg' src="/unown-question.png"></img>
               

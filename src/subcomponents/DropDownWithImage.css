@@ -1,0 +1,18 @@
+.DDIContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.DDITitle{
+    width: 100%;
+}
+
+.DDIImage{
+    width:100%;
+    aspect-ratio: 1/1;
+}
+
+.DDIDopdownText{
+    color: black;
+}

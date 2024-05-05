@@ -12,7 +12,9 @@ export default function SupportPage() {
         <div>
   
         <div className="header">
-            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Support the devs</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
+
+            <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Support the devs</h1><img src="yogieisbar.png" alt="Image" className="logo" />
+
         </div>
         <div>
             <div>

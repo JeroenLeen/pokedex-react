@@ -1,0 +1,45 @@
+.tableFlexCenter{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.wheelTrainer{
+    width: 50px;
+    height: 50px;
+}
+
+.wheelLine{
+    border-bottom:0px solid white;
+}
+
+.wheeltable{
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 80%;
+  }
+
+.greenBackground{
+    background-color:  #0094fe;
+}
+
+.grayBackground{
+    background-color: #555;
+}
+
+.gray2Background{
+    background-color: #777;
+}
+
+
+@media (max-width: 600px) {
+    .hideSmall{
+        display: none;
+    }
+  }
+
+
+  .name{
+    font-size: 18px;
+    text-align: left;
+  }

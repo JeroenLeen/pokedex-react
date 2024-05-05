@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DBResource from './DBResource'
+import singletondDbResource from './DBResourceSingleton'
 
 import Top10 from './subcomponents/top10'
 import './RankingsPage.css'
@@ -17,7 +17,9 @@ export default function RankingsPage() {
     const [yogivsfalcon, setYogivsfalcon] = useState([]);
     const [pokemonCaugthRank, setPokemonCaugthRank] = useState([]);
     const [birthday, setBirthday] = useState([{name:"YogiEisbar", value: 30},{name:"YogiEisbar", value: 29},{name:"YogiEisbar", value: 28},{name:"YogiEisbar", value: 27},{name:"YogiEisbar", value: 26},{name:"YogiEisbar", value: 25},{name:"YogiEisbar", value: 24},{name:"YogiEisbar", value: 23},{name:"YogiEisbar", value: 22},{name:"YogiEisbar", value: 21}]);
-    const resource = new DBResource();
+
+    const resource = singletondDbResource;
+
 
 
   
@@ -49,7 +51,7 @@ export default function RankingsPage() {
     return (
       <div>
         <div className="header">
-        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1>Hatch & Catch rankings</h1><img src="yogieisbar_birthday.png" alt="Image" className="logo" />
+        <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hatch & Catch rankings</h1><img src="yogieisbar.png" alt="Image" className="logo" />
       </div>
         <div className="top10scontainer">
             <Top10 borderColor='1'  firstColumnName='User' title = 'Most Shiny Trainers' firstColumnData = 'currentOwner' secondColumnName='Amount' secondColumnData = 'count' double={false}  data = {mostShinyTrainers}></Top10>
