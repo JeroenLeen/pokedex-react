@@ -16,7 +16,7 @@ export default function RankingsPage() {
     const [magikarpTrainer, setMagikarpTrainer] = useState([]);
     const [yogivsfalcon, setYogivsfalcon] = useState([]);
     const [pokemonCaugthRank, setPokemonCaugthRank] = useState([]);
-    const [birthday, setBirthday] = useState([{name:"YogiEisbar", value: 30},{name:"YogiEisbar", value: 29},{name:"YogiEisbar", value: 28},{name:"YogiEisbar", value: 27},{name:"YogiEisbar", value: 26},{name:"YogiEisbar", value: 25},{name:"YogiEisbar", value: 24},{name:"YogiEisbar", value: 23},{name:"YogiEisbar", value: 22},{name:"YogiEisbar", value: 21}]);
+    const [birthday, setBirthday] = useState([{name:"StreamingFalcon", value: 37},{name:"StreamingFalcon", value: 36},{name:"StreamingFalcon", value: 35},{name:"StreamingFalcon", value: 34},{name:"StreamingFalcon", value: 33},{name:"StreamingFalcon", value: 32},{name:"StreamingFalcon", value: 31},{name:"StreamingFalcon", value: 30},{name:"StreamingFalcon", value: 9},{name:"StreamingFalcon", value: 28}]);
 
     const resource = singletondDbResource;
 
@@ -63,7 +63,7 @@ export default function RankingsPage() {
             <Top10 borderColor='4' firstColumnName='User' title = 'Most of single pokemon' firstColumnData = 'currentOwner' secondColumnName='Pokemon' thirdColumnName='Caught on stream'  secondColumnData = 'monName' thirdColumnData = 'count' data = {pokemonCaugthRank}></Top10>
             <Top10 borderColor='2' firstColumnName='User' title = 'Most Magikarps Caught'firstColumnData = 'currentOwner' secondColumnName='Magikarps owned'  secondColumnData = 'count' double='true' data = {magikarpTrainer}></Top10>
             <Top10 borderColor='3' firstColumnName='Streamer' title = 'Yogi vs Falcon (last 7 days)'firstColumnData = 'acquiredAt' secondColumnName='Caught on stream'  secondColumnData = 'count' data = {yogivsfalcon}></Top10>
-            <Top10 borderColor='4' firstColumnName='Yogi' title = 'Years lived as yogi'firstColumnData = 'name' secondColumnName='Years'  secondColumnData = 'value' data = {birthday}></Top10>
+            <Top10 borderColor='4' firstColumnName='StreamingFalcon' title = 'Years lived as flonc'firstColumnData = 'name' secondColumnName='Years'  secondColumnData = 'value' data = {birthday}></Top10>
            
             
         </div>

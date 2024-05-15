@@ -311,6 +311,21 @@ animation-delay: 9.5s;
   animation-duration: 16s;
   animation-delay: 10.25s;
 }
+
+.container {
+	z-index: 1;
+	position: absolute;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  height: 200px;
+  width: 100%;
+
+	
+	padding: 2rem;
+}
+
 /* @keyframes fly-cycle {
   100%{
       background-position: -3600px 0;

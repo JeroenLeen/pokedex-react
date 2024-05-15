@@ -11,7 +11,7 @@ export default function PokedexEntry(  props) {
 
         let imageUrl2 = "";
         debugger;
-        if(props.selectedUser == "yogieisbar"){
+        if(props.selectedUser == "streamingfalcon"){
             imageUrl2 =   new URL(
               "/pokemon/Normal_yogi_birthday/" + props.pokedexEntryNumber + ".png",
               import.meta.url

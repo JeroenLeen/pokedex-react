@@ -335,6 +335,8 @@ const secondarySort = (a,b,secondaryFilter) => {
 
   return (
 <div className="wholeSite">
+
+<div class="container">
     <div class="bird-container bird-container-one">
       <div class="bird bird-one"></div>
     </div>        
@@ -346,6 +348,7 @@ const secondarySort = (a,b,secondaryFilter) => {
     </div> 
     <div class="bird-container bird-container-four">
       <div class="bird bird-four"></div>
+    </div>
     </div>
 
     <div className="content">
@@ -384,12 +387,28 @@ const secondarySort = (a,b,secondaryFilter) => {
     <div className='badgearea'>
   
       <div className='badgeContainer'>
-      <div className='badgeTitle'>Site Badges</div>
+      <div className='badgeTitle'>Achievements</div>
       <div className='badgeList'>
-      <img className='badge'  src={badgeData?.tradesBadge? '/tradebadge.png':'/emptytradebadge.png'}></img>
-      <img className='badge' src={badgeData?.giftsBadge? '/giftbadge.png':'/emptygiftbadge.png'}></img>
-      <img className='badge'  src={badgeData?.newGamePlusBadge? '/newgameplus.png':'/emptynewgameplus.png'}></img>
-      <img className='badge' src={badgeData?.DuelBadge? '/duelbadge.png':'/emptyduelbadge.png'}></img></div>
+      <img className='badge' data-tooltip-id="trade-badge-tooltip" src={badgeData?.tradesBadge? '/tradebadge.png':'/emptytradebadge.png'}></img>
+              <Tooltip id="trade-badge-tooltip" 
+                place="left"
+                effect='solid'
+                content="More then 500 trades made"/>
+      <img className='badge'  data-tooltip-id="gift-badge-tooltip" src={badgeData?.giftsBadge? '/giftbadge.png':'/emptygiftbadge.png'}></img>
+      <Tooltip id="gift-badge-tooltip" 
+                place="left"
+                effect='solid'
+                content="More then 300 gifts given" />
+      <img className='badge'  data-tooltip-id="newgameplus-badge-tooltip"  src={badgeData?.newGamePlusBadge? '/newgameplus.png':'/emptynewgameplus.png'}></img>
+      <Tooltip id="newgameplus-badge-tooltip" 
+                place="left"
+                effect='solid'
+                content="You did new game plus"/>
+      <img className='badge'  data-tooltip-id="duel-badge-tooltip" src={badgeData?.DuelBadge? '/duelbadge.png':'/emptyduelbadge.png'}></img></div>
+      <Tooltip id="duel-badge-tooltip" 
+                place="left"
+                effect='solid'
+                content="100 duels won"/>
       </div>
     </div>
       <button className={legend?'legendButton active':'legendButton'} onClick={toggleLegend}>Legend</button>

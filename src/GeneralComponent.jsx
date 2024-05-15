@@ -152,7 +152,7 @@ export default function GeneralComponent() {
       
            
             <button  onClick={ routeChange } className='pokemonFinderMenuItemContainer  menuItemContainer'></button>
-            <button onClick={routeToInfo } className='overviewMenuItemContainer menuItemContainer'></button>
+
             <button onClick={routeToRanking } className='rankingsMenuItemContainer  menuItemContainer'></button>
             <button onClick={routeToHoF } className='hofMenuItemContainer  menuItemContainer'></button>
             <button onClick={routeToWheel } className='wheelMenuItemContainer  menuItemContainer'></button>
