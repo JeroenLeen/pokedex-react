@@ -9,7 +9,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { useNavigate } from "react-router-dom";
 
-import ConfettiExplosion from 'react-confetti-explosion';
+
 
 
 
@@ -89,10 +89,7 @@ export default function PokedexPage() {
   }
 
 
-  const confettiDone = () => {
-    setIsExploding(false);
 
-  }
 
 
   const onChangeHandler = (change) => {
@@ -335,24 +332,8 @@ const secondarySort = (a,b,secondaryFilter) => {
 
   return (
 <div className="wholeSite">
-
-<div class="container">
-    <div class="bird-container bird-container-one">
-      <div class="bird bird-one"></div>
-    </div>        
-    <div class="bird-container bird-container-two">
-      <div class="bird bird-two"></div>
-    </div>  
-    <div class="bird-container bird-container-three">
-      <div class="bird bird-three"></div>
-    </div> 
-    <div class="bird-container bird-container-four">
-      <div class="bird bird-four"></div>
-    </div>
-    </div>
-
     <div className="content">
-      <div className='confetti'>   {isExploding && <ConfettiExplosion onComplete={confettiDone} />}</div>
+
  
       <div className="header">
         <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Hatch & Catch Pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
