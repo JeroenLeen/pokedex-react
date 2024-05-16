@@ -9,25 +9,14 @@ export default function PokedexEntry(  props) {
 
   const resource = singletondDbResource;
 
-        let imageUrl2 = "";
-        debugger;
-        if(props.selectedUser == "streamingfalcon"){
-            imageUrl2 =   new URL(
-              "/pokemon/Normal_yogi_birthday/" + props.pokedexEntryNumber + ".png",
-              import.meta.url
-            ).href;
-        }else{
-          imageUrl2 =   new URL(
+        let imageUrl2  =  new URL(
             "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
             import.meta.url
           ).href;
-        }
+        
       
 
        let navigate = useNavigate();
- 
-
-
 
       const saveSettings = () =>{ 
         (async () => {
