@@ -373,12 +373,12 @@ const secondarySort = (a,b,secondaryFilter) => {
               <Tooltip id="trade-badge-tooltip" 
                 place="left"
                 effect='solid'
-                content="More then 500 trades made"/>
+                content="More than 500 trades made"/>
       <img className='badge'  data-tooltip-id="gift-badge-tooltip" src={badgeData?.giftsBadge? '/giftbadge.png':'/emptygiftbadge.png'}></img>
       <Tooltip id="gift-badge-tooltip" 
                 place="left"
                 effect='solid'
-                content="More then 300 gifts given" />
+                content="More than 300 gifts given" />
       <img className='badge'  data-tooltip-id="newgameplus-badge-tooltip"  src={badgeData?.newGamePlusBadge? '/newgameplus.png':'/emptynewgameplus.png'}></img>
       <Tooltip id="newgameplus-badge-tooltip" 
                 place="left"
