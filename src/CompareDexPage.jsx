@@ -6,7 +6,7 @@ import Select from 'react-select'
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import './CompareDexPage.css'
-import ConfettiExplosion from 'react-confetti-explosion';
+
 export default function CompareDexPage() {
       
  
@@ -29,7 +29,6 @@ export default function CompareDexPage() {
   const [nothingToOffer2, setNothingToOffer2] = useState(false);
 
   const [compareToValue, setCompareToValue] = useState();
-  const [isExploding, setIsExploding] = useState(false);
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},{value:"Trade Offer User 1", label:"Trade Offer User 1"},{value:"Trade Offer User 2", label:"Trade Offer User 2"},
   {value:"Name", label:"Name"}
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
@@ -46,12 +45,10 @@ export default function CompareDexPage() {
     }
   })();},[]);
 
-  const confettiDone = () => {
-    setIsExploding(false);
-  }
+
 
   const onChangeHandler = (change) => {
-    setIsExploding(true);
+
     setUserValue(change);
     setNothingToOffer1(false);
     setNothingToOffer2(false);
@@ -68,7 +65,7 @@ export default function CompareDexPage() {
     setNothingToOffer1(false);
     setNothingToOffer2(false);
     setSelectValue({value:"Pokedex", label:"Pokedex"});
-    setIsExploding(true);
+
     (async () => {
      
       console.log("finding pokemon for:" + change.value);
@@ -224,7 +221,6 @@ export default function CompareDexPage() {
     return (
         <div className="wholeSite">
         <div className="content">
-        <div className='confetti'>   {isExploding && <ConfettiExplosion onComplete={confettiDone} />}</div>
           <div className="header">
             <img src='/streamingfalcon.png' alt="Image" className="logo" /><h1 className='titleText'>Compare pokedex</h1><img src="yogieisbar.png" alt="Image" className="logo" />
           </div>

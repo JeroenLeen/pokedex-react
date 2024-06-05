@@ -45,7 +45,6 @@ export default function PokedexPage() {
   ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
   const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
-  const [isExploding, setIsExploding] = useState(false);
   const {logedInUser, setLogedInUser} = useContext(UserContext);
   const {userLoaded, setUserLoaded0} = useContext(UserLoadedContext);
   const [trainerImage,setTrainerImage] = useState();
@@ -94,7 +93,7 @@ export default function PokedexPage() {
 
   const onChangeHandler = (change) => {
 
-     setIsExploding(true);
+
     
  
     setUserValue(change);
