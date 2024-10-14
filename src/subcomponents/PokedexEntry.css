@@ -113,6 +113,17 @@ body {
     align-items: center;
   }
 
+  .typeContainer{
+    margin-left: 5px;
+  }
+
+  .typesContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
   
   .actionsLogoContainer{
     display: flex;

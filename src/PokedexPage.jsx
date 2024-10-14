@@ -42,7 +42,7 @@ export default function PokedexPage() {
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},
   {value:"Name", label:"Name"},{value:"Number caught ↑", label:"Number caught ↑"},{value:"Number caught ↓", label:"Number caught ↓"}
   ,{value:"Shiny's caught ↑", label:"Shiny's caught ↑"},{value:"Shiny's caught ↓", label:"Shiny's caught ↓"}
-  ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
+  ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"},{value:"Seasonal", label:"Seasonal"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
   const [selectValue2,setSelectValue2] = useState({value:"Pokedex", label:"Pokedex"});
   const {logedInUser, setLogedInUser} = useContext(UserContext);
@@ -87,14 +87,7 @@ export default function PokedexPage() {
     setItems2( [...items2]);
   }
 
-
-
-
-
   const onChangeHandler = (change) => {
-
-
-    
  
     setUserValue(change);
     setBadBoy(false);
@@ -104,7 +97,6 @@ export default function PokedexPage() {
       console.log("finding pokemon for:" + change.value);
       const data= await resource.getSettingsForUser(change.value);
    
-
       if(data.length==1 && data[0].trainerimage){
         setTrainerImage("trainers/bulk/" + data[0]?.trainerimage);
       }else{
@@ -130,7 +122,6 @@ export default function PokedexPage() {
     if(badgesData.length>0){
       setBadgeData(badgesData[0]);
     }
-    debugger;
     let data 
     if(value=="overview"){
       data  = await resource.getTotalPokemonOverview();
@@ -171,6 +162,7 @@ export default function PokedexPage() {
   
 }
 
+
 function sortByFieldDescPrimary(data, primaryField, secondaryField) {
   data.sort(function (a, b) {
     if (a[primaryField] > b[primaryField]) {
@@ -203,11 +195,35 @@ function sortByFieldDesc(a,b, field) {
     return 0;
 }
 
+function getSortableDex(dex){
+  let parts = dex.match(/[a-zA-Z]+|[0-9]+/g)
+  while (parts[0].length < 6) parts[0] = "0" + parts[0];
+  return parts[0] + (parts[1]==undefined?"":parts[1]);
+}
+
+
+function sortByPokedexdAsc(a,b) {
+
+  let compa = getSortableDex(a.pokedex);
+  let compb = getSortableDex(b.pokedex);
+
+  if (compa <compb) {
+    return -1;
+  }
+  if (compa >compb) {
+    return 1;
+  }
+  return 0;
+}
+
+
+
+
 const secondarySort = (a,b,secondaryFilter) => {
   
-
+  debugger;
   if(secondaryFilter == "Pokedex"){
-    return sortByFieldAsc(a,b,"pokedex");
+    return sortByPokedexdAsc(a,b);
   }
 
   if(secondaryFilter == "Name"){
@@ -237,6 +253,11 @@ const secondarySort = (a,b,secondaryFilter) => {
   if(secondaryFilter == "Rarity ↓"){
     return sortByFieldDesc(a,b,"rarityNumber");
   }
+
+  if(secondaryFilter == "Seasonal"){
+    return sortByFieldDesc(a,b,"isSeasonal");
+  }
+
   
 };
 
@@ -283,6 +304,11 @@ const secondarySort = (a,b,secondaryFilter) => {
       sortByFieldDescPrimary(tempData,"rarityNumber", selectValue2.value);
       setDisableSort2(false);
     }
+
+    if(change.value == "Seasonal"){
+      sortByFieldDescPrimary(tempData,"isSeasonal", selectValue2.value);
+      setDisableSort2(false);
+    }
     
     setItems2(tempData) ;
   };
@@ -320,6 +346,11 @@ const secondarySort = (a,b,secondaryFilter) => {
       if(selectValue.value == "Rarity ↓"){
         sortByFieldDescPrimary(tempData,"rarityNumber",change.value);
       }
+
+      if(selectValue.value == "Seasonal"){
+        sortByFieldDescPrimary(tempData,"isSeasonal",change.value);
+      }
+    
     
 
     setItems2(tempData) ;
@@ -419,7 +450,7 @@ const secondarySort = (a,b,secondaryFilter) => {
 
          return <div key={el.key} className={"entryBorder" + index %4 + " entry"}>
           <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo} setting={el.setting} lock={el.lock}
+          normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} type1={el.type1} type2={el.type2} exclusiveTo={el.exclusiveTo} setting={el.setting} lock={el.lock}
           rarity={el.rarity} valuechange={setNewValue} mydex={userValue.value===logedInUser} selectedUser={userValue.value} noShine={userValue.value==="overview"}></PokedexEntry>
 
            </div>})

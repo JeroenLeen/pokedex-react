@@ -31,7 +31,7 @@ export default function CompareDexPage() {
   const [compareToValue, setCompareToValue] = useState();
   const sortOptions = [{value:"Pokedex", label:"Pokedex"},{value:"Trade Offer User 1", label:"Trade Offer User 1"},{value:"Trade Offer User 2", label:"Trade Offer User 2"},
   {value:"Name", label:"Name"}
-  ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"}]
+  ,{value:"Rarity ↑", label:"Rarity ↑"},{value:"Rarity ↓", label:"Rarity ↓"},{value:"Seasonal", label:"Seasonal"}]
   const [selectValue,setSelectValue] = useState({value:"Pokedex", label:"Pokedex"});
 
   useEffect(() => {
@@ -212,6 +212,12 @@ export default function CompareDexPage() {
         sortByFieldDesc(tempData1,"rarityNumber");
         sortByFieldDesc(tempData2,"rarityNumber");
     }
+
+    if(change.value == "Seasonal"){
+      sortByFieldDesc(tempData1,"isSeasonal");
+      sortByFieldDesc(tempData2,"isSeasonal");
+  }
+  
     
 
     setItems1(tempData1) ;
@@ -268,7 +274,7 @@ export default function CompareDexPage() {
     
              return <div key={el.key} className={"entryBorder" + index %4 + " compareEntry"}>
               <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-              normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
+              normalNumber={el.normalNumber} type1={el.type1} type2={el.type2}   shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}
               rarity={el.rarity} setting={el.setting} compareEntry={true}></PokedexEntry>
                </div>})
               }
@@ -281,7 +287,7 @@ export default function CompareDexPage() {
     
              return <div key={el.key} className={"entryBorder" + index %4 + " compareEntry"}>
               <PokedexEntry   key={el.pokedex}  pokedexEntryNumber={el.pokedex} 
-              normalNumber={el.normalNumber}  shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}  setting={el.setting} compareEntry={true}
+              normalNumber={el.normalNumber} type1={el.type1} type2={el.type2}   shinyNumber={el.shinyNumber} name={el.monName} exclusiveTo={el.exclusiveTo}  setting={el.setting} compareEntry={true}
               rarity={el.rarity}></PokedexEntry>
                </div>})
               }

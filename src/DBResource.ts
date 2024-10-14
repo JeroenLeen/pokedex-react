@@ -398,7 +398,7 @@ export default class DBResource{
             entry.pokedex=parts[0] + (parts[1]==undefined?"":parts[1]);
         });
 
-
+        debugger;
         allData.sort(function (a, b) {
             if (a.pokedex < b.pokedex) {
               return -1;

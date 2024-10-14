@@ -13,6 +13,17 @@ export default function PokedexEntry(  props) {
             "/pokemon/Normal/" + props.pokedexEntryNumber + ".png",
             import.meta.url
           ).href;
+
+          let type1Img  =  new URL(
+            "/type3/" + props.type1 + ".png",
+            import.meta.url
+          ).href;
+        
+          let type2Img  =  new URL(
+            "/type3/" + props.type2 + ".png",
+            import.meta.url
+          ).href;
+        
         
       
 
@@ -68,9 +79,14 @@ export default function PokedexEntry(  props) {
 
       <div className="numbers">
        <div> <b>{ props.name }</b></div>
+       <div className='typesContainer'>
+        <div className='typeContainer'> <img src={type1Img} alt="Image" /></div>   
+        {props.type2!="Mono"? <div className='typeContainer'> <img src={type2Img} alt="Image" /></div>:<div></div>}
+        </div >
        <div className='number-container'><div className={props.normalNumber>0?'green':'red'}> Normal: { props.normalNumber }</div>
         <div className={props.shinyNumber>0?'green':'red'}>Shiny: {props.shinyNumber }</div></div>
       </div>
+  
       </div>
       {props.compareEntry? '': <div className='actionsLogoContainer'> 
         <button className='buttondiv pointer' onClick={routeChange}>  <FaSearch className='searchLogoImg' /></button>
