@@ -241,10 +241,10 @@ export default class DBResource{
     
     async getPokedex() {
         let { data, error } = await this.supabase
-        .from('PokemonData')
+        .from('ownedpokemondex')
         .select("*");
 
-        let options = data.map(pokemon=> {return {value:pokemon.gamePokedex, label:pokemon.monName}}) ; 
+        let options = data.map(pokemon=> {return {value:pokemon.pokedex, label:pokemon.monName}}) ; 
         return  options;
     }
 

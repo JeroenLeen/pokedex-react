@@ -26,6 +26,7 @@ export default function DoubleFinder() {
             setPokedexCalled(true);
             console.log("calling pokedex:");
             const foundPokemon  = await resource.getPokedex();
+            console.log("foundPokemon");
             console.log(foundPokemon);
             setPokemon(foundPokemon) ;
 
