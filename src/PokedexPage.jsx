@@ -134,7 +134,6 @@ export default function PokedexPage() {
         let data
         if (value == "overview") {
             data = await resource.getTotalPokemonOverview();
-            debugger;
         } else {
             data = await resource.getUniquePokedexEntries(value);
         }
@@ -419,13 +418,13 @@ export default function PokedexPage() {
                             <Tooltip id="falcon-badge-tooltip"
                                      place="left"
                                      effect='solid'
-                                     content="Entry ticket for falcon raffle, 1 pack redeem required to earn this"/>
+                                     content="Entry ticket for falcon end of month raffle, 1 pack redeem required to earn this"/>
                             <img className='badge' data-tooltip-id="yogi-badge-tooltip"
                                  src={badgeData?.YogiToken ? '/yogiraffle.png' : '/emptyTicket.png'}></img>
                             <Tooltip id="yogi-badge-tooltip"
                                      place="left"
                                      effect='solid'
-                                     content={"Entry ticket for falcon raffle," + badgeData?.yogiTokenGoal  + " break joins required to earn this, you have joined: " + badgeData?.wheelTotals}/>
+                                     content={"Entry ticket for yogi end of month raffle, " + badgeData?.yogiTokenGoal  + " break joins required to earn this, you have joined: " + badgeData?.wheelTotals}/>
                             <img className='badge' data-tooltip-id="trade-badge-tooltip"
                                  src={badgeData?.tradesBadge ? '/tradebadge.png' : '/emptytradebadge.png'}></img>
                             <Tooltip id="trade-badge-tooltip"
