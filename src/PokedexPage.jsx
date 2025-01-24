@@ -431,12 +431,6 @@ export default function PokedexPage() {
                                      place="left"
                                      effect='solid'
                                      content={"More than " + badgeData?.tradesGoal +  " trades made, you have " + badgeData?.tradesCompleted }/>
-                            <img className='badge' data-tooltip-id="gift-badge-tooltip"
-                                 src={badgeData?.giftsBadge ? '/giftbadge.png' : '/emptygiftbadge.png'}></img>
-                            <Tooltip id="gift-badge-tooltip"
-                                     place="left"
-                                     effect='solid'
-                                     content={"More than " +badgeData?.giftsGoal +" gifts given, you have " + badgeData?.giftsGiven }/>
                             <img className='badge' data-tooltip-id="newgameplus-badge-tooltip"
                                  src={badgeData?.newGamePlusBadge ? '/newgameplus.png' : '/emptynewgameplus.png'}></img>
                             <Tooltip id="newgameplus-badge-tooltip"
